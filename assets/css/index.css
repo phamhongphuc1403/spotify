@@ -71,18 +71,21 @@ html, body {
     font-weight: 700;
     font-style: normal; 
 }
+
 @font-face {
     font-family: Gotham;
     src: url(./font/Gotham-Font/Gotham-Black.otf);
     font-weight: 800;
     font-style: normal; 
 }
+
 @font-face {
     font-family: Gotham;
     src: url(./font/Gotham-Font/GothamBook.ttf);
     font-weight: 400;
     font-style: normal; 
 }
+
 @font-face {
     font-family: Gotham;
     src: url(./font/Gotham-Font/GothamLight.ttf);
@@ -108,48 +111,28 @@ html, body {
     font-style: normal;
 }
 
-/* #upper-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-image: linear-gradient(#403a26, #121212);
-    height: 45%;
-    width: 100%;
-    z-index: -9;
-    background-attachment: local;
-} */
-/* #under-background {
-    position: absolute;
-    width: 100%;
-    top: 50%;
-    left: 0;
-    background-color: #121212;
-    z-index: -9;
-    height: 800px;background-attachment: local;
-} */
-/* width */
 ::-webkit-scrollbar {
     width: 12px;
     transition: 0.2s ease;
-  }
+}
   
   /* Track */
-  ::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
     background: transparent; 
     transition: 0.2s ease;
-  }
+}
 
   /* Handle */
-  ::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
     background: #4d4d4d; 
     height: 8.57843%; transform: translate(0px, 0px);
-  }
+}
   
   /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
     background: #808080; 
     
-  }
+}
 
 #root__top-container {
     height: 60px;
@@ -159,8 +142,8 @@ html, body {
     grid-area: header;
     position: sticky;
     background-color: #403a26;
-
 }
+
 #root__top__move-action * {
     width: 32px;
     margin-left: 32px;
@@ -172,6 +155,7 @@ html, body {
     transform: rotate(180deg);
     margin-left: 12px;
 }
+
 #root__top__user {
     border-radius: 23px;
     height: 28px;
@@ -196,6 +180,7 @@ html, body {
     line-height: 28px;
     font-weight: 700;
 }
+
 #root__top__user__drop-icon {
     width: 18px;
     margin-right: 6px;
@@ -208,8 +193,7 @@ html, body {
     background-color: #282828;
     width: 196px;
     border-radius: 2px;
-    box-shadow: 0px 0px 10px black;
-    
+    box-shadow: 0px 0px 10px black; 
 }
 
 .drop-bar-item {
@@ -226,6 +210,7 @@ html, body {
     display: flex;
     justify-content: space-between;
 }
+
 .drop-bar-item:nth-child(1) > img {
     width: 16px;
 }
@@ -235,11 +220,7 @@ html, body {
     grid-area: left-sidebar;
     display: flex;
     flex-direction: column;
-
     color: #b3b3b3;
-
-    /* min-width: 129px;
-    max-width: 303px; */
 }
 
 #root__left-sidebar__logo {
@@ -248,9 +229,11 @@ html, body {
     margin: 24px;
     cursor: pointer;
 }
+
 #root__left-sidebar__navigation {
     padding: 0px 8px;
 }
+
 #root__left-sidebar__navigation > li {
     padding: 0 16px;
     height: 40px;
@@ -261,15 +244,18 @@ html, body {
     display: flex;
     align-items: center;
 }
+
 #root__left-sidebar__navigation #current {
     opacity: 1;
     color: white;
     background-color: #282828;
 }
+
 #root__left-sidebar__navigation > li:hover {
     opacity: 1;
     color: white
 }
+
  #root__left-sidebar__navigation > li > img {
      width: 18px;
      margin-right: 20px;
@@ -279,6 +265,7 @@ html, body {
  #root__left-sidebar__action { 
      margin-top: 24px;
  }
+
  #root__left-sidebar__action > li {
      padding: 8px 24px;
      height: 24px;
@@ -293,6 +280,7 @@ html, body {
      opacity: 1;
      color:white;
  }
+
  #root__left-sidebar__action > li > img {
     width: 24px;
     margin-right: 16px;
@@ -303,6 +291,7 @@ html, body {
     margin: 0 24px;
     height: 9px;
 }
+
 #root__left-sidebar__dashline > hr{
 
     background-color: #282828;
@@ -316,6 +305,7 @@ html, body {
     height: 295px;
     padding: 8px 0px;
 }
+
 #root__left-sidebar__my-playlists .my-playlist {
     font-family: Gotham, sans-serif;
     line-height: 32px;
@@ -340,13 +330,15 @@ html, body {
 
 #root__main-view__currently-playing {
    
-    margin-bottom: 42px
+    margin-bottom: 36px
 }
+
 #root__main-view__currently-playing .greeting {
     font-size: 32px;
     font-weight: 700;
-    line-height: 36px;
+    line-height: 40px;
 }
+
 #root__main-view__currently-playing__playlists {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -363,6 +355,7 @@ html, body {
     align-items: center;
     background-color: #32312e;
 }
+
 #root__main-view__currently-playing__playlists > .current-playlist > img {
     width: 80px;
     border-bottom-left-radius: 4px;
@@ -373,37 +366,31 @@ html, body {
     padding: 16px;
     width: 100%;
     display: flex;
-    
     justify-content: space-between;
     align-items: center;
 }
 
 #root__main-view__currently-playing__playlists > .current-playlist > .current-playlist__content > span {
     font-size: 16px;
-    font-weight: 600;
-    
+    font-weight: 600;  
 }
 
 #root__main-view__currently-playing__playlists > .current-playlist > .current-playlist__content > .play-now {
     margin-left: 8px;
     height: 48px;
     visibility: hidden;
-    
 }
 
 
 .root__main-view__recently-playing > .introduction {
     height: 65.6px;
-    
 }
 
 .root__main-view__recently-playing > .introduction > .title {
     font-size: 24px;
     font-weight: 700;
-    height: 33.6px;
+    line-height: 46px;
     color: white;
-    border: 1px solid red;
-    
 }
 
 .root__main-view__recently-playing > .introduction > .description  {
@@ -421,6 +408,7 @@ html, body {
     float: right;
     text-transform: uppercase;
 }
+
 .root__main-view__recently-playing > .introduction > .title:hover, .root__main-view__recently-playing > .introduction > .description > a:hover {
     text-decoration: underline;
 }
@@ -486,15 +474,14 @@ html, body {
     align-items: center;
     width: 100%;
     margin-bottom: 32px;
-    
 }
 
 .root__right-sidebar__user > img {
     width: 48px;
     border-radius: 50%;
     margin-right: 10px;
-    
 }
+
 .root__right-sidebar__user__user-content {
     color: #afafaf;
     width: 100%;
@@ -520,8 +507,7 @@ html, body {
 
 .root__right-sidebar__user__user-content > .user-music, .root__right-sidebar__user__user-content > .user-name-and-activity > .user-activity {
     font-size: 11px;
-    font-weight: 500;    
-
+    font-weight: 500;  
 }
 
 .root__right-sidebar__user__user-content > .user-music > .user-music__song > img {
@@ -536,6 +522,7 @@ html, body {
     margin-right: 2px;
     color: #f01919;
 }   
+
 #root__now-playing {
     background-color: #181818;
     grid-area: now-playing;
