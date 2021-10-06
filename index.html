@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Spotify</title>
+    <link rel="stylesheet" href="./assets/css/index.css">
+</head>
+<body>
+    <div id="root">
+        <div id="root__top-container">
+            <div id="root__top__move-action">
+                <img id="root__top__move-action" src="/assets/images/top-container/action.PNG" alt="">
+                <img id="root__top__move-action" src="/assets/images/top-container/action.PNG" alt="">
+            </div>
+        <div id="root__top__user" onclick = openMenu()>
+            <img src="./assets/images/user/user-avatar.jpg" id="root__top__user__avatar">
+            <div id="root__top__user__name">Phuc</div>
+            <img id="root__top__user__drop-icon" src="assets/images/top-container/drop-icon.PNG">
+            <!-- <ul class="root__top__user__drop-bar">
+                <li class="drop-bar-item"><span>Account</span><img src="assets/images/top-container/share.png"></li>
+                <li class="drop-bar-item"><span>Profile</span></li>
+                <li class="drop-bar-item"><span>Log out</span></li>
+            </ul> -->
+        </div>
+        </div>
+        <div id="root__left-sidebar">
+            <img id="root__left-sidebar__logo" src="assets/images/left-sidebar/spotify.png">
+            <ul id="root__left-sidebar__navigation">
+                <li id="current"><img src="./assets/images/left-sidebar/home.PNG">Home</li>
+                <li><img src="./assets/images/left-sidebar/search.PNG">Search</li>
+                <li><img src="./assets/images/left-sidebar/library.PNG">Your library</li>
+            </ul>
+            <ul id="root__left-sidebar__action">
+                <li><img src="./assets/images/left-sidebar/create-playlist.PNG">Create Playlist</li>
+                <li><img src="./assets/images/left-sidebar/liked-songs.PNG">Liked Songs</li>
+            </ul>
+            <div id="root__left-sidebar__dashline"><hr/></div>
+            <ul id="root__left-sidebar__my-playlists">
+                <li class="my-playlist">Your Top Songs 2020</li>
+                <li class="my-playlist">Liked Songs</li>
+                <li class="my-playlist">Good old memories</li>
+                <li class="my-playlist">September - 2021</li>
+                <li class="my-playlist">September - 2021</li>
+                <li class="my-playlist">August - 2021</li>
+                <li class="my-playlist">July - 2021</li>
+                <li class="my-playlist">June - 2021</li>
+                <li class="my-playlist">May - 2021</li>
+                <li class="my-playlist">April - 2021</li>
+                <li class="my-playlist">March - 2021</li>
+                <li class="my-playlist">February - 2021</li>
+                <li class="my-playlist">January - 2021</li>
+                <li class="my-playlist">December - 2020</li>
+                <li class="my-playlist">November - 2020</li>
+                <li class="my-playlist">October - 2020</li>
+                <li class="my-playlist">Semtember - 2020</li>
+                <li class="my-playlist">August - 2020</li>
+            </ul>
+        </div>
+        <div id="root__main-view">
+            <div id="root__main-view__currently-playing">
+                <span class="greeting">Hello</span>
+                <ul id="root__main-view__currently-playing__playlists">
+                    <li class="current-playlist">
+                        <img src="./assets/images/main-view/current-playlists/1434366698370_500.jpg">
+                        <div class="current-playlist__content">
+                            <span>September - 2021</span>
+                            <img src="/assets/images/main-view/play-now.PNG" class="play-now">
+                        </div>
+                    </li>
+                    <li class="current-playlist">
+                        <img src="./assets/images/main-view/current-playlists/1434366698370_500.jpg">
+                        <div class="current-playlist__content">
+                            <span>September - 2021</span>
+                            <img src="/assets/images/main-view/play-now.PNG" class="play-now">
+                        </div>
+                    </li>
+                    <li class="current-playlist">
+                        <img src="./assets/images/main-view/current-playlists/1434366698370_500.jpg">
+                        <div class="current-playlist__content">
+                            <span>September - 2021</span>
+                            <img src="/assets/images/main-view/play-now.PNG" class="play-now">
+                        </div>
+                    </li>
+                    <li class="current-playlist">
+                        <img src="./assets/images/main-view/current-playlists/1434366698370_500.jpg">
+                        <div class="current-playlist__content">
+                            <span>September - 2021</span>
+                            <img src="/assets/images/main-view/play-now.PNG" class="play-now">
+                        </div>
+                    </li>
+                    <li class="current-playlist">
+                        <img src="./assets/images/main-view/current-playlists/1434366698370_500.jpg">
+                        <div class="current-playlist__content">
+                            <span>September - 2021</span>
+                            <img src="/assets/images/main-view/play-now.PNG" class="play-now">
+                        </div>
+                    </li>
+                    <li class="current-playlist">
+                        <img src="./assets/images/main-view/current-playlists/1434366698370_500.jpg">
+                        <div class="current-playlist__content">
+                            <span>September - 2021</span>
+                            <img src="/assets/images/main-view/play-now.PNG" class="play-now">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="root__main-view__recently-playing">
+                <div class="introduction">
+                    <a href ="" class="title">Based on your recent listening</a>
+                    <span class="description">Inspired on your recent activity.<a href="">See all</a></span>
+                </div>
+                <ul class="playlists">
+                    <li class="playlist">
+                        <img src="./assets/images/main-view/recent-playlists/daily-mix-1.PNG">
+                        <div class="playlist__description">
+                            <span class="playlist__description__title">Daily Mix 1</span>
+                            <span class="playlist__description__artist">Martin Garrix</span>
+                        </div>
+                    </li>
+                    <li class="playlist">
+                        <img src="./assets/images/main-view/recent-playlists/daily-mix-1.PNG">
+                        <div class="playlist__description">
+                            <span class="playlist__description__title">Daily Mix 1</span>
+                            <span class="playlist__description__artist">Martin Garrix</span>
+                        </div>
+                    </li>
+                    <li class="playlist">
+                        <img src="./assets/images/main-view/recent-playlists/daily-mix-1.PNG">
+                        <div class="playlist__description">
+                            <span class="playlist__description__title">Daily Mix 1</span>
+                            <span class="playlist__description__artist">Martin Garrix</span>
+                        </div>
+                    </li>
+                    <li class="playlist">
+                        <img src="./assets/images/main-view/recent-playlists/daily-mix-1.PNG">
+                        <div class="playlist__description">
+                            <span class="playlist__description__title">Daily Mix 1</span>
+                            <span class="playlist__description__artist">Martin Garrix</span>
+                        </div>
+                    </li>
+                    <li class="playlist">
+                        <img src="./assets/images/main-view/recent-playlists/daily-mix-1.PNG">
+                        <div class="playlist__description">
+                            <span class="playlist__description__title">Daily Mix 1</span>
+                            <span class="playlist__description__artist">Martin Garrix</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="root__main-view__recently-playing">
+                <div class="introduction">
+                    <a href ="" class="title">Based on your recent listening</a>
+                    <span class="description">Inspired on your recent activity.<a href="">See all</a></span>
+                </div>
+                <ul class="playlists">
+                    <li class="playlist">
+                        <img src="./assets/images/main-view/recent-playlists/daily-mix-1.PNG">
+                        <div class="playlist__description">
+                            <span class="playlist__description__title">Daily Mix 1</span>
+                            <span class="playlist__description__artist">Martin Garrix</span>
+                        </div>
+                    </li>
+                    <li class="playlist">
+                        <img src="./assets/images/main-view/recent-playlists/daily-mix-1.PNG">
+                        <div class="playlist__description">
+                            <span class="playlist__description__title">Daily Mix 1</span>
+                            <span class="playlist__description__artist">Martin Garrix</span>
+                        </div>
+                    </li>
+                    <li class="playlist">
+                        <img src="./assets/images/main-view/recent-playlists/daily-mix-1.PNG">
+                        <div class="playlist__description">
+                            <span class="playlist__description__title">Daily Mix 1</span>
+                            <span class="playlist__description__artist">Martin Garrix</span>
+                        </div>
+                    </li>
+                    <li class="playlist">
+                        <img src="./assets/images/main-view/recent-playlists/daily-mix-1.PNG">
+                        <div class="playlist__description">
+                            <span class="playlist__description__title">Daily Mix 1</span>
+                            <span class="playlist__description__artist">Martin Garrix</span>
+                        </div>
+                    </li>
+                    <li class="playlist">
+                        <img src="./assets/images/main-view/recent-playlists/daily-mix-1.PNG">
+                        <div class="playlist__description">
+                            <span class="playlist__description__title">Daily Mix 1</span>
+                            <span class="playlist__description__artist">Martin Garrix</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="root__main-view__recently-playing">
+                <div class="introduction">
+                    <a href ="" class="title">Based on your recent listening</a>
+                    <span class="description">Inspired on your recent activity.<a href="">See all</a></span>
+                </div>
+                <ul class="playlists">
+                    <li class="playlist">
+                        <img src="./assets/images/main-view/recent-playlists/daily-mix-1.PNG">
+                        <div class="playlist__description">
+                            <span class="playlist__description__title">Daily Mix 1</span>
+                            <span class="playlist__description__artist">Martin Garrix</span>
+                        </div>
+                    </li>
+                    <li class="playlist">
+                        <img src="./assets/images/main-view/recent-playlists/daily-mix-1.PNG">
+                        <div class="playlist__description">
+                            <span class="playlist__description__title">Daily Mix 1</span>
+                            <span class="playlist__description__artist">Martin Garrix</span>
+                        </div>
+                    </li>
+                    <li class="playlist">
+                        <img src="./assets/images/main-view/recent-playlists/daily-mix-1.PNG">
+                        <div class="playlist__description">
+                            <span class="playlist__description__title">Daily Mix 1</span>
+                            <span class="playlist__description__artist">Martin Garrix</span>
+                        </div>
+                    </li>
+                    <li class="playlist">
+                        <img src="./assets/images/main-view/recent-playlists/daily-mix-1.PNG">
+                        <div class="playlist__description">
+                            <span class="playlist__description__title">Daily Mix 1</span>
+                            <span class="playlist__description__artist">Martin Garrix</span>
+                        </div>
+                    </li>
+                    <li class="playlist">
+                        <img src="./assets/images/main-view/recent-playlists/daily-mix-1.PNG">
+                        <div class="playlist__description">
+                            <span class="playlist__description__title">Daily Mix 1</span>
+                            <span class="playlist__description__artist">Martin Garrix</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="root__main-view__recently-playing">
+                <div class="introduction">
+                    <a href ="" class="title">Based on your recent listening</a>
+                    <span class="description">Inspired on your recent activity.<a href="">See all</a></span>
+                </div>
+                <ul class="playlists">
+                    <li class="playlist">
+                        <img src="./assets/images/main-view/recent-playlists/daily-mix-1.PNG">
+                        <div class="playlist__description">
+                            <span class="playlist__description__title">Daily Mix 1</span>
+                            <span class="playlist__description__artist">Martin Garrix</span>
+                        </div>
+                    </li>
+                    <li class="playlist">
+                        <img src="./assets/images/main-view/recent-playlists/daily-mix-1.PNG">
+                        <div class="playlist__description">
+                            <span class="playlist__description__title">Daily Mix 1</span>
+                            <span class="playlist__description__artist">Martin Garrix</span>
+                        </div>
+                    </li>
+                    <li class="playlist">
+                        <img src="./assets/images/main-view/recent-playlists/daily-mix-1.PNG">
+                        <div class="playlist__description">
+                            <span class="playlist__description__title">Daily Mix 1</span>
+                            <span class="playlist__description__artist">Martin Garrix</span>
+                        </div>
+                    </li>
+                    <li class="playlist">
+                        <img src="./assets/images/main-view/recent-playlists/daily-mix-1.PNG">
+                        <div class="playlist__description">
+                            <span class="playlist__description__title">Daily Mix 1</span>
+                            <span class="playlist__description__artist">Martin Garrix</span>
+                        </div>
+                    </li>
+                    <li class="playlist">
+                        <img src="./assets/images/main-view/recent-playlists/daily-mix-1.PNG">
+                        <div class="playlist__description">
+                            <span class="playlist__description__title">Daily Mix 1</span>
+                            <span class="playlist__description__artist">Martin Garrix</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="root__right-sidebar">
+            <div id="root__right-sidebar__friend-activity">
+                <span>Friend activity</span>
+                <img src="./assets/images/right-sidebar/friend-activity.png">
+            </div>
+            <div id="root__right-sidebar__users">
+                <div class="root__right-sidebar__user">
+                    <img src="assets/images/user/user-avatar.jpg">
+                    <div class="root__right-sidebar__user__user-content">
+                        <div class="user-name-and-activity">
+                            <span class='user-name'>Pham Hong Phuc</span>
+                            <div class="user-activity">
+                                <img src="assets/images/right-sidebar/listening.png">
+                            </div>
+                        </div>
+                        <div class='user-music'>
+                            <div class='user-music__song'>Weightless <img src="./assets/images/right-sidebar/dot.png"> All Time Low</div>
+                            <div class='user-music__owner'><img src="/assets/images/right-sidebar/playlist.png">September - 2021</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="root__right-sidebar__user">
+                    <img src="assets/images/user/user-avatar.jpg">
+                    <div class="root__right-sidebar__user__user-content">
+                        <div class="user-name-and-activity">
+                            <span class='user-name'>Pham Hong Phuc</span>
+                            <div class="user-activity">
+                                15hr
+                            </div>
+                        </div>
+                        <div class='user-music'>
+                            <div class='user-music__song'>Weightless <img src="./assets/images/right-sidebar/dot.png"> All Time Low</div>
+                            <div class='user-music__owner'><img src="/assets/images/right-sidebar/playlist.png">September - 2021</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="root__right-sidebar__user">
+                    <img src="assets/images/user/user-avatar.jpg">
+                    <div class="root__right-sidebar__user__user-content">
+                        <div class="user-name-and-activity">
+                            <span class='user-name'>Pham Hong Phuc</span>
+                            <div class="user-activity">
+                                2d
+                            </div>
+                        </div>
+                        <div class='user-music'>
+                            <div class='user-music__song'>Weightless <img src="./assets/images/right-sidebar/dot.png"> All Time Low</div>
+                            <div class='user-music__owner'><img src="/assets/images/right-sidebar/playlist.png">September - 2021</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="root__now-playing">now</div>       
+    </div>
+    <script src="./assets/js/index.js"></script>
+</body>
+</html>
