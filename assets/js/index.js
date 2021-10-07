@@ -53,8 +53,25 @@ function handleTopContainerOpacity() {
     const rootTop = document.getElementById('root__top-container')
     const mainView = document.getElementById('root__main-view')
     mainView.onscroll = function() {
-        console.log(mainView.scrollTop)
+        if (100 - Math.ceil(mainView.scrollTop) <= 0) {
+            rootTop.style.backgroundColor = `rgba(54, 50, 34, ${0.5 + -(100 - Math.ceil(mainView.scrollTop)) / 100})`;
+        }
     }
 }
 
 handleTopContainerOpacity()
+
+
+function handleTopContainerWidth() {
+    const rootTop = document.getElementById('root__top-container')
+    const mainView = document.getElementById('root__main-view')
+    rootTop.style.width = mainView.offsetWidth + 'px';
+    
+}
+
+handleTopContainerWidth()
+
+const mainView = document.getElementById('root__main-view')
+mainView.onmousedown = function() {
+    
+}
