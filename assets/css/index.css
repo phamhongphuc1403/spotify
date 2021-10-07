@@ -81,7 +81,7 @@ html, body {
 
 @font-face {
     font-family: Gotham;
-    src: url(./font/Gotham-Font/GothamBook.ttf);
+    src: url(./font/Gotham-Font/AvenirLTStd-Medium.otf);
     font-weight: 400;
     font-style: normal; 
 }
@@ -96,7 +96,7 @@ html, body {
 #root {
     font-family: Gotham;
     color:white;
-    font-stretch: semi-condensed;
+    font-stretch: ultra-condensed;
     font-size: 14px;
     font-weight: 700;
     line-height: 16px;
@@ -288,8 +288,10 @@ html, body {
 }
 
 #root__left-sidebar__dashline {
-    margin: 0 24px;
+    position: relative;
+    padding: 0 24px;
     height: 9px;
+    box-shadow: 0 10px 15px black;
 }
 
 #root__left-sidebar__dashline > hr{
@@ -526,4 +528,114 @@ html, body {
 #root__now-playing {
     background-color: #181818;
     grid-area: now-playing;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+}
+#root__now-playing > div {
+    width: 33%;
+}
+
+#root__now-playing__song {
+    display: flex;
+    align-items: center;
+}
+
+#root__now-playing__song__img {
+    width: 56px;
+}
+
+#root__now-playing__song__info {
+    margin: 0 14px;
+    font-weight: 500;
+    
+}
+
+#root__now-playing__song__info__name {
+    line-height: 16px;
+}
+
+#root__now-playing__song__info__artist {
+    font-size: 11px;
+    color: #afafaf;
+
+}
+
+#root__now-playing__song__favorite {
+    width: 14px;
+    margin: 8px;
+}
+
+#root__now-playing__song__overlay {
+    width: 16px;
+    margin: 8px;
+}
+
+
+#root__now-playing__player-control__playback-bar__range-slider {
+    background: #535353;
+    border-radius: 8px;
+    height: 4px;
+    width: 501.7px;
+    outline: none;
+    transition: 450ms ease-in;
+    -webkit-appearance: none;
+    margin: 0 10px;
+}
+
+#root__now-playing__player-control__playback-bar__range-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+  }
+
+#root__now-playing__player-control__playback-bar {
+    font-size: 11px;
+    font-weight: 400;
+    color: rgb(179, 179, 179);
+    display: flex;
+    align-items: center;
+}
+
+#root__now-playing__player-control {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#root__now-playing__player-control__buttons {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+#root__now-playing__player-control__buttons > img {
+    margin: 0 12px;
+}
+
+.player-control-play-pause {
+    width: 32px;
+    transition: 0.1s ease;
+}
+.player-control-play-pause:hover {
+    transform:scale(1.1)
+}
+
+.player-control-back-forward {
+    width: 10px;
+}
+
+.player-control-shuffle-repeat {
+    width: 16px;  
+}
+
+.player-control-back-forward, .player-control-shuffle-repeat {
+    opacity: 0.6;
+    transition: 0.2s ease;
+
+}
+.player-control-back-forward:hover, .player-control-shuffle-repeat:hover {
+    opacity: 1;
 }

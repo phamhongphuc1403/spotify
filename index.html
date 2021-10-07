@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Spotify</title>
     <link rel="stylesheet" href="./assets/css/index.css">
+    <!-- <link rel="stylesheet" href="./assets/css/slider.css">  -->
 </head>
 <body>
     <div id="root">
@@ -41,7 +42,10 @@
                 <li><img src="./assets/images/left-sidebar/create-playlist.PNG">Create Playlist</li>
                 <li><img src="./assets/images/left-sidebar/liked-songs.PNG">Liked Songs</li>
             </ul>
-            <div id="root__left-sidebar__dashline"><hr/></div>
+            <div id="root__left-sidebar__dashline">
+                <hr/>
+                <div id="root__left-sidebar__dashline__shadow"></div>
+            </div>
             <ul id="root__left-sidebar__my-playlists">
                 <li class="my-playlist">Your Top Songs 2020</li>
                 <li class="my-playlist">Liked Songs</li>
@@ -337,7 +341,35 @@
                 </div>
             </div>
         </div>
-        <div id="root__now-playing">now</div>       
+        <div id="root__now-playing">
+            <div id="root__now-playing__song">
+                <img id="root__now-playing__song__img" src='./assets/images/main-view/current-playlists/1434366698370_500.jpg'>
+                <div id="root__now-playing__song__info">
+                    <div id="root__now-playing__song__info__name">Weightless</div>
+                    <div id="root__now-playing__song__info__artist">All Time Low</div>  
+                </div>
+                <img id="root__now-playing__song__favorite" src="./assets/images/now-playing/favorite.png">
+                <img id="root__now-playing__song__overlay" src="./assets/images/now-playing/overlay.png">
+            </div>
+            <div id="root__now-playing__player-control">
+                <div id="root__now-playing__player-control__buttons">
+                    <img class="player-control-shuffle-repeat" src="/assets/images/now-playing/shuffle.PNG">
+                    <img class="player-control-back-forward" src="./assets/images/now-playing/back.PNG">
+                    <img class="player-control-play-pause" src="./assets/images/now-playing/play.PNG">
+                    <img class="player-control-back-forward" src="./assets/images/now-playing/foward.PNG">
+                    <img class="player-control-shuffle-repeat" src="./assets/images/now-playing/repeat.PNG">
+                </div>
+                <div id="root__now-playing__player-control__playback-bar">
+                    <div id="root__now-playing__player-control__playback-bar__minutes-played">00:00</div>
+                    <input  id="root__now-playing__player-control__playback-bar__range-slider" min="0" max="100" type="range" value = "0"/>
+                    <div id="root__now-playing__speed-control__playback-bar__minutes-total">1:67</div>
+                    <audio src=""></audio>
+                </div>
+            </div>
+            <div id="root__now-playing__media-control">
+
+            </div>
+        </div>       
     </div>
     <script src="./assets/js/index.js"></script>
 </body>
