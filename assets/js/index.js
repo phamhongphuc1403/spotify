@@ -47,3 +47,14 @@ slider.onmouseleave = function() {
 
 }
 
+
+
+function handleTopContainerOpacity() {
+    const rootTop = document.getElementById('root__top-container')
+    const mainView = document.getElementById('root__main-view')
+    mainView.onscroll = function() {
+        console.log(mainView.scrollTop)
+    }
+}
+
+handleTopContainerOpacity()

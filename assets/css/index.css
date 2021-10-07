@@ -109,6 +109,7 @@ html, body {
     grid-template-columns: 200px auto 250px; 
     grid-template-rows: 60px auto 90px; 
     font-style: normal;
+    
 }
 
 ::-webkit-scrollbar {
@@ -141,7 +142,7 @@ html, body {
     align-items: center;
     grid-area: header;
     position: sticky;
-    background-color: #403a26;
+    background-color: #403A26;
 }
 
 #root__top__move-action * {
