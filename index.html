@@ -344,10 +344,10 @@
         </div>
         <div id="root__now-playing">
             <div id="root__now-playing__song">
-                <img id="root__now-playing__song__img" src='./assets/songs/albums/nothing-personal__all-time-low.jpg'>
+                <img id="root__now-playing__song__img" src=''>
                 <div id="root__now-playing__song__info">
-                    <div id="root__now-playing__song__info__name">Weightless</div>
-                    <div id="root__now-playing__song__info__artist">All Time Low</div>  
+                    <div id="root__now-playing__song__info__name"></div>
+                    <div id="root__now-playing__song__info__artist"></div>  
                 </div>
                 <img id="root__now-playing__song__favorite" src="./assets/images/now-playing/favorite.png">
                 <img id="root__now-playing__song__overlay" src="./assets/images/now-playing/overlay.png">
@@ -362,16 +362,16 @@
                 </div>
                 <div id="root__now-playing__player-control__playback-bar">
                     <div id="root__now-playing__player-control__playback-bar__minutes-played">00:00</div>
-                    <input  id="root__now-playing__player-control__playback-bar__range-slider" min="0" max="100" type="range" value = "0"/>
-                    <div id="root__now-playing__speed-control__playback-bar__minutes-total">1:67</div>
-                    <audio src=""></audio>
+                    <input  id="root__now-playing__player-control__playback-bar__range-slider" min="0" max="100" type="range" value = "0" step="1"/>
+                    <div id="root__now-playing__speed-control__playback-bar__minutes-total"></div>
+                    
                 </div>
             </div>
             <div id="root__now-playing__media-control">
-
             </div>
         </div>       
     </div>
+    <audio id="audio" src="" preload="metadata"></audio>
     <script src="./assets/js/index.js"></script>
     <script src="./assets/js/play-song.js"></script>
 </body>

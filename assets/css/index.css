@@ -594,7 +594,8 @@ html, body {
     width: 4px;
     height: 4px;
     border-radius: 50%;
-    background: transparent;
+    /* background: transparent; */
+    background: red;
     cursor: pointer;
   }
 
