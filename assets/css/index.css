@@ -626,7 +626,7 @@ html, body {
     transform:scale(1.1)
 }
 
-.player-control-back-forward {
+.player-control-prev-next {
     width: 10px;
 }
 
@@ -634,11 +634,11 @@ html, body {
     width: 16px;  
 }
 
-.player-control-back-forward, .player-control-shuffle-repeat {
+.player-control-prev-next, .player-control-shuffle-repeat {
     opacity: 0.6;
     transition: 0.2s ease;
 
 }
-.player-control-back-forward:hover, .player-control-shuffle-repeat:hover {
+.player-control-prev-next:hover, .player-control-shuffle-repeat:hover {
     opacity: 1;
 }

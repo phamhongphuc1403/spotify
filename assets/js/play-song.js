@@ -7,6 +7,8 @@ const playBtn = $('.player-control-play-pause')
 const slider = $('#root__now-playing__player-control__playback-bar__range-slider')
 const timeTotal = $('#root__now-playing__speed-control__playback-bar__minutes-total')
 const timePlayed = $('#root__now-playing__player-control__playback-bar__minutes-played')
+const nextBtn = $('.next')
+const prevBtn = $('.prev')
 
 const app = { 
   songs: [
@@ -99,9 +101,18 @@ const app = {
     slider.oninput = function() {
       _this.handleTimePlayed(slider.value)
       let thumbValue = slider.value / slider.max *100
+      setTimeout(_this.audioUpdate)
       slider.style.background = 'linear-gradient(to right, #1db954 0%, #1db954 ' + thumbValue + '%, #535353 ' + thumbValue + '%, #535353 100%)'
-      audio.ontimeupdate = slider.value      
-    };
+
+    }
+
+    slider.onchange = function() {
+      _this.handleTimePlayed(slider.value)
+      let thumbValue = slider.value / slider.max *100
+      slider.style.background = 'linear-gradient(to right, #1db954 0%, #1db954 ' + thumbValue + '%, #535353 ' + thumbValue + '%, #535353 100%)'
+      
+      audio.currentTime = slider.value;      
+    }
 
     slider.onmouseenter = function() {
       const head = document.querySelector('head')
@@ -128,10 +139,6 @@ const app = {
   audioUpdate: function(color = '#b3b3b3') {
     const _this = this
     audio.ontimeupdate = function() {
-      // const currentTimeCount = Math.round(audio.currentTime)
-      // let currentMinute = Math.floor(currentTimeCount / 60)
-      // let currentSecond = currentTimeCount - currentMinute * 60
-      // currentSecond < 10 ? timePlayed.innerHTML = `${currentMinute}:0${currentSecond}`: timePlayed.innerHTML = `${currentMinute}:${currentSecond}`
       _this.handleTimePlayed()
       slider.value = audio.currentTime
       let thumbValue = slider.value / slider.max *100
@@ -139,6 +146,29 @@ const app = {
     }
   },
 
+  nextSong: function() {
+    const _this = this
+    nextBtn.onclick = function() {
+      _this.currentIndex += 1
+      if (_this.currentIndex >= _this.songs.length) _this.currentIndex = 0
+      _this.loadCurrentSong()
+      audio.autoplay = true
+      _this.isPlaying = true;
+      playBtn.src = `./assets/images/now-playing/pause.png`
+    }
+  },
+
+  prevSong: function() {
+    const _this = this
+    prevBtn.onclick = function() {
+      _this.currentIndex -= 1
+      if (_this.currentIndex < 0) _this.currentIndex = _this.songs.length - 1
+      _this.loadCurrentSong()
+      audio.autoplay = true
+      _this.isPlaying = true;
+      playBtn.src = `./assets/images/now-playing/pause.png`
+    }
+  },
 
 
   start: function() {
@@ -146,6 +176,8 @@ const app = {
     this.handleTimeTotal()
     this.handleSliderBar()
     this.handlePlayBtn()
+    this.nextSong()
+    this.prevSong()
     
   }
 }
