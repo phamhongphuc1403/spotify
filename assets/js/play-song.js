@@ -7,7 +7,6 @@ const slider = document.getElementById('root__now-playing__player-control__playb
 const timeTotal = document.getElementById('root__now-playing__speed-control__playback-bar__minutes-total')
 
 
-
 const app = { 
   songs: [
     { 
@@ -26,7 +25,7 @@ const app = {
     },
     { 
       id: 3,
-      name: "Damn If I Do Ya (Damn If I Don't)", 
+      name: "Damned If I Do Ya (Damned If I Don't)", 
       artist: "All Time Low", 
       img: "./assets/songs/albums/nothing-personal__all-time-low.jpg",
       path: "./assets/songs/songs/damn-if-i-do-ya__all-time-low.mp3"
@@ -47,12 +46,14 @@ const app = {
   ],
   currentIndex: 2,
   isPlaying: false,
+
   loadCurrentSong: function() {
     songImg.src = `${this.songs[this.currentIndex].img}`
     songName.innerHTML = `${this.songs[this.currentIndex].name}`
     songArtist.innerHTML = `${this.songs[this.currentIndex].artist}`
     audio.src = `${this.songs[this.currentIndex].path}`
   },
+
   handlePlayBtn: function() {
     const _this = this
     playBtn.onclick = function() {
@@ -61,6 +62,7 @@ const app = {
       audio.onplay = function() {
         _this.isPlaying = true;
         playBtn.src = `./assets/images/now-playing/pause.png`
+        _this.audioUpdate()
       }
       audio.onpause = function() {
         _this.isPlaying = false;
@@ -68,9 +70,10 @@ const app = {
       }
     }
   },
+  
   handleSliderBar: function() {    
+    const _this = this
     audio.onloadedmetadata = function() {
-       slider.max = audio.duration
       const songDuration = Math.round(audio.duration)
       const minutes = Math.floor(songDuration / 60)
       const seconds = songDuration - minutes * 60
@@ -80,15 +83,45 @@ const app = {
       } else {
         timeTotal.innerHTML = `${minutes}:${songDuration - minutes * 60}`
       }
+    }
+    slider.oninput = function() {
+      let thumbValue = slider.value / slider.max *100
+      slider.style.background = 'linear-gradient(to right, #1db954 0%, #1db954 ' + thumbValue + '%, #535353 ' + thumbValue + '%, #535353 100%)'
     };
-    
-    audio.ontimeupdate = function() {
-        slider.value = audio.currentTime
-        handleRangeSlider()
-      };
-   
 
+    slider.onmouseenter = function() {
+      const head = document.querySelector('head')
+      const link = document.createElement('link')
+      link.setAttribute('rel',"stylesheet")
+      link.setAttribute('href',"./assets/css/slider.css")
+      link.setAttribute('id',"slidercss")
+      head.appendChild(link)
+      
+      let thumbValue = slider.value / slider.max *100
+      slider.style.background = 'linear-gradient(to right, #1db954 0%, #1db954 ' + thumbValue + '%,#535353 ' + thumbValue + '%, #535353 100%)'
+      _this.audioUpdate('#1db954')
+    }
+
+    slider.onmouseleave = function() {
+      const sliderHover = document.getElementById('slidercss')
+      sliderHover.remove()
+      
+      let thumbValue = slider.value / slider.max *100
+      slider.style.background = 'linear-gradient(to right, #b3b3b3 0%, #b3b3b3 ' + thumbValue + '%,#535353 ' + thumbValue + '%, #535353 100%)'
+      _this.audioUpdate()
+    }
   },
+
+  audioUpdate: function(color = `#b3b3b3`) {
+    audio.ontimeupdate = function() {
+    slider.value = audio.currentTime;
+    let thumbValue = slider.value / slider.max *100
+      slider.style.background = `linear-gradient(to right, ${color} 0%, ${color} ${thumbValue}%, #535353 ${thumbValue}%, #535353 100%)`
+    }
+  },
+
+
+
   start: function() {
     this.loadCurrentSong()
     this.handlePlayBtn()
