@@ -1,11 +1,12 @@
-const songImg = document.getElementById('root__now-playing__song__img')
-const songName = document.getElementById('root__now-playing__song__info__name')
-const songArtist = document.getElementById('root__now-playing__song__info__artist')
-const audio = document.getElementById('audio')
-const playBtn = document.querySelector('.player-control-play-pause')
-const slider = document.getElementById('root__now-playing__player-control__playback-bar__range-slider')
-const timeTotal = document.getElementById('root__now-playing__speed-control__playback-bar__minutes-total')
-
+const $ = document.querySelector.bind(document)
+const songImg = $('#root__now-playing__song__img')
+const songName = $('#root__now-playing__song__info__name')
+const songArtist = $('#root__now-playing__song__info__artist')
+const audio = $('#audio')
+const playBtn = $('.player-control-play-pause')
+const slider = $('#root__now-playing__player-control__playback-bar__range-slider')
+const timeTotal = $('#root__now-playing__speed-control__playback-bar__minutes-total')
+const timePlayed = $('#root__now-playing__player-control__playback-bar__minutes-played')
 
 const app = { 
   songs: [
@@ -44,7 +45,7 @@ const app = {
       path: "./assets/songs/songs/die-young__kesha.mp3"
     }
   ],
-  currentIndex: 2,
+  currentIndex: 3,
   isPlaying: false,
 
   loadCurrentSong: function() {
@@ -70,23 +71,36 @@ const app = {
       }
     }
   },
-  
-  handleSliderBar: function() {    
-    const _this = this
+
+  handleTimeTotal: function() {
     audio.onloadedmetadata = function() {
-      const songDuration = Math.round(audio.duration)
+      slider.max = audio.duration
+      const songDuration = Math.floor(audio.duration)
       const minutes = Math.floor(songDuration / 60)
       const seconds = songDuration - minutes * 60
-      
       if (seconds < 10) {
         timeTotal.innerHTML = `${minutes}:0${songDuration - minutes * 60}`
       } else {
         timeTotal.innerHTML = `${minutes}:${songDuration - minutes * 60}`
       }
     }
+  }, 
+
+  handleTimePlayed: function(value = Math.round(audio.currentTime)) {
+    const currentTimeCount = value
+      let currentMinute = Math.floor(currentTimeCount / 60)
+      let currentSecond = currentTimeCount - currentMinute * 60
+      currentSecond < 10 ? timePlayed.innerHTML = `${currentMinute}:0${currentSecond}`: timePlayed.innerHTML = `${currentMinute}:${currentSecond}`
+  },
+
+  handleSliderBar: function() {   
+    const _this = this
+
     slider.oninput = function() {
+      _this.handleTimePlayed(slider.value)
       let thumbValue = slider.value / slider.max *100
       slider.style.background = 'linear-gradient(to right, #1db954 0%, #1db954 ' + thumbValue + '%, #535353 ' + thumbValue + '%, #535353 100%)'
+      audio.ontimeupdate = slider.value      
     };
 
     slider.onmouseenter = function() {
@@ -96,26 +110,31 @@ const app = {
       link.setAttribute('href',"./assets/css/slider.css")
       link.setAttribute('id',"slidercss")
       head.appendChild(link)
-      
-      let thumbValue = slider.value / slider.max *100
-      slider.style.background = 'linear-gradient(to right, #1db954 0%, #1db954 ' + thumbValue + '%,#535353 ' + thumbValue + '%, #535353 100%)'
       _this.audioUpdate('#1db954')
+      let thumbValue = slider.value / slider.max *100
+      slider.style.background = 'linear-gradient(to right, #1db954 0%, #1db954 ' + thumbValue + '%, #535353 ' + thumbValue + '%, #535353 100%)'
     }
 
     slider.onmouseleave = function() {
       const sliderHover = document.getElementById('slidercss')
       sliderHover.remove()
-      
-      let thumbValue = slider.value / slider.max *100
-      slider.style.background = 'linear-gradient(to right, #b3b3b3 0%, #b3b3b3 ' + thumbValue + '%,#535353 ' + thumbValue + '%, #535353 100%)'
       _this.audioUpdate()
+      let thumbValue = slider.value / slider.max *100
+      slider.style.background = 'linear-gradient(to right,#b3b3b3 0%, #b3b3b3 ' + thumbValue + '%, #535353 ' + thumbValue + '%, #535353 100%)'
     }
+
   },
 
-  audioUpdate: function(color = `#b3b3b3`) {
+  audioUpdate: function(color = '#b3b3b3') {
+    const _this = this
     audio.ontimeupdate = function() {
-    slider.value = audio.currentTime;
-    let thumbValue = slider.value / slider.max *100
+      // const currentTimeCount = Math.round(audio.currentTime)
+      // let currentMinute = Math.floor(currentTimeCount / 60)
+      // let currentSecond = currentTimeCount - currentMinute * 60
+      // currentSecond < 10 ? timePlayed.innerHTML = `${currentMinute}:0${currentSecond}`: timePlayed.innerHTML = `${currentMinute}:${currentSecond}`
+      _this.handleTimePlayed()
+      slider.value = audio.currentTime
+      let thumbValue = slider.value / slider.max *100
       slider.style.background = `linear-gradient(to right, ${color} 0%, ${color} ${thumbValue}%, #535353 ${thumbValue}%, #535353 100%)`
     }
   },
@@ -124,8 +143,10 @@ const app = {
 
   start: function() {
     this.loadCurrentSong()
-    this.handlePlayBtn()
+    this.handleTimeTotal()
     this.handleSliderBar()
+    this.handlePlayBtn()
+    
   }
 }
 

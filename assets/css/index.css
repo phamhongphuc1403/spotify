@@ -166,7 +166,6 @@ html, body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
     margin-right: 32px;
 }
 
@@ -188,9 +187,8 @@ html, body {
 }
 
 .root__top__user__drop-bar {
-    position: absolute;
-    top: 40px;
-    right: 0px;
+    position: fixed;
+    top: 55px;
     background-color: #282828;
     width: 196px;
     border-radius: 2px;
