@@ -60,7 +60,7 @@ const app = {
 
       audio.onplay = function() {
         _this.isPlaying = true;
-        playBtn.src = `./assets/images/now-playing/pause.PNG`
+        playBtn.src = `./assets/images/now-playing/pause.png`
       }
       audio.onpause = function() {
         _this.isPlaying = false;
