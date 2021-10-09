@@ -9,6 +9,8 @@ const timeTotal = $('#root__now-playing__speed-control__playback-bar__minutes-to
 const timePlayed = $('#root__now-playing__player-control__playback-bar__minutes-played')
 const nextBtn = $('.next')
 const prevBtn = $('.prev')
+const shuffleBtn = $('.shuffle')
+const repeatBtn = $('.repeat')
 
 const app = { 
   songs: [
@@ -35,19 +37,82 @@ const app = {
     },
     { 
       id: 4, 
+      name: "Stella", 
+      artist: "All Time Low",
+      img: "./assets/songs/albums/nothing-personal__all-time-low.jpg",
+      path: "./assets/songs/songs/stella__all-time-low.mp3"
+    },
+    { 
+      id: 5, 
+      name: "Runaways", 
+      artist: "All Time Low",
+      img: "./assets/songs/albums/nothing-personal__all-time-low.jpg",
+      path: "./assets/songs/songs/runaways__all-time-low.mp3"
+    },
+    { 
+      id: 6, 
+      name: "Australia", 
+      artist: "Jonas Brothers",
+      img: "./assets/songs/albums/jonas-brothers__jonas-brothers.jpg",
+      path: "./assets/songs/songs/australia__jonas-brothers.mp3"
+    },
+    { 
+      id: 7, 
+      name: "Hesitate", 
+      artist: "Jonas Brothers",
+      img: "./assets/songs/albums/happiness-begins__jonas-brothers.jpg",
+      path: "./assets/songs/songs/hesitate__jonas-brothers.mp3"
+    },
+    { 
+      id: 8, 
+      name: "Rollercoaster", 
+      artist: "Jonas Brothers",
+      img: "./assets/songs/albums/happiness-begins__jonas-brothers.jpg",
+      path: "./assets/songs/songs/rollercoaster__jonas-brothers.mp3"
+    },
+    { 
+      id: 9, 
       name: "Hold On", 
       artist: "Justin Bieber", 
       img: "./assets/songs/albums/justice__justin-bieber.jpg",
       path: "./assets/songs/songs/hold-on__justin-bieber.mp3"
     },
-    { id: 5, 
+    { id: 10, 
       name: "Die Young",
       artist: "Ke$ha", 
       img: "./assets/songs/albums/warrior__kehsa.jpg",
       path: "./assets/songs/songs/die-young__kesha.mp3"
+    },
+    { 
+      id: 11, 
+      name: "Best Song Ever", 
+      artist: "Jonas Brothers",
+      img: "./assets/songs/albums/midnight-memories__one-direction.jpg",
+      path: "./assets/songs/songs/best-song-ever__one-direction.mp3"
+    },
+    { 
+      id: 12, 
+      name: "Daylight", 
+      artist: "Maroon 5",
+      img: "./assets/songs/albums/overexposed__maroon-5.jpg",
+      path: "./assets/songs/songs/daylight__maroon-5.mp3"
+    },
+    { 
+      id: 13, 
+      name: "Summer", 
+      artist: "Calvin Harris",
+      img: "./assets/songs/albums/motion__calvin-harris.jpg",
+      path: "./assets/songs/songs/summer__calvin-harris.mp3"
+    },
+    { 
+      id: 14, 
+      name: "More Than A Feeling", 
+      artist: "Boton",
+      img: "./assets/songs/albums/boston__boston.jpg",
+      path: "./assets/songs/songs/more-than-a-feeling__boston.mp3"
     }
   ],
-  currentIndex: 3,
+  currentIndex: 0,
   isPlaying: false,
 
   loadCurrentSong: function() {
@@ -57,27 +122,10 @@ const app = {
     audio.src = `${this.songs[this.currentIndex].path}`
   },
 
-  handlePlayBtn: function() {
-    const _this = this
-    playBtn.onclick = function() {
-      _this.isPlaying ? audio.pause() : audio.play()
-
-      audio.onplay = function() {
-        _this.isPlaying = true;
-        playBtn.src = `./assets/images/now-playing/pause.png`
-        _this.audioUpdate()
-      }
-      audio.onpause = function() {
-        _this.isPlaying = false;
-        playBtn.src = `./assets/images/now-playing/play.PNG`
-      }
-    }
-  },
-
   handleTimeTotal: function() {
     audio.onloadedmetadata = function() {
       slider.max = audio.duration
-      const songDuration = Math.floor(audio.duration)
+      const songDuration = Math.round(audio.duration)
       const minutes = Math.floor(songDuration / 60)
       const seconds = songDuration - minutes * 60
       if (seconds < 10) {
@@ -144,41 +192,79 @@ const app = {
       let thumbValue = slider.value / slider.max *100
       slider.style.background = `linear-gradient(to right, ${color} 0%, ${color} ${thumbValue}%, #535353 ${thumbValue}%, #535353 100%)`
     }
-  },
-
-  nextSong: function() {
-    const _this = this
-    nextBtn.onclick = function() {
-      _this.currentIndex += 1
-      if (_this.currentIndex >= _this.songs.length) _this.currentIndex = 0
-      _this.loadCurrentSong()
-      audio.autoplay = true
-      _this.isPlaying = true;
-      playBtn.src = `./assets/images/now-playing/pause.png`
-    }
-  },
-
-  prevSong: function() {
-    const _this = this
-    prevBtn.onclick = function() {
-      _this.currentIndex -= 1
-      if (_this.currentIndex < 0) _this.currentIndex = _this.songs.length - 1
-      _this.loadCurrentSong()
-      audio.autoplay = true
-      _this.isPlaying = true;
-      playBtn.src = `./assets/images/now-playing/pause.png`
+    audio.onended = function() {
+      if (_this.currentIndex < _this.songs.length - 1) {
+        _this.currentIndex += 1
+        _this.loadCurrentSong()
+        audio.autoplay = true
+        playBtn.src = `./assets/images/now-playing/pause.png`
+      } else {
+        _this.currentIndex +=3
+        _this.isPlaying = false;
+        audio.autoplay = false
+        playBtn.src = `./assets/images/now-playing/play.png`
+      }
     }
   },
 
 
+  handleBtn: function() {
+      const _this = this
+
+      playBtn.onclick = function() {
+        _this.isPlaying ? audio.pause() : audio.play()
+        
+        if (_this.currentIndex > _this.songs.length) {
+          _this.currentIndex = 0
+          _this.loadCurrentSong()
+          audio.autoplay = true
+        }
+
+        audio.onplay = function() {
+          _this.isPlaying = true;
+          playBtn.src = `./assets/images/now-playing/pause.png`
+          _this.audioUpdate()
+        }
+        audio.onpause = function() {
+          _this.isPlaying = false;
+          playBtn.src = `./assets/images/now-playing/play.PNG`
+        }
+      }
+
+      prevBtn.onclick = function() {
+        if (audio.currentTime < 2.5) {
+          _this.currentIndex -= 1
+          if (_this.currentIndex < 0) _this.currentIndex = _this.songs.length - 1
+          _this.loadCurrentSong()
+          audio.autoplay = true
+          _this.isPlaying = true;
+          playBtn.src = `./assets/images/now-playing/pause.png`
+        } else {
+          _this.loadCurrentSong()
+          audio.autoplay = true
+          _this.isPlaying = true;
+          playBtn.src = `./assets/images/now-playing/pause.png`
+        }
+      }
+
+      nextBtn.onclick = function() {
+        _this.currentIndex += 1
+        if (_this.currentIndex >= _this.songs.length) _this.currentIndex = 0
+        _this.loadCurrentSong()
+        audio.autoplay = true
+        _this.isPlaying = true;
+        playBtn.src = `./assets/images/now-playing/pause.png`
+      }
+
+      
+
+      
+  },
   start: function() {
     this.loadCurrentSong()
     this.handleTimeTotal()
     this.handleSliderBar()
-    this.handlePlayBtn()
-    this.nextSong()
-    this.prevSong()
-    
+    this.handleBtn()
   }
 }
 
