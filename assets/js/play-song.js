@@ -19,7 +19,7 @@ const app = {
       name: "Weightless", 
       artist: "All Time Low",
       img: "./assets/songs/albums/nothing-personal__all-time-low.jpg",
-      path: "./assets/songs/songs/weightless____all-time-low.mp3"
+      path: "./assets/songs/songs/weightless__all-time-low.mp3"
     },
     { 
       id: 2, 
@@ -46,7 +46,7 @@ const app = {
       id: 5, 
       name: "Runaways", 
       artist: "All Time Low",
-      img: "./assets/songs/albums/nothing-personal__all-time-low.jpg",
+      img: "./assets/songs/albums/future-hearts__all-time-low.jpg",
       path: "./assets/songs/songs/runaways__all-time-low.mp3"
     },
     { 
@@ -254,6 +254,10 @@ const app = {
         audio.autoplay = true
         _this.isPlaying = true;
         playBtn.src = `./assets/images/now-playing/pause.png`
+      }
+
+      shuffleBtn.onclick = function() {
+        
       }
 
       
