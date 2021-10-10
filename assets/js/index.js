@@ -17,7 +17,22 @@ function openMenu() {
     }
 }
 
+function handleCurrentPlaylistHover() {
+    const currentPlaylists = document.getElementsByClassName('current-playlist')
+    for (let playlist of currentPlaylists) {
+        playlist.onmouseover = function() {
+            playlist.querySelector('.play-now-shadow').style.opacity= '1';
+            playlist.querySelector('.play-now').style.opacity = '1';
+            playlist.style.backgroundColor = '#54524a'
+        }
+        playlist.onmouseout = function() {
+            playlist.querySelector('.play-now-shadow').style.opacity= '0';
+            playlist.querySelector('.play-now').style.opacity = '0';
+            playlist.style.backgroundColor = '#32312e'
+        }
 
+    }
+}
 function handleTopContainerOpacity() {
     const rootTop = document.getElementById('root__top-container')
     const mainView = document.getElementById('root__main-view')
@@ -42,3 +57,5 @@ function handleTopContainer() {
 
 handleTopContainer()
 openMenu()
+handleCurrentPlaylistHover()
+
