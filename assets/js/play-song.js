@@ -670,7 +670,7 @@ const handlePlaylists = {
             <img src="${playlist.img}">
             <div class="current-playlist__content">
                 <span>${playlist.name}</span>
-                <img src="/assets/images/main-view/play-now.PNG" class="play-now">
+                <img src="./assets/images/main-view/play-now.PNG" class="play-now">
                 <div class="play-now-shadow"></div>
             </div>
         </li>`)
