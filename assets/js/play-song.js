@@ -255,8 +255,11 @@ const app = {
     audio.ontimeupdate = function() {
       
       //set 'time played' when song plays
-      if (!slider.oninput) _this.handleTimePlayed()
-
+      if (slider.oninput || slider.onchange || slider.onclick) {
+        setTimeout(_this.handleTimePlayed());
+      } else {
+        _this.handleTimePlayed()
+      }
       //handle slider track color when song plays
       slider.value = audio.currentTime
       let thumbValue = slider.value / slider.max *100
@@ -340,7 +343,7 @@ const app = {
           shuffleBtn.src = './assets/images/now-playing/shuffle-active.PNG'
           shuffleBtn.style.opacity = 0.8
           const shuffleActive = document.createElement('img')
-          shuffleActive.src='./assets/images/now-playing/active-dot.PNG'
+          shuffleActive.src='./assets/images/now-playing/active-dot.png'
           shuffleActive.classList.add('shuffle-active')
           $("#root__now-playing__player-control__buttons").appendChild(shuffleActive)
 
@@ -392,7 +395,7 @@ const app = {
           repeatBtn.src = './assets/images/now-playing/repeat-playlist-active.PNG'
           repeatBtn.style.opacity = 0.8
           const repeatActive = document.createElement('img')
-          repeatActive.src = './assets/images/now-playing/active-dot.PNG'
+          repeatActive.src = './assets/images/now-playing/active-dot.png'
           repeatActive.classList.add('repeat-active')
           $("#root__now-playing__player-control__buttons").appendChild(repeatActive)
           handleRepeatHover()
