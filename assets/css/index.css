@@ -613,6 +613,7 @@ html, body {
     display: flex;
     align-items: center;
     margin-bottom: 12px;
+    position: relative
 }
 #root__now-playing__player-control__buttons > img {
     margin: 0 12px;
@@ -631,7 +632,8 @@ html, body {
 }
 
 .player-control-shuffle-repeat {
-    width: 16px;  
+    width: 15px;  
+    z-index: 1;
 }
 
 .player-control-prev-next, .player-control-shuffle-repeat {
@@ -641,4 +643,19 @@ html, body {
 }
 .player-control-prev-next:hover, .player-control-shuffle-repeat:hover {
     opacity: 1;
+}
+
+.shuffle-active, .repeat-active { 
+    position: absolute;
+    bottom: 0px;
+    width: 4px;
+    opacity: 0.8;
+}
+
+.shuffle-active {
+    left: 5px;
+}
+
+.repeat-active {
+    right: 6px;
 }
