@@ -91,7 +91,7 @@ const allSongs = [
   { 
     id: 11, 
     name: "Best Song Ever", 
-    artist: "Jonas Brothers",
+    artist: "One Direction",
     img: "./assets/songs/albums/midnight-memories__one-direction.jpg",
     path: "./assets/songs/songs/best-song-ever__one-direction.mp3"
   },
@@ -322,43 +322,6 @@ const playSongs = {
     playBtn.src = `./assets/images/now-playing/pause.png`
   },
 
-  //set default repeat, stop when playlist ends
-  noRepeat: function() {
-    const _this = this
-
-    this.isRepeatPlaylist = false
-    this.isRepeatSong = false
-    audio.loop = false
-    audio.onended = function() {
-      
-      const playlistLength = _this.songs.length - 1
-        
-      if (_this.currentIndex < playlistLength) {  //if the next song is not the last in the playlist, auto play the song
-        _this.handleNextSong()
-      } else {    //if the next song is the last, stop the playlist 
-        _this.currentIndex +=3                                        
-        _this.isPlaying = false;                                      
-       audio.autoplay = false                                        
-        playBtn.src = `./assets/images/now-playing/play.png`          
-      }                                                               
-    }      
-    
-    //change repeat button to default
-    if($('.repeat-active')) {
-      $('.repeat-active').remove()
-
-    }
-    repeatBtn.src = './assets/images/now-playing/repeat.PNG'
-    repeatBtn.style.opacity = 0.6
-
-    repeatBtn.onmouseover = function() {
-      repeatBtn.style.opacity = 1
-    }
-    repeatBtn.onmouseout = function() {
-      repeatBtn.style.opacity = 0.6
-    }
-
-  },
 
   handleSliderBar: function() {   
     const _this = this
@@ -428,8 +391,147 @@ const playSongs = {
       let thumbValue = slider.value / slider.max *100
       slider.style.background = `linear-gradient(to right, ${color} 0%, ${color} ${thumbValue}%, #535353 ${thumbValue}%, #535353 100%)`
     }                          
-  },                                                                  
-                                                                      
+  }, 
+
+  handleShuffle: {
+
+    shuffle: function() {
+      playSongs.isShuffle = true
+
+      //random order of other songs
+      playSongs.songs.forEach(obj => {
+        obj.order = Math.random() * Math.random()
+      })
+      playSongs.songs[playSongs.currentIndex].order = 0
+      playSongs.currentIndex = 0
+
+      //sort songs by order
+      playSongs.songs.sort((a,b) => a.order === b.order ? 0 : a.order < b.order ? -1 : 1)
+      
+
+      //add active shuffle button
+      shuffleBtn.src = './assets/images/now-playing/shuffle-active.PNG'
+      shuffleBtn.style.opacity = 0.8
+      $('.shuffle-active').style.opacity = 0.8
+      this.shuffleActive()
+    },
+    
+    noShuffle: function() {
+      playSongs.isShuffle = false
+      console.log(playSongs.isShuffle)
+      //sort songs by id
+      playSongs.songs.sort((a,b) => a.id - b.id)
+      
+      //change shuffle button to default
+      shuffleBtn.src="./assets/images/now-playing/shuffle.PNG"
+      $('.shuffle-active').style.opacity = 0
+      this.shuffleActive()
+    },
+
+    shuffleActive: function() {
+      const shuffleActiveDot = $('.shuffle-active')
+      shuffleBtn.onmouseover = function() {
+        if (playSongs.isShuffle) {
+          shuffleBtn.style.opacity = 1
+          shuffleActiveDot.style.opacity = 1
+        }
+      }
+      shuffleBtn.onmouseout = function() {
+        if (playSongs.isShuffle) {
+          shuffleBtn.style.opacity = 0.8
+          shuffleActiveDot.style.opacity = 0.8
+        }
+      }
+    }
+
+  },
+  
+  handleRepeat: {
+
+    noRepeat: function() {
+      playSongs.isRepeatPlaylist = false
+      playSongs.isRepeatSong = false
+      audio.loop = false
+      
+      audio.onended = function() {
+        
+        const playlistLength = playSongs.songs.length - 1
+          
+        if (playSongs.currentIndex < playlistLength) {  //if the next song is not the last in the playlist, auto play the song
+          playSongs.handleNextSong()
+        } else {    //if the next song is the last, stop the playlist 
+          playSongs.currentIndex +=3                                        
+          playSongs.isPlaying = false;                                      
+        audio.autoplay = false                                        
+          playBtn.src = `./assets/images/now-playing/play.png`          
+        }                                                               
+      }      
+      
+      //change repeat button to default
+      repeatBtn.src = './assets/images/now-playing/repeat.PNG'
+      repeatBtn.style.opacity = 0.6
+      $('.repeat-active').style.opacity = 0
+
+      repeatBtn.onmouseover = function() {
+        repeatBtn.style.opacity = 1
+      }
+      repeatBtn.onmouseout = function() {
+        repeatBtn.style.opacity = 0.6
+      }
+    },
+
+    
+    repeatPlaylist: function() {
+      playSongs.isRepeatPlaylist = true
+      playSongs.isRepeatSong = false
+      
+      audio.onended = function() {
+        const playlistLength = playSongs.songs.length - 1
+
+        if (playSongs.currentIndex < playlistLength) {  //if the next song is not the last in the playlist, auto play the song
+          playSongs.handleNextSong()
+        } else {    //if the next song is the last, auto play the first song 
+          playSongs.currentIndex = 0                                       
+          audio.autoplay = true     
+          playSongs.isPlaying = true;
+          playSongs.loadCurrentSong() 
+        }           
+      }
+
+      // add repeat playlist button
+      repeatBtn.src = './assets/images/now-playing/repeat-playlist-active.PNG'
+      repeatBtn.style.opacity = 0.8
+      $('.repeat-active').style.opacity = 0.8
+      this.handleRepeatHover()
+    },
+
+    repeatSong: function() {
+      playSongs.isRepeatPlaylist = false
+      playSongs.isRepeatSong = true                   
+      audio.loop = true
+
+      repeatBtn.src = './assets/images/now-playing/repeat-song-active.PNG'
+      this.handleRepeatHover()
+    },
+
+    //handle repeat button when hover
+    handleRepeatHover: function() {
+      const repeatActive = $('.repeat-active')
+      repeatBtn.onmouseover = function() {
+        if (playSongs.isRepeatPlaylist || playSongs.isRepeatSong) {
+          repeatBtn.style.opacity = 1
+          repeatActive.style.opacity = 1
+        }
+      }
+      repeatBtn.onmouseout = function() {
+        if (playSongs.isRepeatPlaylist || playSongs.isRepeatSong) {
+          repeatBtn.style.opacity = 0.8
+          repeatActive.style.opacity = 0.8
+        }
+      }
+    }
+
+  },                                                          
                                                                       
   handleBtn: function() {                                             
       const _this = this                                              
@@ -485,108 +587,14 @@ const playSongs = {
 
       //handle shuffle button
       shuffleBtn.onclick = function() {
-        _this.isShuffle ? noShuffle() : shuffle()
-        
-        function shuffle() {
-          _this.isShuffle = true
-          
-          //random order of other songs
-          _this.songs.forEach(obj => {
-            obj.order = Math.random() * Math.random()
-          })
-          _this.songs[_this.currentIndex].order = 0
-          _this.currentIndex = 0
-
-          //sort songs by order
-          _this.songs.sort((a,b) => a.order === b.order ? 0 : a.order < b.order ? -1 : 1)
-          console.log(_this.songs)
-          
-
-          //add active shuffle button
-          shuffleBtn.src = './assets/images/now-playing/shuffle-active.PNG'
-          shuffleBtn.style.opacity = 0.8
-          const shuffleActive = document.createElement('img')
-          shuffleActive.src='./assets/images/now-playing/active-dot.png'
-          shuffleActive.classList.add('shuffle-active')
-          $("#root__now-playing__player-control__buttons").appendChild(shuffleActive)
-
-          //handle active shuffle button when hover
-          shuffleBtn.onmouseover = function() {
-            shuffleBtn.style.opacity = 1
-            shuffleActive.style.opacity = 1
-          }
-          shuffleBtn.onmouseout = function() {
-            shuffleBtn.style.opacity = 0.8
-            shuffleActive.style.opacity = 0.8
-          }
-        }
-        
-        function noShuffle() {
-          _this.isShuffle = false
-          
-          //sort songs by id
-          _this.songs.sort((a,b) => a.id === b.id ? 0 : a.id < b.id ? -1 : 1)
-          
-          //change shuffle button to default
-          shuffleBtn.src="./assets/images/now-playing/shuffle.PNG"
-          $('.shuffle-active').remove()
-        }
+        _this.isShuffle ? _this.handleShuffle.noShuffle() : _this.handleShuffle.shuffle()
+        console.log(_this.isShuffle)
       }
 
       //handle repeat button
       repeatBtn.onclick = function() {
-        _this.isRepeatPlaylist ?  repeatSong() : _this.isRepeatSong ? _this.noRepeat() : repeatPlaylist()
-
-        function repeatPlaylist() {
-          _this.isRepeatPlaylist = true
-          _this.isRepeatSong = false
-          
-          audio.onended = function() {
-            const playlistLength = _this.songs.length - 1
-
-            if (_this.currentIndex < playlistLength) {  //if the next song is not the last in the playlist, auto play the song
-              _this.handleNextSong()
-            } else {    //if the next song is the last, auto play the first song 
-              _this.currentIndex = 0                                       
-              audio.autoplay = true     
-              _this.isPlaying = true;
-              _this.loadCurrentSong() 
-            }           
-          }
-
-          // add repeat playlist button
-          repeatBtn.src = './assets/images/now-playing/repeat-playlist-active.PNG'
-          repeatBtn.style.opacity = 0.8
-          const repeatActive = document.createElement('img')
-          repeatActive.src = './assets/images/now-playing/active-dot.png'
-          repeatActive.classList.add('repeat-active')
-          $("#root__now-playing__player-control__buttons").appendChild(repeatActive)
-          handleRepeatHover()
-        }
-
-        function repeatSong() {
-          _this.isRepeatPlaylist = false
-          _this.isRepeatSong = true                   
-          audio.loop = true
-
-          repeatBtn.src = './assets/images/now-playing/repeat-song-active.PNG'
-          repeatBtn.classList.add('song-active')
-          const repeatActive = $('.repeat-active')
-          handleRepeatHover()
-        }
-
-        //handle repeat button when hover
-        function handleRepeatHover() {
-          const repeatActive = $('.repeat-active')
-          repeatBtn.onmouseover = function() {
-            repeatBtn.style.opacity = 1
-            repeatActive.style.opacity = 1
-          }
-          repeatBtn.onmouseout = function() {
-            repeatBtn.style.opacity = 0.8
-            repeatActive.style.opacity = 0.8
-          }
-        }
+        _this.isRepeatPlaylist ? _this.handleRepeat.repeatSong() : _this.isRepeatSong ? _this.handleRepeat.noRepeat() : _this.handleRepeat.repeatPlaylist()
+        console.log(_this.isShuffle)
       }
       
   },
@@ -594,10 +602,11 @@ const playSongs = {
     if (this.songs) {
       this.loadCurrentSong()
       this.handleTimeTotal()
+      this.isRepeatPlaylist ? this.handleRepeat.repeatPlaylist() : this.isRepeatSong ? this.handleRepeat.repeatSong() : this.handleRepeat.noRepeat()
+      this.isShuffle ? this.handleShuffle.shuffle() : this.handleShuffle.noShuffle()
       this.audioUpdate()
       this.handleSliderBar()
       this.handleBtn()
-      this.noRepeat()
     }
   }
 }
@@ -662,6 +671,8 @@ const handlePlaylists = {
       songs: allSongs.filter(song => song.artist.includes('Jonas Brothers'))
     }
   ],
+
+  //render current playlists to mainview
   renderCurrentPlaylists: function() {
     const currentPlaylistContent = this.allPlaylists
       .filter(playlist => playlist.id <=6 )
@@ -677,17 +688,29 @@ const handlePlaylists = {
       .join('')
     currentPlaylists.innerHTML = currentPlaylistContent
   },
+
+  //play playlist when click "play now" button
   playPlaylist: function() {
     const _this = this
     const currentPlaylists = document.getElementsByClassName('current-playlist')
+    
     for (let currentPlaylist of currentPlaylists) {
       currentPlaylist.querySelector('.play-now').onclick = function() {
-        const playlist = _this.allPlaylists.filter(playlist => playlist.id == currentPlaylist.getAttribute('id'))
-        playSongs.songs = playlist[0].songs 
+        const playlist = _this.allPlaylists.filter(playlist => playlist.id == currentPlaylist.getAttribute('id'))   //find playlist in the database that match the id
+        playSongs.songs = playlist[0].songs //choose the first (and only) object of 'playlist' array that contain a playlist
+        
+        //auto play the playlist
         audio.autoplay = true
         playSongs.isPlaying = true
-        playBtn.src = `./assets/images/now-playing/pause.png`
-        playSongs.currentIndex = 0;
+        playBtn.src = './assets/images/now-playing/pause.png'
+        
+        //handle shuffle
+        if (playSongs.isShuffle) {
+          playSongs.currentIndex = Math.floor(Math.random() * (playSongs.songs.length - 1)) + 1
+        } else {
+          playSongs.currentIndex = 0;
+        }
+
         playSongs.start()
         console.log(playSongs.songs)
       }

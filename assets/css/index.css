@@ -109,6 +109,13 @@ html, body {
     grid-template-rows: auto 90px; 
     font-style: normal;
     
+
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; 
 }
 
 ::-webkit-scrollbar {
@@ -406,12 +413,13 @@ html, body {
     box-shadow: 0 8px 8px rgb(0 0 0 / 30%);
     position: absolute;
     right: 16px;
-    /* background-color: black;
-    z-index: 10; */
     border-radius: 50px;
     opacity: 0;
     transition: opacity 300ms;
 
+}
+.playing {
+    
 }
 
 
@@ -682,11 +690,11 @@ html, body {
     opacity: 1;
 }
 
-.shuffle-active, .repeat-active { 
+.repeat-active, .shuffle-active { 
     position: absolute;
     bottom: 0px;
     width: 4px;
-    opacity: 0.8;
+    opacity: 0;
 }
 
 .shuffle-active {
