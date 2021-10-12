@@ -18,8 +18,9 @@ function openMenu() {
 }
 
 function handleCurrentPlaylistHover() {
-    const currentPlaylists = document.getElementsByClassName('current-playlist')
-    for (let playlist of currentPlaylists) {
+    const currentPlaylists = Array.from(document.getElementsByClassName('current-playlist'));
+    const pauseBtns = Array.from(document.getElementsByClassName('playing'))
+    currentPlaylists.forEach(playlist => {
         playlist.onmouseover = function() {
             playlist.querySelector('.play-now-shadow').style.opacity= '1';
             playlist.querySelector('.play-now').style.opacity = '1';
@@ -28,10 +29,9 @@ function handleCurrentPlaylistHover() {
         playlist.onmouseout = function() {
             playlist.querySelector('.play-now-shadow').style.opacity= '0';
             playlist.querySelector('.play-now').style.opacity = '0';
-            playlist.style.backgroundColor = '#32312e'
+            playlist.style.backgroundColor = '#32312e' 
         }
-
-    }
+    })
 }
 function handleTopContainerOpacity() {
     const rootTop = document.getElementById('root__top-container')

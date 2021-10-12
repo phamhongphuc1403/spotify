@@ -277,9 +277,10 @@ const allSongs = [
 
 const playSongs = { 
   songs: allSongs,
+  id: 0,
   currentIndex: 0,
   isPlaying: false,
-  isShuffle: false,
+  isShuffle: true,
   isRepeatSong: false,
   isRepeatPlaylist: false,
 
@@ -418,7 +419,6 @@ const playSongs = {
     
     noShuffle: function() {
       playSongs.isShuffle = false
-      console.log(playSongs.isShuffle)
       //sort songs by id
       playSongs.songs.sort((a,b) => a.id - b.id)
       
@@ -534,69 +534,93 @@ const playSongs = {
   },                                                          
                                                                       
   handleBtn: function() {                                             
-      const _this = this                                              
-                                                                      
-      //handle play button                                               
-      playBtn.onclick = function() {                                  
-        _this.isPlaying ? audio.pause() : audio.play()             
-        
-        if (_this.currentIndex > _this.songs.length) {  //if the the last song in the playlist is end, go to the first song
-          _this.currentIndex = 0
-          _this.loadCurrentSong()
-          audio.autoplay = true
-        }
-
-        audio.onplay = function() {
-          _this.isPlaying = true;
-          playBtn.src = `./assets/images/now-playing/pause.png`
-        }
-        audio.onpause = function() {
-          _this.isPlaying = false;
-          playBtn.src = `./assets/images/now-playing/play.PNG`
-        }
+    const _this = this                                              
+                                                                    
+    //handle play button                                               
+    playBtn.onclick = function() {                                  
+      _this.isPlaying ? audio.pause() : audio.play()             
+      if (_this.currentIndex > _this.songs.length) {  //if the the last song in the playlist is end, go to the first song
+        _this.currentIndex = 0
+        _this.loadCurrentSong()
+        audio.autoplay = true
       }
+    }
 
-      //handle previous button
-      prevBtn.onclick = function() {
-        
-        if (audio.currentTime < 2.5) {      // go to the previous song if the current song is playing less than 2.5 seconds
-          _this.currentIndex -= 1
-          if (_this.currentIndex < 0) _this.currentIndex = _this.songs.length - 1   //if the current song is the first in the playlist, go to the last song
-          _this.loadCurrentSong()
-          audio.autoplay = true
-          _this.isPlaying = true;
-          playBtn.src = `./assets/images/now-playing/pause.png`
-        
-        } else {      //replay the song if the current song is playing more than 2.5 seconds
-          _this.loadCurrentSong()
-          audio.autoplay = true
-          _this.isPlaying = true;
-          playBtn.src = `./assets/images/now-playing/pause.png`
-        }
-      }
-
-      //handle next button
-      nextBtn.onclick = function() {
-        _this.currentIndex += 1   
-        if (_this.currentIndex >= _this.songs.length) _this.currentIndex = 0    //if it's the the last song in the playlist, play the first song
+    //handle previous button
+    prevBtn.onclick = function() {
+      
+      if (audio.currentTime < 2.5) {      // go to the previous song if the current song is playing less than 2.5 seconds
+        _this.currentIndex -= 1
+        if (_this.currentIndex < 0) _this.currentIndex = _this.songs.length - 1   //if the current song is the first in the playlist, go to the last song
+        _this.loadCurrentSong()
+        audio.autoplay = true
+        _this.isPlaying = true;
+        playBtn.src = `./assets/images/now-playing/pause.png`
+      
+      } else {      //replay the song if the current song is playing more than 2.5 seconds
         _this.loadCurrentSong()
         audio.autoplay = true
         _this.isPlaying = true;
         playBtn.src = `./assets/images/now-playing/pause.png`
       }
+      console.log(_this.currentIndex)
+    }
 
-      //handle shuffle button
-      shuffleBtn.onclick = function() {
-        _this.isShuffle ? _this.handleShuffle.noShuffle() : _this.handleShuffle.shuffle()
-        console.log(_this.isShuffle)
+    //handle next button
+    nextBtn.onclick = function() {
+      _this.currentIndex += 1   
+      if (_this.currentIndex >= _this.songs.length) _this.currentIndex = 0    //if it's the the last song in the playlist, play the first song
+      _this.loadCurrentSong()
+      audio.autoplay = true
+      _this.isPlaying = true;
+      playBtn.src = `./assets/images/now-playing/pause.png`
+      console.log(_this.currentIndex)
+    }
+
+    //handle shuffle button
+    shuffleBtn.onclick = function() {
+      _this.isShuffle ? _this.handleShuffle.noShuffle() : _this.handleShuffle.shuffle()
+    }
+
+    //handle repeat button
+    repeatBtn.onclick = function() {
+      _this.isRepeatPlaylist ? _this.handleRepeat.repeatSong() : _this.isRepeatSong ? _this.handleRepeat.noRepeat() : _this.handleRepeat.repeatPlaylist()
+    }
+    
+    for (let pauseBtns of document.getElementsByClassName('playing')) {
+      pauseBtns.onclick = function() {
+        pauseBtns.style.opacity = 0
+        pauseBtns.style.zIndex = -1
+        audio.pause()
+        _this.isShuffle = false
+        playBtn.src = `./assets/images/now-playing/play.png`
+      }
+    }
+   
+    audio.onplay = function() {
+      _this.isPlaying = true;
+      playBtn.src = `./assets/images/now-playing/pause.png`
+      const pauseBtn = document.getElementsByClassName('playing')[_this.id - 1]
+      const pauseBtnShadow = document.getElementsByClassName('playing-shadow')[_this.id - 1]
+      if (pauseBtn) {
+        pauseBtn.style.opacity = 1;
+        pauseBtn.style.zIndex = 2;
+        pauseBtnShadow.style.opacity = 1;
       }
 
-      //handle repeat button
-      repeatBtn.onclick = function() {
-        _this.isRepeatPlaylist ? _this.handleRepeat.repeatSong() : _this.isRepeatSong ? _this.handleRepeat.noRepeat() : _this.handleRepeat.repeatPlaylist()
-        console.log(_this.isShuffle)
+    }
+    audio.onpause = function() {
+      _this.isPlaying = false;
+      playBtn.src = `./assets/images/now-playing/play.PNG`
+      const pauseBtn = document.getElementsByClassName('playing')[_this.id - 1]
+      const pauseBtnShadow = document.getElementsByClassName('playing-shadow')[_this.id - 1]
+      if (pauseBtn) {
+        pauseBtn.style.opacity = 0;
+        pauseBtn.style.zIndex = -1;
+        pauseBtnShadow.style.opacity = 0;
+        
       }
-      
+    }
   },
   start: function() {  //wrap all function into one 
     if (this.songs) {
@@ -607,7 +631,26 @@ const playSongs = {
       this.audioUpdate()
       this.handleSliderBar()
       this.handleBtn()
+
+      if (this.isPlaying) {
+        audio.play()
+        playBtn.src = `./assets/images/now-playing/pause.png`
+      } else {
+        audio.pause()
+        playBtn.src = `./assets/images/now-playing/play.png`
+      }
+
+      for (let pauseBtns of document.getElementsByClassName('playing')) {
+        pauseBtns.style.opacity = 0
+        pauseBtns.style.zIndex = -1
+      }
+      for (let pauseBtnShadows of document.getElementsByClassName('playing-shadow')) {
+        pauseBtnShadows.style.opacity = 0
+      }
     }
+    console.log(`index: ${this.currentIndex}`)
+    console.log(`id: ${this.id}`)
+    console.log(this.isShuffle)
   }
 }
 
@@ -682,7 +725,9 @@ const handlePlaylists = {
             <div class="current-playlist__content">
                 <span>${playlist.name}</span>
                 <img src="./assets/images/main-view/play-now.PNG" class="play-now">
+                <img src="./assets/images/main-view/pause.PNG" class="playing">
                 <div class="play-now-shadow"></div>
+                <div class="playing-shadow"></div>
             </div>
         </li>`)
       .join('')
@@ -695,24 +740,40 @@ const handlePlaylists = {
     const currentPlaylists = document.getElementsByClassName('current-playlist')
     
     for (let currentPlaylist of currentPlaylists) {
+      const playlist = _this.allPlaylists.filter(playlist => playlist.id == currentPlaylist.getAttribute('id'))   //find playlist in the database that match the id
+      
       currentPlaylist.querySelector('.play-now').onclick = function() {
-        const playlist = _this.allPlaylists.filter(playlist => playlist.id == currentPlaylist.getAttribute('id'))   //find playlist in the database that match the id
-        playSongs.songs = playlist[0].songs //choose the first (and only) object of 'playlist' array that contain a playlist
         
-        //auto play the playlist
-        audio.autoplay = true
-        playSongs.isPlaying = true
-        playBtn.src = './assets/images/now-playing/pause.png'
-        
-        //handle shuffle
-        if (playSongs.isShuffle) {
-          playSongs.currentIndex = Math.floor(Math.random() * (playSongs.songs.length - 1)) + 1
+        if (playSongs.id == playlist[0].id) {
+          audio.play()
+          playSongs.isPlaying = true
+          currentPlaylist.querySelector('.playing').style.opacity = 1;
+          currentPlaylist.querySelector('.playing').style.zIndex = 2;
+          currentPlaylist.querySelector('.playing-shadow').style.opacity = 1
         } else {
-          playSongs.currentIndex = 0;
-        }
+          playSongs.songs = playlist[0].songs //choose the first (and only) object of 'playlist' array that contain a playlist
+          playSongs.id = playlist[0].id
+          console.log(playlist[0].id)
 
-        playSongs.start()
-        console.log(playSongs.songs)
+          if (playSongs.isShuffle) {
+            playSongs.currentIndex = Math.floor(Math.random() * (playSongs.songs.length - 1)) + 1
+          } else {
+            playSongs.currentIndex = 0;
+          }
+
+        //   // auto play the playlist
+          audio.autoplay = true
+          playSongs.isPlaying = true
+        //   // playBtn.src = './assets/images/now-playing/pause.png'
+        
+        // //   //handle shuffle
+
+        
+          playSongs.start()
+          currentPlaylist.querySelector('.playing').style.opacity = 1;
+          currentPlaylist.querySelector('.playing').style.zIndex = 2;
+          currentPlaylist.querySelector('.playing-shadow').style.opacity = 1
+        }
       }
     }
   },
@@ -723,3 +784,4 @@ const handlePlaylists = {
   }
 }
 handlePlaylists.start()
+
