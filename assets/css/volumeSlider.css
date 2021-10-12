@@ -1,0 +1,9 @@
+#root__now-playing__media-control__volume-bar__range-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: white;
+    cursor: default;
+  }

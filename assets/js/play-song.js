@@ -4,7 +4,7 @@ const songName = $('#root__now-playing__song__info__name')
 const songArtist = $('#root__now-playing__song__info__artist')
 const audio = $('#audio')
 const playBtn = $('.player-control-play-pause')
-const slider = $('#root__now-playing__player-control__playback-bar__range-slider')
+const playbackSlider = $('#root__now-playing__player-control__playback-bar__range-slider')
 const timeTotal = $('#root__now-playing__speed-control__playback-bar__minutes-total')
 const timePlayed = $('#root__now-playing__player-control__playback-bar__minutes-played')
 const nextBtn = $('.next')
@@ -12,7 +12,9 @@ const prevBtn = $('.prev')
 const shuffleBtn = $('.shuffle')
 const repeatBtn = $('.repeat')
 const currentPlaylists = $('#root__main-view__currently-playing__playlists')
-
+const volumeBar = $('#root__now-playing__media-control__volume-bar')
+const volumeSlider = $('#root__now-playing__media-control__volume-bar__range-slider')
+const volumeBtn = $('.volume-btn')
 
 
 
@@ -270,7 +272,48 @@ const allSongs = [
     img: "./assets/songs/albums/happiness-begins__jonas-brothers.jpg",
     path: "./assets/songs/songs/only-human__jonas-brothers.mp3"
   },
-
+  { 
+    id: 37, 
+    name: "By Your Side", 
+    artist: "Jonas Blue",
+    img: "./assets/songs/albums/blue__jonas-blue.jpg",
+    path: "./assets/songs/songs/by-your-side__jonas-blue.mp3"
+  },
+  { 
+    id: 36, 
+    name: "Mama", 
+    artist: "Jonas Blue",
+    img: "./assets/songs/albums/blue__jonas-blue.jpg",
+    path: "./assets/songs/songs/mama__jonas-blue.mp3"
+  },
+  { 
+    id: 36, 
+    name: "Polaroid", 
+    artist: "Jonas Blue",
+    img: "./assets/songs/albums/blue__jonas-blue.jpg",
+    path: "./assets/songs/songs/polaroid__jonas-blue.mp3"
+  },
+  { 
+    id: 36, 
+    name: "Rise", 
+    artist: "Jonas Blue",
+    img: "./assets/songs/albums/blue__jonas-blue.jpg",
+    path: "./assets/songs/songs/rise__jonas-blue.mp3"
+  },
+  { 
+    id: 36, 
+    name: "Younger", 
+    artist: "Jonas Blue",
+    img: "./assets/songs/singles/younger__jonas-blue.jpg",
+    path: "./assets/songs/songs/younger__jonas-blue.mp3"
+  },
+  { 
+    id: 36, 
+    name: "Perfect Stranger", 
+    artist: "Jonas Blue",
+    img: "./assets/songs/albums/blue__jonas-blue.jpg",
+    path: "./assets/songs/songs/perfect-stranger__jonas-blue.mp3"
+  },
 
 ]
 
@@ -283,6 +326,7 @@ const playSongs = {
   isShuffle: true,
   isRepeatSong: false,
   isRepeatPlaylist: false,
+  isMute: false,
 
   loadCurrentSong: function() {
     songImg.src = `${this.songs[this.currentIndex].img}`
@@ -293,7 +337,7 @@ const playSongs = {
 
   handleTimeTotal: function() {
     audio.onloadedmetadata = function() {
-      slider.max = audio.duration
+      playbackSlider.max = audio.duration
       const songDuration = Math.round(audio.duration)
       const minutes = Math.floor(songDuration / 60)
       const seconds = songDuration - minutes * 60
@@ -324,44 +368,44 @@ const playSongs = {
   },
 
 
-  handleSliderBar: function() {   
+  handlePlaybackSliderBar: function() {   
     const _this = this
     
     //handle slider thumb when drag or click
-    slider.oninput = function() {
-      _this.handleTimePlayed(slider.value)
-      let thumbValue = slider.value / slider.max *100
+    playbackSlider.oninput = function() {
+      _this.handleTimePlayed(playbackSlider.value)
+      let thumbValue = playbackSlider.value / playbackSlider.max *100
       setTimeout(_this.audioUpdate)
-      slider.style.background = 'linear-gradient(to right, #1db954 0%, #1db954 ' + thumbValue + '%, #535353 ' + thumbValue + '%, #535353 100%)'
+      playbackSlider.style.background = 'linear-gradient(to right, #1db954 0%, #1db954 ' + thumbValue + '%, #535353 ' + thumbValue + '%, #535353 100%)'
 
     }
-    slider.onchange = function() {
-      _this.handleTimePlayed(slider.value)
-      let thumbValue = slider.value / slider.max *100
-      slider.style.background = 'linear-gradient(to right, #1db954 0%, #1db954 ' + thumbValue + '%, #535353 ' + thumbValue + '%, #535353 100%)'
+    playbackSlider.onchange = function() {
+      _this.handleTimePlayed(playbackSlider.value)
+      let thumbValue = playbackSlider.value / playbackSlider.max *100
+      playbackSlider.style.background = 'linear-gradient(to right, #1db954 0%, #1db954 ' + thumbValue + '%, #535353 ' + thumbValue + '%, #535353 100%)'
       
-      audio.currentTime = slider.value;      
+      audio.currentTime = playbackSlider.value;      
     }
 
 
     //handle slider tracks color
-    slider.onmouseenter = function() {
+    playbackSlider.onmouseenter = function() {
 
       //add new css file to change the slider thumb when hover
       const head = document.querySelector('head')
       const link = document.createElement('link')
       link.setAttribute('rel',"stylesheet")
-      link.setAttribute('href',"./assets/css/slider.css")
+      link.setAttribute('href',"./assets/css/playbackSlider.css")
       link.setAttribute('id',"slidercss")
       head.appendChild(link)
 
       //change slider track color when hover
       _this.audioUpdate('#1db954')
-      let thumbValue = slider.value / slider.max *100
-      slider.style.background = 'linear-gradient(to right, #1db954 0%, #1db954 ' + thumbValue + '%, #535353 ' + thumbValue + '%, #535353 100%)'
+      let thumbValue = playbackSlider.value / playbackSlider.max *100
+      playbackSlider.style.background = 'linear-gradient(to right, #1db954 0%, #1db954 ' + thumbValue + '%, #535353 ' + thumbValue + '%, #535353 100%)'
     }
 
-    slider.onmouseleave = function() {
+    playbackSlider.onmouseleave = function() {
 
       //remove 'change slider thumb' css file
       const sliderHover = document.getElementById('slidercss')
@@ -369,10 +413,83 @@ const playSongs = {
 
       //change slider track color to default
       _this.audioUpdate()
-      let thumbValue = slider.value / slider.max *100
-      slider.style.background = 'linear-gradient(to right,#b3b3b3 0%, #b3b3b3 ' + thumbValue + '%, #535353 ' + thumbValue + '%, #535353 100%)'
+      let thumbValue = playbackSlider.value / playbackSlider.max *100
+      playbackSlider.style.background = 'linear-gradient(to right,#b3b3b3 0%, #b3b3b3 ' + thumbValue + '%, #535353 ' + thumbValue + '%, #535353 100%)'
     }
 
+  },
+
+  handleVolumeSliderBar: function() {
+    const previousVolume = []
+    volumeBtn.onclick = function() {      
+      if (volumeSlider.value != 0) {
+        previousVolume.shift()
+        previousVolume.push(volumeSlider.value)
+        volumeSlider.value = 0
+        audio.volume = 0
+        volumeSlider.style.background = `#1db954`
+        setTimeout(volumeSlider.oninput());
+        handleVolumeBtn()
+      } else {
+        volumeSlider.value = previousVolume[previousVolume.length - 1]
+        let thumbValue = volumeSlider.value / volumeSlider.max *100
+        volumeSlider.style.background = `linear-gradient(to right, #1db954 0%, #1db954 ${thumbValue}%, #535353 ${thumbValue}%, #535353 100%)`
+        audio.volume = volumeSlider.value / 100
+        handleVolumeBtn()
+      }
+    }
+    
+    //handle slider thumb when drag or click
+    volumeSlider.oninput = function() {
+      let thumbValue = volumeSlider.value / volumeSlider.max *100
+      volumeSlider.style.background = `linear-gradient(to right, #1db954 0%, #1db954 ${thumbValue}%, #535353 ${thumbValue}%, #535353 100%)`
+      audio.volume = volumeSlider.value / 100
+      handleVolumeBtn()
+    }    
+
+    function handleVolumeBtn() {
+      const volumeBtn = $('.volume-btn')
+      if (volumeSlider.value == 0) {
+        volumeBtn.src='./assets/images/now-playing/volume-mute.PNG'
+      } else if (volumeSlider.value <= 30) {
+        volumeBtn.src='./assets/images/now-playing/volume-small.PNG'
+      } else if (volumeSlider.value <= 60) {
+        volumeBtn.src='./assets/images/now-playing/volume-medium.PNG'
+      } else {
+        volumeBtn.src='./assets/images/now-playing/volume-big.PNG'
+      }
+    }
+
+    //handle slider tracks color
+    volumeBar.onmouseenter = function() {
+
+      //add new css file to change the slider thumb when hover
+      const head = document.querySelector('head')
+      const link = document.createElement('link')
+      link.setAttribute('rel',"stylesheet")
+      link.setAttribute('href',"./assets/css/volumeSlider.css")
+      link.setAttribute('id',"slidercss")
+      head.appendChild(link)
+
+      //change slider track color when hover
+      let thumbValue = volumeSlider.value / volumeSlider.max * 100
+      volumeSlider.style.background = `linear-gradient(to right, #1db954 0%, #1db954 ${thumbValue}%, #535353 ${thumbValue}%, #535353 100%)`
+
+      volumeBtn.style.opacity = 1
+    }
+
+    volumeBar.onmouseleave = function() {
+
+      //remove 'change slider thumb' css file
+      const sliderHover = document.getElementById('slidercss')
+      sliderHover.remove()
+
+      //change slider track color to default
+      let thumbValue = volumeSlider.value / volumeSlider.max * 100
+      volumeSlider.style.background = `linear-gradient(to right, #b3b3b3 0%, #b3b3b3 ${thumbValue}%, #535353 ${thumbValue}%, #535353 100%)`
+
+      volumeBtn.style.opacity = 0.6
+    }
   },
 
   //handle when song plays
@@ -382,15 +499,15 @@ const playSongs = {
     audio.ontimeupdate = function() {
       
       //set 'time played' when song plays
-      if (slider.oninput || slider.onchange || slider.onclick) {
+      if (playbackSlider.oninput || playbackSlider.onchange || playbackSlider.onclick) {
         setTimeout(_this.handleTimePlayed());
       } else {
         _this.handleTimePlayed()
       }
       //handle slider track color when song plays
-      slider.value = audio.currentTime
-      let thumbValue = slider.value / slider.max *100
-      slider.style.background = `linear-gradient(to right, ${color} 0%, ${color} ${thumbValue}%, #535353 ${thumbValue}%, #535353 100%)`
+      playbackSlider.value = audio.currentTime
+      let thumbValue = playbackSlider.value / playbackSlider.max *100
+      playbackSlider.style.background = `linear-gradient(to right, ${color} 0%, ${color} ${thumbValue}%, #535353 ${thumbValue}%, #535353 100%)`
     }                          
   }, 
 
@@ -629,7 +746,8 @@ const playSongs = {
       this.isRepeatPlaylist ? this.handleRepeat.repeatPlaylist() : this.isRepeatSong ? this.handleRepeat.repeatSong() : this.handleRepeat.noRepeat()
       this.isShuffle ? this.handleShuffle.shuffle() : this.handleShuffle.noShuffle()
       this.audioUpdate()
-      this.handleSliderBar()
+      this.handlePlaybackSliderBar()
+      this.handleVolumeSliderBar()
       this.handleBtn()
 
       if (this.isPlaying) {
@@ -648,9 +766,9 @@ const playSongs = {
         pauseBtnShadows.style.opacity = 0
       }
     }
-    console.log(`index: ${this.currentIndex}`)
-    console.log(`id: ${this.id}`)
-    console.log(this.isShuffle)
+    // console.log(`index: ${this.currentIndex}`)
+    // console.log(`id: ${this.id}`)
+    // console.log(this.isShuffle)
   }
 }
 
@@ -711,7 +829,7 @@ const handlePlaylists = {
       description: '',
       owner: "Phuc",
       img: "./assets/songs/playlists/own-playlists/jonas-blue.jpg",
-      songs: allSongs.filter(song => song.artist.includes('Jonas Brothers'))
+      songs: allSongs.filter(song => song.artist.includes('Jonas Blue'))
     }
   ],
 

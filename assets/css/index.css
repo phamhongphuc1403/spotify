@@ -657,7 +657,7 @@ html, body {
     border-radius: 50%;
     background: transparent;
     cursor: pointer;
-  }
+}
 
 #root__now-playing__player-control__playback-bar {
     font-size: 11px;
@@ -717,4 +717,49 @@ html, body {
 
 .repeat-active {
     right: 6px;
+}
+
+#root__now-playing__media-control {
+    display: flex;
+    align-items: center;
+    width: 30%;
+    justify-content: flex-end;
+
+}
+
+.media-control, .volume-btn {
+    width: 16px;
+    margin: 8px;
+    opacity: 0.7;
+    transition: 0.2s ease;
+}
+
+.media-control:hover, .volume-btn:hover {
+    opacity: 1;
+}
+
+#root__now-playing__media-control__volume-bar {
+    display: flex;
+    align-items: center;
+}
+
+#root__now-playing__media-control__volume-bar__range-slider {
+    background: #535353;
+    border-radius: 8px;
+    height: 4px;
+    width: 93px;
+    outline: none;
+    transition: 450ms ease-in;
+    -webkit-appearance: none;
+    margin: 0 0px;
+}
+
+#root__now-playing__media-control__volume-bar__range-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
 }
