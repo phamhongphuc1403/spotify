@@ -393,8 +393,7 @@ html, body {
 #root__main-view__currently-playing__playlists > .current-playlist > .current-playlist__content > span {
     font-size: 16px;
     font-weight: 600;  
-    /* white-space:nowrap; */
-    overflow:hidden;
+    overflow: hidden;
     text-overflow:ellipsis;
 }
 
@@ -448,6 +447,7 @@ html, body {
     font-weight: 700;
     line-height: 46px;
     color: white;
+    text-decoration: none;
 }
 
 .root__main-view__recently-playing > .introduction > .description  {
