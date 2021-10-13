@@ -600,7 +600,7 @@ html, body {
     display: flex;
     width: 30%;
     align-items: center;
-    border: 1px solid green;
+    /* border: 1px solid green; */
 }
 
 #root__now-playing__song__img {
@@ -646,7 +646,7 @@ html, body {
     flex-direction: column;
     align-items: center;
     width: 40%;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 #root__now-playing__player-control__playback-bar__range-slider {
@@ -786,6 +786,11 @@ html, body {
     #root{
         display: block;
         overflow-y: overlay;
+        width: 100%;
+    }
+    .root__main-view__recently-playing:last-child {
+
+        margin-bottom: 100px;
     }
     #root__left-sidebar {
         display:none;
@@ -796,9 +801,11 @@ html, body {
     #root__now-playing {
         position: fixed;
         bottom: 0;
+
         width: 100%;
+        z-index: 1;
         padding: 10px 32px;
-        border: 1px solid yellow;
+        /* border: 1px solid yellow; */
     }
     #root__now-playing__media-control{
         margin-right: 40px;
@@ -825,10 +832,14 @@ html, body {
         display: block;
         width: 30px;
     }
+
 }
 
 /* small screen */
 @media (max-width: 1024px) and (min-width: 769px) {
+    #root__now-playing {
+        width: 100%;
+    }
     #root__now-playing__player-control__buttons {
         margin-bottom: 4px;
     }
@@ -855,20 +866,16 @@ html, body {
     #root__now-playing__media-control {
         display: none;
     }
-    /* #root__now-playing { */
-        /* display: block; */
-        /* width: 93%; */
-    /* } */
     #root__now-playing__song {
         width: 100%;
     }
     #root__now-playing__player-control {
         position: absolute;
         top: -15px;
-        /* left: -8px; */
+        left: 0;
         /* flex-direction: column-reverse; */
         display: block;
-        width: 85%;
+        width: 100vw;
         height: 100%;
     }
     .player-control-shuffle-repeat, .shuffle-active, .player-control-prev-next, #root__now-playing__player-control__playback-bar__minutes-played, #root__now-playing__speed-control__playback-bar__minutes-total {

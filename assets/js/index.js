@@ -88,22 +88,23 @@ function handleResponsive() {
         //     playlist.gridTemplateRow = `${playlist.offsetWidth + 50} px`
         // }
     }
-    // function handleNowPlaying() {
-    //     const nowPlaying = document.querySelector('#root__now-playing')
-    //     if (window.outerWidth <= 768) nowPlaying.style.width = `${window.outerWidth} + px`
-    //     console.log(nowPlaying.style.width)
-    // }
+    function handlePlaybackSlider() {
+        const slider = document.querySelector('#root__now-playing__player-control__playback-bar__range-slider')
+        slider.style.display = 'block';
+        if (window.outerWidth <= 768) slider.style.width = document.querySelector('#root__main-view') + 5 + 'px'
+        console.log(slider.style.width)
+    }
     
     handleTextOverflow()
     handleTopContainerWidth()
     handlePlaylists()
-    // handleNowPlaying()
+    handlePlaybackSlider()
 
     window.onresize = function() {
         handleTopContainerWidth() 
         handleTextOverflow()
         handlePlaylists()
-        // handleNowPlaying()
+        handlePlaybackSlider()
     }
 }
 
@@ -115,7 +116,6 @@ handleResponsive()
 
 
 
-console.log(window.outerWidth);
 
-console.log(document.querySelector('#root__now-playing').offsetWidth)
+    
     
