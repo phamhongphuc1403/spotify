@@ -60,7 +60,7 @@ html, body {
  */
  @font-face {
     font-family: Gotham;
-    src: url(./font/Gotham-Font/AvenirLTStd-Heavy.otf) format('truetype');
+    src: url(./font/Gotham-Font/AvenirLTStd-Heavy.otf);
     font-weight: 600;
     font-style: normal; 
 }
@@ -392,6 +392,7 @@ html, body {
 
 #root__main-view__currently-playing__playlists > .current-playlist > .current-playlist__content > span {
     font-size: 16px;
+    line-height: 24px;
     font-weight: 600;  
     overflow: hidden;
     text-overflow:ellipsis;
@@ -935,7 +936,7 @@ html, body {
     }
     
     #root, #root__left-sidebar__my-playlists .my-playlist, 
-    #root__main-view__currently-playing__playlists > .current-playlist > .current-playlist__content > span, .root__main-view__recently-playing > .introduction > .description, 
+    .root__main-view__recently-playing > .introduction > .description, 
     .root__main-view__recently-playing > .introduction > .description > a, .playlists > .playlist > .playlist__description > .playlist__description__artist, 
     #root__right-sidebar__friend-activity > span, .root__right-sidebar__user__user-content > .user-name-and-activity > .user-name,
     .root__right-sidebar__user__user-content > .user-music, .root__right-sidebar__user__user-content > .user-name-and-activity > .user-activity {
