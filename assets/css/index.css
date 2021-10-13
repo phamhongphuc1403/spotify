@@ -845,7 +845,6 @@ html, body {
     }
     #root__top-container {
         width: 80%;
-        border: 1px solid red;
     }
     #root__now-playing__player-control__buttons {
         margin-bottom: 4px;
@@ -876,6 +875,9 @@ html, body {
         grid-template-columns: 45% 45%;
         justify-content: space-between;
         grid-template-rows: 50px 50px 50px;
+    }
+    #root__now-playing {
+        padding: 10px;
     }
     #root__now-playing__media-control {
         display: none;
