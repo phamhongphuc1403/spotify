@@ -420,6 +420,10 @@ const playSongs = {
   },
 
   handleVolumeSliderBar: function() {
+    let thumbValue = volumeSlider.value / volumeSlider.max * 100
+    volumeSlider.style.background = `linear-gradient(to right, #b3b3b3 0%, #b3b3b3 ${thumbValue}%, #535353 ${thumbValue}%, #535353 100%)`
+    
+    
     const previousVolume = []
     volumeBtn.onclick = function() {      
       if (volumeSlider.value != 0) {

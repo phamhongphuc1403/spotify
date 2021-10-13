@@ -60,7 +60,12 @@ function handleResponsive() {
     function handleTopContainerWidth() {
         const rootTop = document.getElementById('root__top-container')
         const mainView = document.getElementById('root__main-view')
-        rootTop.style.width = mainView.offsetWidth + 'px';        
+        
+        if (window.outerWidth > 768) {
+            rootTop.style.width = mainView.offsetWidth + 'px'
+        } else {
+            rootTop.style.width = window.outerWidth + 5 + 'px'
+        };        
     }
 
     function handleTextOverflow() {
@@ -68,7 +73,7 @@ function handleResponsive() {
         const currentPlaylistWidth = document.querySelector('#root__main-view__currently-playing__playlists > .current-playlist').offsetWidth
         
         for (title of currentPlaylistTitle) {
-            title.style.width = `${currentPlaylistWidth - 164}px`
+            if (window.outerWidth > 768) title.style.width = `${currentPlaylistWidth - 164}px`
         }
     }
 
@@ -77,16 +82,28 @@ function handleResponsive() {
         for (let playlistImg of playlistImgs) {
             playlistImg.style.width = document.querySelector('.playlist').offsetWidth - 32 + 'px'
         }
+
+        // const playlists =  document.getElementsByClassName('playlist')
+        // for (let playlist of playlists) {
+        //     playlist.gridTemplateRow = `${playlist.offsetWidth + 50} px`
+        // }
     }
+    // function handleNowPlaying() {
+    //     const nowPlaying = document.querySelector('#root__now-playing')
+    //     if (window.outerWidth <= 768) nowPlaying.style.width = `${window.outerWidth} + px`
+    //     console.log(nowPlaying.style.width)
+    // }
     
     handleTextOverflow()
     handleTopContainerWidth()
     handlePlaylists()
+    // handleNowPlaying()
 
     window.onresize = function() {
         handleTopContainerWidth() 
         handleTextOverflow()
         handlePlaylists()
+        // handleNowPlaying()
     }
 }
 
@@ -98,6 +115,7 @@ handleResponsive()
 
 
 
+console.log(window.outerWidth);
 
-    
+console.log(document.querySelector('#root__now-playing').offsetWidth)
     
