@@ -60,7 +60,7 @@ html, body {
  */
  @font-face {
     font-family: Gotham;
-    src: url(./font/Gotham-Font/GothamMedium.ttf);
+    src: url(./font/Gotham-Font/GothamMedium.ttf) format('truetype');
     font-weight: 600;
     font-style: normal; 
 }
@@ -447,12 +447,12 @@ html, body {
     font-weight: 700;
     line-height: 46px;
     color: white;
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 .root__main-view__recently-playing > .introduction > .description  {
     font-size: 14px;
-    font-weight:600;
+    font-weight: 600;
     color: #afafaf;
     display: block;
 }
@@ -968,4 +968,7 @@ html, body {
     #root__top__responsive-user-and-friends {
         right: 10px;
     }    
+    #root__now-playing__song__overlay {
+        display: hidden;
+    }
 }   
