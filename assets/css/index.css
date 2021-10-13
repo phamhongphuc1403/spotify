@@ -867,7 +867,6 @@ html, body {
     }
     #root__top-container {
         width: 100%;
-        border: 1px solid red;
     }
     #root__main-view__currently-playing__playlists {
         width: 100%;
