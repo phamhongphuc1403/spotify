@@ -39,18 +39,22 @@ function handleTopContainerOpacity() {
     const mainView = document.getElementById('root__main-view')
     const root = document.getElementById('root')
     
-    mainView.onscroll = function() {
-        if (100 - Math.ceil(mainView.scrollTop) <= 0) {
-            rootTop.style.backgroundColor = `rgba(54, 50, 34, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`;
+    if (window.outerWidth > 768) {
+        mainView.onscroll = function() {
+            if (100 - Math.ceil(mainView.scrollTop) <= 0) {
+                rootTop.style.backgroundColor = `rgba(54, 50, 34, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`;
+            }
         }
-    }
 
-    root.onscroll = function() {
-        
-        if (100 - Math.ceil(root.scrollTop) <= 0) {
-            rootTop.style.backgroundColor = `rgba(54, 50, 34, ${0.5 + - (100 - Math.ceil(root.scrollTop)) / 100})`;
+        root.onscroll = function() {
+            
+            if (100 - Math.ceil(root.scrollTop) <= 0) {
+                rootTop.style.backgroundColor = `rgba(54, 50, 34, ${0.5 + - (100 - Math.ceil(root.scrollTop)) / 100})`;
+            }
+            
         }
-        
+    } else {
+        rootTop.style.backgroundColor = 'rgb(54, 50, 34)'
     }
 }
 

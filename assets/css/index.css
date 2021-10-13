@@ -937,8 +937,24 @@ html, body {
     #root__main-view__currently-playing__playlists > .current-playlist > .current-playlist__content > span, .root__main-view__recently-playing > .introduction > .description, 
     .root__main-view__recently-playing > .introduction > .description > a, .playlists > .playlist > .playlist__description > .playlist__description__artist, 
     #root__right-sidebar__friend-activity > span, .root__right-sidebar__user__user-content > .user-name-and-activity > .user-name,
-    .root__right-sidebar__user__user-content > .user-music, .root__right-sidebar__user__user-content > .user-name-and-activity > .user-activity, .playlist__description__title {
+    .root__right-sidebar__user__user-content > .user-music, .root__right-sidebar__user__user-content > .user-name-and-activity > .user-activity {
         font-size: 10px
+    }
+    #root__top-container {
+        font-size: 14px;
+    }
+    .playlists > .playlist {
+        height: 120px;
+    }
+    .playlists > .playlist > img {
+        margin-bottom: 10px;
+    }
+    .playlists > .playlist > .playlist__description > .playlist__description__title {
+        font-size: 12px;
+        line-height: 16px;
+    }
+    .playlists > .playlist > .playlist__description > .playlist__description__artist {
+        font-size: 10px;
     }
     .root__main-view__recently-playing > .introduction > .title,  #root__main-view__currently-playing .greeting {
         font-size: 18px
