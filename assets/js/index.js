@@ -79,7 +79,12 @@ function handleResponsive() {
         const currentPlaylistWidth = document.querySelector('#root__main-view__currently-playing__playlists > .current-playlist').offsetWidth
         
         for (title of currentPlaylistTitle) {
-            if (window.outerWidth > 768) title.style.width = `${currentPlaylistWidth - 164}px`
+            if (window.outerWidth > 768) {
+                title.style.width = `${currentPlaylistWidth - 164}px` 
+            } else {
+                title.style.width = `${currentPlaylistWidth - 80}px`
+            }
+            
         }
     }
 

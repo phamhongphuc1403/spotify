@@ -865,9 +865,10 @@ html, body {
     #root {
         width: 100%;
     }
-    #root__top-container {
-        width: 100%;
+    #root__top__user {
+        display: none;
     }
+    
     #root__main-view__currently-playing__playlists {
         width: 100%;
         /* border: 1px solid red; */
