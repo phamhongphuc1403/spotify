@@ -60,7 +60,7 @@ html, body {
  */
  @font-face {
     font-family: Gotham;
-    src: url(./font/Gotham-Font/GothamMedium.ttf) format('truetype');
+    src: url(./font/Gotham-Font/AvenirLTStd-Heavy.otf) format('truetype');
     font-weight: 600;
     font-style: normal; 
 }
