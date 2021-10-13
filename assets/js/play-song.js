@@ -580,7 +580,7 @@ const playSongs = {
           playSongs.currentIndex +=3                                        
           playSongs.isPlaying = false;                                      
         audio.autoplay = false                                        
-          playBtn.src = `./assets/images/now-playing/play.png`          
+          playBtn.src = `./assets/images/now-playing/play.PNG`          
         }                                                               
       }      
       
@@ -710,7 +710,7 @@ const playSongs = {
         pauseBtns.style.zIndex = -1
         audio.pause()
         _this.isShuffle = false
-        playBtn.src = `./assets/images/now-playing/play.png`
+        playBtn.src = `./assets/images/now-playing/play.PNG`
       }
     }
    
@@ -752,10 +752,10 @@ const playSongs = {
 
       if (this.isPlaying) {
         audio.play()
-        playBtn.src = `./assets/images/now-playing/pause.png`
+        playBtn.src = `./assets/images/now-playing/pause.pnf`
       } else {
         audio.pause()
-        playBtn.src = `./assets/images/now-playing/play.png`
+        playBtn.src = `./assets/images/now-playing/play.PNG`
       }
 
       for (let pauseBtns of document.getElementsByClassName('playing')) {
