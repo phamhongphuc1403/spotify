@@ -57,15 +57,17 @@ function handleTopContainerOpacity() {
 
 
 function handleResponsive() {
+    
     function handleTopContainerWidth() {
         const rootTop = document.getElementById('root__top-container')
         const mainView = document.getElementById('root__main-view')
         
         if (window.outerWidth > 768) {
             rootTop.style.width = mainView.offsetWidth + 'px'
+            console.log( rootTop.style.width)
         } else {
-            rootTop.style.width = window.outerWidth + 5 + 'px'
-        };        
+            rootTop.style.width = mainView.offsetWidth + 20 + 'px'
+        }        
     }
 
     function handleTextOverflow() {

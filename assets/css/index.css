@@ -837,8 +837,15 @@ html, body {
 
 /* small screen */
 @media (max-width: 1024px) and (min-width: 769px) {
+    #root{
+        width: 100%;
+    }
     #root__now-playing {
         width: 100%;
+    }
+    #root__top-container {
+        width: 80%;
+        border: 1px solid red;
     }
     #root__now-playing__player-control__buttons {
         margin-bottom: 4px;
@@ -856,6 +863,13 @@ html, body {
     /* #root::-webkit-scrollbar {
         display: none;
     } */
+    #root {
+        width: 100%;
+    }
+    #root__top-container {
+        width: 100%;
+        border: 1px solid red;
+    }
     #root__main-view__currently-playing__playlists {
         width: 100%;
         /* border: 1px solid red; */
