@@ -942,6 +942,9 @@ html, body {
     .root__right-sidebar__user__user-content > .user-music, .root__right-sidebar__user__user-content > .user-name-and-activity > .user-activity {
         font-size: 10px
     }
+    #root__main-view__currently-playing__playlists > .current-playlist > .current-playlist__content > span {
+        font-size: 12px;
+    }
     #root__top-container {
         font-size: 14px;
     }
