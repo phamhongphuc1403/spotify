@@ -52,7 +52,7 @@ function handleTopContainerOpacity() {
                 rootTop.style.backgroundColor = `rgba(54, 50, 34, ${0.5 + - (100 - Math.ceil(root.scrollTop)) / 100})`;
             }
             
-        }
+                }
     } else {
         rootTop.style.backgroundColor = 'rgb(54, 50, 34)'
     }
@@ -68,7 +68,7 @@ function handleResponsive() {
         
         if (window.outerWidth > 768) {
             rootTop.style.width = mainView.offsetWidth + 'px'
-            console.log(rootTop.style.width)
+            // console.log(rootTop.style.width)
         } else {
             rootTop.style.width = mainView.offsetWidth + 250 + 'px'
             
@@ -82,8 +82,8 @@ function handleResponsive() {
         for (title of currentPlaylistTitle) {
             if (window.outerWidth > 768) {
                 title.style.width = `${currentPlaylistWidth - 164}px` 
-            // } else {
-            //     title.style.width = `${currentPlaylistWidth - 85}px`
+            } else {
+                title.style.width = `${currentPlaylistWidth - 85}px`
             }
             
         }
@@ -95,10 +95,6 @@ function handleResponsive() {
             playlistImg.style.width = document.querySelector('.playlist').offsetWidth - 32 + 'px'
         }
 
-        // const playlists =  document.getElementsByClassName('playlist')
-        // for (let playlist of playlists) {
-        //     playlist.gridTemplateRow = `${playlist.offsetWidth + 50} px`
-        // }
     }
     function handlePlaybackSlider() {
         const slider = document.querySelector('#root__now-playing__player-control__playback-bar__range-slider')
@@ -106,30 +102,65 @@ function handleResponsive() {
         if (window.outerWidth <= 768) slider.style.width = document.querySelector('#root__main-view').offsetWidth+ 'px'
         // console.log(slider.style.width)
     }
-
-    // function test() {
-    //     if (window.outerWidth <= 768) {
-    //         const a = document.querySelector('#root__top-container')
-    //         document.querySelector('#root').appendChild(a)
-    //         document.querySelector('#root  #root__top-container').classList.add('root-top')
-    //         const b = document.querySelector('#root__main-view #root__top-container')
-    //         b.remove()
-    //     }
-    // }
     
+    function handleMenuResponsiveBar() {
+        const menuIcon = document.querySelector('#responsive-menu')
+        const menuBar = document.querySelector('#root__left-sidebar')
+        const friendsIcon = document.querySelector('#responsive-friends')
+        const friendsBar = document.querySelector('#root__right-sidebar')
+        
+        if (menuIcon) {
+            menuIcon.onclick = function() {
+                if (menuBar.classList.contains('slideToRight')) {
+                    menuBar.classList.remove('slideToRight')
+                    menuBar.classList.add('reverseSlideToRight')
+                } else {
+                    menuBar.classList.remove('reverseSlideToRight')
+                    menuBar.classList.add('slideToRight')
+
+                    if (friendsBar.classList.contains('slideToLeft')) {
+                        friendsBar.classList.remove('slideToLeft')
+                        friendsBar.classList.add('reverseSlideToLeft')
+                    }
+                }
+            }
+        }
+
+        
+        if (friendsIcon) {
+            friendsIcon.onclick = function() {
+                if (friendsBar.classList.contains('slideToLeft')) {
+                    friendsBar.classList.remove('slideToLeft')
+                    friendsBar.classList.add('reverseSlideToLeft')
+                } else {
+                    friendsBar.classList.remove('reverseSlideToLeft')
+                    friendsBar.classList.add('slideToLeft')
+
+                    if (menuBar.classList.contains('slideToRight')) {
+                        menuBar.classList.remove('slideToRight')
+                        menuBar.classList.add('reverseSlideToRight')
+                    }
+                }
+            }
+        }
+    }
     handleTextOverflow()
     handleTopContainerWidth()
     handlePlaylists()
     handlePlaybackSlider()
-    // test()
+    handleMenuResponsiveBar()
 
     window.onresize = function() {
         handleTopContainerWidth() 
         handleTextOverflow()
         handlePlaylists()
         handlePlaybackSlider()
+        handleMenuResponsiveBar()
     }
 }
+
+
+
 
 
 handleTopContainerOpacity()
