@@ -886,10 +886,10 @@ html, body {
         grid-template-rows: 50px 50px 50px; */
     /* } */
     #root__main-view__currently-playing__playlists {
-            grid-gap: 10px;
-            grid-template-columns: repeat(2, 49%);
+            /* grid-gap: 10px; */
+            grid-template-columns: repeat(2, 47%);
             grid-template-rows: 50px 50px 50px;
-            z-index: 0;
+            justify-content: space-between;
 
     }
     #root__now-playing {
@@ -921,7 +921,7 @@ html, body {
     }
     .playlists {
         grid-template-columns: repeat(5, 100px);  
-    
+        grid-gap: 10px;
         height: 100%;
     }
     .playlists > .playlist {
