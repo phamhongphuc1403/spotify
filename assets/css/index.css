@@ -810,18 +810,26 @@ html {
 @media (max-width: 1100px) {
     #root{
         display: block;
+        position: relative;
         overflow-y: overlay;
         overflow-x: hidden;
-        width: 100vw;
+        border: 1px solid red;
+        /* width: 100vw; */
+    }
+    #root__main-view {
+        /* overflow-x: hidden; */
     }
     .root__main-view__recently-playing:last-child {
 
         margin-bottom: 100px;
     }
     #root__left-sidebar {
-        position: absolute;
+        /* display: none; */
+         position: absolute;
         z-index: 1;
-        top: 60px;
+        top: 0px;
+        padding-top: 60px;
+        height: 100%;
         width: 100%;
         transform: translateX(-100%);
         /* animation: slideToRight linear 0.3s forwards; */
@@ -832,9 +840,11 @@ html {
     }
     @keyframes slideToRight {
         from {
+            display: none;
             transform: translateX(-100%);
         }
         to {
+            display: block;
             transform: translateX(0%);
         }
     }
@@ -844,18 +854,23 @@ html {
     }
     @keyframes reverseSlideToRight {
         from {
+            display: block;
             transform: translateX(0%);
         }
         to {
+            display: none;
             transform: translateX(-100%);
         }
     }
 
     #root__right-sidebar {
+        right: - 1000px;
         position: absolute;
         z-index: 1;
-        top: 60px;
-        width: 100%;
+        top: 0px;
+        padding-top: 60px;
+        width: 90%;
+        height: 100%;
         transform: translateX(100%);
     }
 
@@ -864,9 +879,11 @@ html {
     }
     @keyframes slideToLeft {
         from {
+            display: none;
             transform: translateX(100%);
         }
         to {
+            display: block;
             transform: translateX(0%);
         }
     }
@@ -876,9 +893,11 @@ html {
     }
     @keyframes reverseSlideToLeft {
         from {
+            display: block;
             transform: translateX(0%);
         }
         to {
+            display: none;
             transform: translateX(100%);
         }
     }

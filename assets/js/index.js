@@ -120,7 +120,7 @@ function handleResponsive() {
 
                     if (friendsBar.classList.contains('slideToLeft')) {
                         friendsBar.classList.remove('slideToLeft')
-                        friendsBar.classList.add('reverseSlideToLeft')
+                        friendsBar.classList.add('reverseSlideToLeft')                        
                     }
                 }
             }
@@ -132,13 +132,16 @@ function handleResponsive() {
                 if (friendsBar.classList.contains('slideToLeft')) {
                     friendsBar.classList.remove('slideToLeft')
                     friendsBar.classList.add('reverseSlideToLeft')
+ 
                 } else {
                     friendsBar.classList.remove('reverseSlideToLeft')
                     friendsBar.classList.add('slideToLeft')
+                    
 
                     if (menuBar.classList.contains('slideToRight')) {
                         menuBar.classList.remove('slideToRight')
                         menuBar.classList.add('reverseSlideToRight')
+                       
                     }
                 }
             }
