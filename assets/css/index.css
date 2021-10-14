@@ -92,14 +92,10 @@ html, body {
     font-weight: 300;
     font-style: normal; 
 }
-html:before {
-    content: '';
-    position: fixed;
-    width: 100%;
-    height: 999px;
-    top: -999px;
+html {
     background-color: #181818;
-  }
+    position: fixed;
+}
 #root {
     font-family: Gotham;
     color:white;
@@ -844,9 +840,9 @@ html:before {
         width: 24px;
     }
     
-    #root__top-container {
+    /* #root__top-container { */
         /* justify-content: flex-start; */
-    }
+    /* } */
     #root__top__move-action {
         display: flex;
     }
