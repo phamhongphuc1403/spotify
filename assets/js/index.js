@@ -69,9 +69,9 @@ function handleResponsive() {
         if (window.outerWidth > 768) {
             rootTop.style.width = mainView.offsetWidth + 'px'
             console.log( rootTop.style.width)
-        } else {
-            rootTop.style.width = mainView.offsetWidth + 5 + 'px'
-            console.log(rootTop.style.width)
+        // } else {
+        //     rootTop.style.width = mainView.offsetWidth + 10 + 'px'
+        //     console.log(rootTop.style.width)
         }        
     }
 
@@ -106,11 +106,22 @@ function handleResponsive() {
         if (window.outerWidth <= 768) slider.style.width = document.querySelector('#root__main-view').offsetWidth+ 'px'
         console.log(slider.style.width)
     }
+
+    // function test() {
+    //     if (window.outerWidth <= 768) {
+    //         const a = document.querySelector('#root__top-container')
+    //         document.querySelector('#root').appendChild(a)
+    //         document.querySelector('#root  #root__top-container').classList.add('root-top')
+    //         const b = document.querySelector('#root__main-view #root__top-container')
+    //         b.remove()
+    //     }
+    // }
     
     handleTextOverflow()
     handleTopContainerWidth()
     handlePlaylists()
     handlePlaybackSlider()
+    // test()
 
     window.onresize = function() {
         handleTopContainerWidth() 

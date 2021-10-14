@@ -22,6 +22,13 @@ const volumeBtn = $('.volume-btn')
 
 const allSongs = [
   { 
+    id: 28, 
+    name: "Summer Days (feat. Macklemore & Patrick Stump of Fall Out Boy)", 
+    artist: "Martin Garrix, Macklemore, Fall Out Boy",
+    img: "./assets/songs/singles/summer-days__martin-garrix.jpg",
+    path: "./assets/songs/songs/summer-days__martin-garrix.mp3"
+  },
+  { 
     id: 1, 
     name: "Hold On", 
     artist: "Justin Bieber", 
@@ -209,13 +216,7 @@ const allSongs = [
     img: "./assets/songs/singles/high-on-life__martin-garrix.jpg",
     path: "./assets/songs/songs/high-on-life__martin-garrix.mp3"
   },
-  { 
-    id: 28, 
-    name: "Summer Days (feat. Macklemore & Patrick Stump of Fall Out Boy)", 
-    artist: "Martin Garrix, Macklemore, Fall Out Boy",
-    img: "./assets/songs/singles/summer-days__martin-garrix.jpg",
-    path: "./assets/songs/songs/summer-days__martin-garrix.mp3"
-  },
+
   { 
     id: 29, 
     name: "These Are The Times (feat. JRM)", 
