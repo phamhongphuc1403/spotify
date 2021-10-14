@@ -891,8 +891,13 @@ html, body {
         overflow-x: hidden;
     }
 
+    #root__top__responsive-user-and-friends {
+        position: fixed;
+        right: 0;
+        /* border: 1px solid red; */
+    }
     #root__top__user {
-        /* display: none; */
+        display: none;
     }
     #root__main-view__currently-playing__playlists {
          /* grid-gap: 10px; */
