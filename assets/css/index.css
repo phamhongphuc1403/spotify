@@ -828,7 +828,7 @@ html {
          position: absolute;
         z-index: 1;
         top: 0px;
-        padding-top: 60px;
+        padding-top: 80px;
         height: 100%;
         width: 100%;
         transform: translateX(-100%);
@@ -864,14 +864,14 @@ html {
     }
 
     #root__right-sidebar {
-        right: - 1000px;
         position: absolute;
         z-index: 1;
         top: 0px;
-        padding-top: 60px;
+        padding-top: 80px;
+        padding-right: 100px;
         width: 90%;
         height: 100%;
-        transform: translateX(100%);
+        transform: translateX(110%);
     }
 
     .slideToLeft {
@@ -880,7 +880,7 @@ html {
     @keyframes slideToLeft {
         from {
             display: none;
-            transform: translateX(100%);
+            transform: translateX(110%);
         }
         to {
             display: block;
@@ -898,7 +898,7 @@ html {
         }
         to {
             display: none;
-            transform: translateX(100%);
+            transform: translateX(110%);
         }
     }
     #root__now-playing {
