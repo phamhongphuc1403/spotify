@@ -863,16 +863,16 @@ html, body {
     /* #root::-webkit-scrollbar {
         display: none;
     } */
-    #root {
+    /* #root {
         width: 100%;
     }
     #root__main-view {
         width: 100%;
-    }
-    /* #root__top-container {
-        width: 100vw;
-        border: 1px solid red;
     } */
+    #root__top-container {
+        width: 100vw;
+        
+    }
     #root__top__user {
         display: none;
     }
@@ -889,6 +889,7 @@ html, body {
             grid-gap: 10px;
             grid-template-columns: repeat(2, 49%);
             grid-template-rows: 50px 50px 50px;
+            z-index: 0;
 
     }
     #root__now-playing {
@@ -920,7 +921,7 @@ html, body {
     }
     .playlists {
         grid-template-columns: repeat(5, 100px);  
-        /* border: 1px solid red; */
+    
         height: 100%;
     }
     .playlists > .playlist {
