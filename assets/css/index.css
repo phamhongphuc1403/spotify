@@ -844,9 +844,9 @@ html, body {
     #root__now-playing {
         width: 100%;
     }
-    #root__top-container {
-        width: 80%;
-    }
+    /* #root__top-container {
+        width: 100%;
+    } */
     #root__now-playing__player-control__buttons {
         margin-bottom: 4px;
     }
@@ -866,16 +866,30 @@ html, body {
     #root {
         width: 100%;
     }
+    #root__main-view {
+        width: 100%;
+    }
+    /* #root__top-container {
+        width: 100vw;
+        border: 1px solid red;
+    } */
     #root__top__user {
         display: none;
     }
-    
-    #root__main-view__currently-playing__playlists {
+    /* #root__main-view__currently-playing__playlists {
         width: 100%;
-        /* border: 1px solid red; */
-        grid-template-columns: 45% 45%;
-        justify-content: space-between;
-        grid-template-rows: 50px 50px 50px;
+        
+        grid-template-columns: repeat(2, 49%);
+        
+        /* grid-gap: 10px; */
+        /* justify-content: space-around;
+        grid-template-rows: 50px 50px 50px; */
+    /* } */
+    #root__main-view__currently-playing__playlists {
+            grid-gap: 10px;
+            grid-template-columns: repeat(2, 49%);
+            grid-template-rows: 50px 50px 50px;
+
     }
     #root__now-playing {
         padding: 10px;
@@ -924,13 +938,6 @@ html, body {
     #root__main-view {
         padding: 10px;
     }
-    #root__main-view__currently-playing__playlists {
-        width: 100%;
-        /* border: 1px solid red; */
-        grid-template-columns: 45% 45%;
-        justify-content: space-between;
-        grid-template-rows: 50px 50px 50px;
-    }
     #root__main-view__currently-playing__playlists > .current-playlist > img {
         width: 50px;
     }
@@ -943,7 +950,7 @@ html, body {
         font-size: 10px
     }
     #root__main-view__currently-playing__playlists > .current-playlist > .current-playlist__content > span {
-        font-size: 12px;
+        font-size: 14px;
     }
     #root__top-container {
         font-size: 14px;

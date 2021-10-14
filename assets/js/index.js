@@ -70,7 +70,8 @@ function handleResponsive() {
             rootTop.style.width = mainView.offsetWidth + 'px'
             console.log( rootTop.style.width)
         } else {
-            rootTop.style.width = mainView.offsetWidth + 20 + 'px'
+            rootTop.style.width = mainView.offsetWidth + 5 + 'px'
+            console.log(rootTop.style.width)
         }        
     }
 
@@ -82,7 +83,7 @@ function handleResponsive() {
             if (window.outerWidth > 768) {
                 title.style.width = `${currentPlaylistWidth - 164}px` 
             } else {
-                title.style.width = `${currentPlaylistWidth - 80}px`
+                title.style.width = `${currentPlaylistWidth - 85}px`
             }
             
         }
@@ -102,7 +103,7 @@ function handleResponsive() {
     function handlePlaybackSlider() {
         const slider = document.querySelector('#root__now-playing__player-control__playback-bar__range-slider')
         slider.style.display = 'block';
-        if (window.outerWidth <= 768) slider.style.width = document.querySelector('#root__main-view') + 5 + 'px'
+        if (window.outerWidth <= 768) slider.style.width = document.querySelector('#root__main-view').offsetWidth+ 'px'
         console.log(slider.style.width)
     }
     
