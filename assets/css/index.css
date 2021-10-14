@@ -858,9 +858,9 @@ html, body {
 
 /* small screen */
 @media (max-width: 1024px) and (min-width: 769px) {
-    /* #root{
-        width: 100%;
-    } */
+    #root{
+        background-color: back;
+    }
     /* #root__now-playing {
         width: 100%;
     } */
