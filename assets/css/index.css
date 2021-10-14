@@ -846,7 +846,7 @@ html, body {
     #root__top__responsive-user-and-friends {
         display: flex;
         position: relative;
-        right: 32px;
+        right: 50px;
         align-items: center;
     }
     #responsive-friends {
@@ -883,19 +883,16 @@ html, body {
     /* #root::-webkit-scrollbar {
         display: none;
     } */
-     /* #root {
-        overflow: hidden;
-    } */
-    /*#root__main-view {
-        width: 100%;
-    } */
-    #root__top-container {
-        width: 100%;
-        display: fixed;
-        padding: 10px 10px;
+     #root {
+        overflow-x: hidden;
+        overflow-y: overlay;
     }
+    #root__main-view {
+        overflow-x: hidden;
+    }
+
     #root__top__user {
-        display: none;
+        /* display: none; */
     }
     #root__main-view__currently-playing__playlists {
          /* grid-gap: 10px; */

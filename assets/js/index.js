@@ -68,10 +68,10 @@ function handleResponsive() {
         
         if (window.outerWidth > 768) {
             rootTop.style.width = mainView.offsetWidth + 'px'
-            console.log( rootTop.style.width)
-        // } else {
-        //     rootTop.style.width = mainView.offsetWidth + 10 + 'px'
-        //     console.log(rootTop.style.width)
+            console.log(rootTop.style.width)
+        } else {
+            rootTop.style.width = mainView.offsetWidth + 250 + 'px'
+            
         }        
     }
 
@@ -82,8 +82,8 @@ function handleResponsive() {
         for (title of currentPlaylistTitle) {
             if (window.outerWidth > 768) {
                 title.style.width = `${currentPlaylistWidth - 164}px` 
-            } else {
-                title.style.width = `${currentPlaylistWidth - 85}px`
+            // } else {
+            //     title.style.width = `${currentPlaylistWidth - 85}px`
             }
             
         }
@@ -104,7 +104,7 @@ function handleResponsive() {
         const slider = document.querySelector('#root__now-playing__player-control__playback-bar__range-slider')
         slider.style.display = 'block';
         if (window.outerWidth <= 768) slider.style.width = document.querySelector('#root__main-view').offsetWidth+ 'px'
-        console.log(slider.style.width)
+        // console.log(slider.style.width)
     }
 
     // function test() {
@@ -136,9 +136,3 @@ handleTopContainerOpacity()
 openMenu()
 handleCurrentPlaylistHover()
 handleResponsive() 
-
-
-
-
-    
-    
