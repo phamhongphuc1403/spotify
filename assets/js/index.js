@@ -34,28 +34,6 @@ function handleCurrentPlaylistHover() {
         }
     })
 }
-function handleTopContainerOpacity() {
-    const rootTop = document.getElementById('root__top-container')
-    const mainView = document.getElementById('root__main-view')
-    const root = document.getElementById('root')
-    rootTop.style.backgroundColor = 'transparent'
-        
-    mainView.onscroll = function() {
-        if (100 - Math.ceil(mainView.scrollTop) <= 0 && window.outerWidth > 1024) {
-                rootTop.style.backgroundColor = `rgba(64, 58, 38, ${- (100 - Math.ceil(mainView.scrollTop)) / 100})`;
-            } else {
-                rootTop.style.backgroundColor = 'transparent'
-            }
-        }
-
-        // root.onscroll = function() {
-            
-        //     if (100 - Math.ceil(root.scrollTop) <= 0) {
-        //         rootTop.style.backgroundColor = `rgba(54, 50, 34, ${0.5 + - (100 - Math.ceil(root.scrollTop)) / 100})`;
-        //     }
-            
-        //         }
-}
 
 
 
@@ -82,8 +60,8 @@ function handleResponsive() {
             if (window.outerWidth > 1115) {
                 title.style.width = `${currentPlaylistWidth - 164}px` 
             } else {
-                title.style.width = `${currentPlaylistWidth - 100}px`
-                console.log(title.offsetWidth)
+                title.style.width = `${currentPlaylistWidth - 70}px`
+
             }
             
         }
@@ -164,7 +142,7 @@ function handleResponsive() {
 
 
 
-handleTopContainerOpacity()
+// handleTopContainerOpacity()
 openMenu()
 handleCurrentPlaylistHover()
 handleResponsive() 

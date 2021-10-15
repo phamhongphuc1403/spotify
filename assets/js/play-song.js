@@ -16,6 +16,7 @@ const volumeBar = $('#root__now-playing__media-control__volume-bar')
 const volumeSlider = $('#root__now-playing__media-control__volume-bar__range-slider')
 const volumeBtn = $('.volume-btn')
 const mainView = $('#root__main-view')
+const rootTop = $('#root__top-container')
 
 
 
@@ -685,7 +686,6 @@ const playSongs = {
         _this.isPlaying = true;
         playBtn.src = `./assets/images/now-playing/pause.png`
       }
-      console.log(_this.currentIndex)
     }
 
     //handle next button
@@ -696,7 +696,6 @@ const playSongs = {
       audio.autoplay = true
       _this.isPlaying = true;
       playBtn.src = `./assets/images/now-playing/pause.png`
-      console.log(_this.currentIndex)
     }
 
     //handle shuffle button
@@ -771,9 +770,6 @@ const playSongs = {
         pauseBtnShadows.style.opacity = 0
       }
     }
-    // console.log(`index: ${this.currentIndex}`)
-    // console.log(`id: ${this.id}`)
-    // console.log(this.isShuffle)
   }
 }
 
@@ -789,8 +785,8 @@ const handlePlaylists = {
       owner: "Phuc",
       img: "./assets/songs/playlists/own-playlists/all-time-low.jpg",
       songs: allSongs.filter(song => song.artist.includes('All Time Low')),
-      backgroundColor: {r: 142, g: 128, b: 86},
-      headerColor: {r: 64, g: 58, b: 38}
+      backgroundColor: '142, 128, 86',
+      headerColor: '64, 58, 38'
     },
     {
       id: 2, 
@@ -799,8 +795,8 @@ const handlePlaylists = {
       owner: "Phuc",
       img: "./assets/songs/playlists/own-playlists/liked-songs.jpg",
       songs: allSongs,
-      backgroundColor: {r: 74, g: 53, b: 144},
-      headerColor: {r: 32, g: 22, b: 64}
+      backgroundColor: '74, 53, 144',
+      headerColor: '32, 22, 64'
     },
     {
       id: 3, 
@@ -809,8 +805,8 @@ const handlePlaylists = {
       owner: "Phuc",
       img: "./assets/songs/playlists/own-playlists/nocopyrightsounds.jpg",
       songs: allSongs.filter(song => song.artist.includes('Jonas Brothers')),
-      backgroundColor: {r: 180, g: 200, b: 200},
-      headerColor: {r: 32, g: 22, b: 64}
+      backgroundColor: '83, 83, 83',
+      headerColor: '33, 33, 33'
     },
     {
       id: 4, 
@@ -819,8 +815,8 @@ const handlePlaylists = {
       owner: "Phuc",
       img: "./assets/songs/playlists/own-playlists/jonas-brothers.jpg",
       songs: allSongs.filter(song => song.artist.includes('Jonas Brothers')),
-      backgroundColor: {r: 180, g: 200, b: 200},
-      headerColor: {r: 80, g: 90, b: 90}
+      backgroundColor: '180, 200, 200',
+      headerColor: '80, 90, 90'
     },
     {
       id: 5, 
@@ -829,8 +825,8 @@ const handlePlaylists = {
       owner: "Phuc",
       img: "./assets/songs/playlists/own-playlists/martin-garrix.jpg",
       songs: allSongs.filter(song => song.artist.includes('Martin Garrix')),
-      backgroundColor: {r: 13, g: 54, b: 75},
-      headerColor: {r: 3, g: 22, b: 32}
+      backgroundColor: '13, 54, 75',
+      headerColor: '3, 22, 32'
     },
     {
       id: 6, 
@@ -839,8 +835,8 @@ const handlePlaylists = {
       owner: "Phuc",
       img: "./assets/songs/playlists/own-playlists/jonas-blue.jpg",
       songs: allSongs.filter(song => song.artist.includes('Jonas Blue')),
-      backgroundColor: {r: 3, g: 24, b: 60},
-      headerColor: {r: 0, g: 10, b: 26}
+      backgroundColor: '3, 24, 60',
+      headerColor: '0, 10, 26'
     }
   ],
 
@@ -861,9 +857,31 @@ const handlePlaylists = {
         </li>`)
       .join('')
     currentPlaylists.innerHTML = currentPlaylistContent
-    console.log(currentPlaylists)
   },
-
+  renderBackground: function() {
+    const arr = []
+    const currentPlaylists = Array.from(document.getElementsByClassName('current-playlist'));
+    console.log(currentPlaylists)
+    currentPlaylists.forEach((playlist, index) => {
+      
+      playlist.onmouseenter = function() {
+        mainView.style.backgroundImage = `linear-gradient(rgba(${handlePlaylists.allPlaylists[index].backgroundColor}, 0.35) 0%, #121212 15%)`
+        // rootTop.style.backgroundColor = `rgba(${handlePlaylists.allPlaylists[index].headerColor}, 0)`
+        // arr.shift()
+        arr.unshift(handlePlaylists.allPlaylists[index].headerColor);
+      }
+    })
+    function handleHeaderOpacity() {
+      mainView.onscroll = function() {
+        if (100 - Math.ceil(mainView.scrollTop) <= 0 && window.outerWidth > 1024) {
+          rootTop.style.backgroundColor = `rgba(${arr[0]}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`;
+        } else {
+          rootTop.style.backgroundColor = 'transparent'
+        }
+      }
+    }
+    handleHeaderOpacity()
+  },
   //play playlist when click "play now" button
   playPlaylist: function() {
     const _this = this
@@ -883,7 +901,6 @@ const handlePlaylists = {
         } else {
           playSongs.songs = playlist[0].songs //choose the first (and only) object of 'playlist' array that contain a playlist
           playSongs.id = playlist[0].id
-          console.log(playlist[0].id)
 
           if (playSongs.isShuffle) {
             playSongs.currentIndex = Math.floor(Math.random() * (playSongs.songs.length - 1)) + 1
@@ -910,6 +927,7 @@ const handlePlaylists = {
 
   start: function() {
     this.renderCurrentPlaylists()
+    this.renderBackground()
     this.playPlaylist()
   }
 }
