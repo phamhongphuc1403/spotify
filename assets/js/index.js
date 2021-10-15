@@ -39,7 +39,7 @@ function handleTopContainerOpacity() {
     const mainView = document.getElementById('root__main-view')
     const root = document.getElementById('root')
     
-    if (window.outerWidth > 768) {
+    if (window.outerWidth > 1024) {
         mainView.onscroll = function() {
             if (100 - Math.ceil(mainView.scrollTop) <= 0) {
                 rootTop.style.backgroundColor = `rgba(54, 50, 34, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`;
@@ -54,7 +54,7 @@ function handleTopContainerOpacity() {
             
                 }
     } else {
-        rootTop.style.backgroundColor = 'rgb(54, 50, 34)'
+        rootTop.style.backgroundColor = 'transparent'
     }
 }
 
@@ -66,7 +66,7 @@ function handleResponsive() {
         const rootTop = document.getElementById('root__top-container')
         const mainView = document.getElementById('root__main-view')
         
-        if (window.outerWidth > 768) {
+        if (window.outerWidth > 1115) {
             rootTop.style.width = mainView.offsetWidth + 'px'
             // console.log(rootTop.style.width)
         } else {
@@ -80,10 +80,11 @@ function handleResponsive() {
         const currentPlaylistWidth = document.querySelector('#root__main-view__currently-playing__playlists > .current-playlist').offsetWidth
         
         for (title of currentPlaylistTitle) {
-            if (window.outerWidth > 768) {
+            if (window.outerWidth > 1115) {
                 title.style.width = `${currentPlaylistWidth - 164}px` 
             } else {
-                title.style.width = `${currentPlaylistWidth - 85}px`
+                title.style.width = `${currentPlaylistWidth - 100}px`
+                console.log(title.offsetWidth)
             }
             
         }
@@ -96,69 +97,62 @@ function handleResponsive() {
         }
 
     }
-    function handlePlaybackSlider() {
-        const slider = document.querySelector('#root__now-playing__player-control__playback-bar__range-slider')
-        slider.style.display = 'block';
-        if (window.outerWidth <= 768) slider.style.width = document.querySelector('#root__main-view').offsetWidth+ 'px'
-        // console.log(slider.style.width)
-    }
     
-    function handleMenuResponsiveBar() {
-        const menuIcon = document.querySelector('#responsive-menu')
-        const menuBar = document.querySelector('#root__left-sidebar')
+    function handleResponsiveBar() {
         const friendsIcon = document.querySelector('#responsive-friends')
         const friendsBar = document.querySelector('#root__right-sidebar')
+        const rightSidebar = document.querySelector('#root__right-sidebar')
         
-        if (menuIcon) {
-            menuIcon.onclick = function() {
-                if (menuBar.classList.contains('slideToRight')) {
-                    menuBar.classList.remove('slideToRight')
-                    menuBar.classList.add('reverseSlideToRight')
-                } else {
-                    menuBar.classList.remove('reverseSlideToRight')
-                    menuBar.classList.add('slideToRight')
-
-                    if (friendsBar.classList.contains('slideToLeft')) {
+        if (window.outerWidth <= 1115) {            
+            const profile = document.createElement('div')
+                profile.classList.add('responsive-friends__profile')
+                profile.innerHTML = `
+                        <img src="./assets/images/user/user-avatar.jpg">
+                        <div class="user">
+                            <span class='name'>Pham Hong Phuc</span>
+                            <div class='view-profile'>view profile</div>
+                        </div>
+                        <img class='setting' src='./assets/images/right-sidebar/setting.png'>`
+                rightSidebar.appendChild(profile) 
+                
+            if (friendsIcon) {
+                
+                friendsIcon.onclick = function() {
+                    
+                    if (!friendsBar.classList.contains('slideToLeft')) {
+                        friendsBar.classList.remove('reverseSlideToLeft')
+                        friendsBar.classList.add('slideToLeft')
+                    }
+                }
+                document.querySelector('#root__main-view').onclick = function(e) {
+                    if (e.target != friendsIcon && e.target != document.querySelector('#root__right-sidebar')) {
                         friendsBar.classList.remove('slideToLeft')
-                        friendsBar.classList.add('reverseSlideToLeft')                        
+                        friendsBar.classList.add('reverseSlideToLeft')
                     }
                 }
             }
         }
-
-        
-        if (friendsIcon) {
-            friendsIcon.onclick = function() {
-                if (friendsBar.classList.contains('slideToLeft')) {
-                    friendsBar.classList.remove('slideToLeft')
-                    friendsBar.classList.add('reverseSlideToLeft')
- 
-                } else {
-                    friendsBar.classList.remove('reverseSlideToLeft')
-                    friendsBar.classList.add('slideToLeft')
-                    
-
-                    if (menuBar.classList.contains('slideToRight')) {
-                        menuBar.classList.remove('slideToRight')
-                        menuBar.classList.add('reverseSlideToRight')
-                       
-                    }
-                }
-            }
+    }
+    function HandleMainViewAndNowPlayingWidth() {
+        if (window.outerWidth < 768) {
+            document.querySelector('#root__main-view').style.width = window.outerWidth - 20 + 'px'
+        }
+        if (window.outerWidth < 500) {
+            document.querySelector('#root__now-playing').style.width = window.outerWidth - 50 + 'px'
         }
     }
     handleTextOverflow()
     handleTopContainerWidth()
     handlePlaylists()
-    handlePlaybackSlider()
-    handleMenuResponsiveBar()
+    HandleMainViewAndNowPlayingWidth()
+    handleResponsiveBar()
 
     window.onresize = function() {
         handleTopContainerWidth() 
         handleTextOverflow()
         handlePlaylists()
-        handlePlaybackSlider()
-        handleMenuResponsiveBar()
+        HandleMainViewAndNowPlayingWidth()
+        handleResponsiveBar()
     }
 }
 
@@ -170,3 +164,4 @@ handleTopContainerOpacity()
 openMenu()
 handleCurrentPlaylistHover()
 handleResponsive() 
+
