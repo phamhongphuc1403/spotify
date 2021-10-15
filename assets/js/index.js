@@ -38,24 +38,23 @@ function handleTopContainerOpacity() {
     const rootTop = document.getElementById('root__top-container')
     const mainView = document.getElementById('root__main-view')
     const root = document.getElementById('root')
-    
-    if (window.outerWidth > 1024) {
-        mainView.onscroll = function() {
-            if (100 - Math.ceil(mainView.scrollTop) <= 0) {
-                rootTop.style.backgroundColor = `rgba(54, 50, 34, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`;
+    rootTop.style.backgroundColor = 'transparent'
+        
+    mainView.onscroll = function() {
+        if (100 - Math.ceil(mainView.scrollTop) <= 0 && window.outerWidth > 1024) {
+                rootTop.style.backgroundColor = `rgba(64, 58, 38, ${- (100 - Math.ceil(mainView.scrollTop)) / 100})`;
+            } else {
+                rootTop.style.backgroundColor = 'transparent'
             }
         }
 
-        root.onscroll = function() {
+        // root.onscroll = function() {
             
-            if (100 - Math.ceil(root.scrollTop) <= 0) {
-                rootTop.style.backgroundColor = `rgba(54, 50, 34, ${0.5 + - (100 - Math.ceil(root.scrollTop)) / 100})`;
-            }
+        //     if (100 - Math.ceil(root.scrollTop) <= 0) {
+        //         rootTop.style.backgroundColor = `rgba(54, 50, 34, ${0.5 + - (100 - Math.ceil(root.scrollTop)) / 100})`;
+        //     }
             
-                }
-    } else {
-        rootTop.style.backgroundColor = 'transparent'
-    }
+        //         }
 }
 
 
@@ -103,7 +102,7 @@ function handleResponsive() {
         const friendsBar = document.querySelector('#root__right-sidebar')
         const rightSidebar = document.querySelector('#root__right-sidebar')
         
-        if (window.outerWidth <= 1115) {            
+        if (window.outerWidth <= 1115) {      
             const profile = document.createElement('div')
                 profile.classList.add('responsive-friends__profile')
                 profile.innerHTML = `
@@ -119,39 +118,44 @@ function handleResponsive() {
                 
                 friendsIcon.onclick = function() {
                     
-                    if (!friendsBar.classList.contains('slideToLeft')) {
-                        friendsBar.classList.remove('reverseSlideToLeft')
+                    if (!friendsBar.classList.contains('slideToLeft')) {     
                         friendsBar.classList.add('slideToLeft')
                     }
                 }
                 document.querySelector('#root__main-view').onclick = function(e) {
+                    if (friendsBar.classList.contains('slideToLeft')) {
                     if (e.target != friendsIcon && e.target != document.querySelector('#root__right-sidebar')) {
                         friendsBar.classList.remove('slideToLeft')
                         friendsBar.classList.add('reverseSlideToLeft')
+                        setTimeout(function() {
+                            friendsBar.classList.remove('reverseSlideToLeft')
+                        }, 300)
+                    }
+                }
+                }
+                document.querySelector('#root__main-view').onscroll = function(e) {
+                    if (friendsBar.classList.contains('slideToLeft')) {
+                            friendsBar.classList.remove('slideToLeft')
+                            friendsBar.classList.add('reverseSlideToLeft')
+                            setTimeout(function() {
+                                friendsBar.classList.remove('reverseSlideToLeft')
+                            }, 300)
                     }
                 }
             }
+
         }
     }
-    function HandleMainViewAndNowPlayingWidth() {
-        if (window.outerWidth < 768) {
-            document.querySelector('#root__main-view').style.width = window.outerWidth - 20 + 'px'
-        }
-        if (window.outerWidth < 500) {
-            document.querySelector('#root__now-playing').style.width = window.outerWidth - 50 + 'px'
-        }
-    }
+
     handleTextOverflow()
     handleTopContainerWidth()
     handlePlaylists()
-    HandleMainViewAndNowPlayingWidth()
     handleResponsiveBar()
 
     window.onresize = function() {
         handleTopContainerWidth() 
         handleTextOverflow()
         handlePlaylists()
-        HandleMainViewAndNowPlayingWidth()
         handleResponsiveBar()
     }
 }

@@ -15,7 +15,7 @@ const currentPlaylists = $('#root__main-view__currently-playing__playlists')
 const volumeBar = $('#root__now-playing__media-control__volume-bar')
 const volumeSlider = $('#root__now-playing__media-control__volume-bar__range-slider')
 const volumeBtn = $('.volume-btn')
-
+const mainView = $('#root__main-view')
 
 
 
@@ -789,9 +789,8 @@ const handlePlaylists = {
       owner: "Phuc",
       img: "./assets/songs/playlists/own-playlists/all-time-low.jpg",
       songs: allSongs.filter(song => song.artist.includes('All Time Low')),
-      play: function() {
-        playSongs.songs = this.songs
-      }
+      backgroundColor: {r: 142, g: 128, b: 86},
+      headerColor: {r: 64, g: 58, b: 38}
     },
     {
       id: 2, 
@@ -799,7 +798,9 @@ const handlePlaylists = {
       description: '',
       owner: "Phuc",
       img: "./assets/songs/playlists/own-playlists/liked-songs.jpg",
-      songs: allSongs
+      songs: allSongs,
+      backgroundColor: {r: 74, g: 53, b: 144},
+      headerColor: {r: 32, g: 22, b: 64}
     },
     {
       id: 3, 
@@ -807,7 +808,9 @@ const handlePlaylists = {
       description: '',
       owner: "Phuc",
       img: "./assets/songs/playlists/own-playlists/nocopyrightsounds.jpg",
-      songs: allSongs.filter(song => song.artist.includes('Jonas Brothers'))
+      songs: allSongs.filter(song => song.artist.includes('Jonas Brothers')),
+      backgroundColor: {r: 180, g: 200, b: 200},
+      headerColor: {r: 32, g: 22, b: 64}
     },
     {
       id: 4, 
@@ -815,7 +818,9 @@ const handlePlaylists = {
       description: '',
       owner: "Phuc",
       img: "./assets/songs/playlists/own-playlists/jonas-brothers.jpg",
-      songs: allSongs.filter(song => song.artist.includes('Jonas Brothers'))
+      songs: allSongs.filter(song => song.artist.includes('Jonas Brothers')),
+      backgroundColor: {r: 180, g: 200, b: 200},
+      headerColor: {r: 80, g: 90, b: 90}
     },
     {
       id: 5, 
@@ -824,9 +829,8 @@ const handlePlaylists = {
       owner: "Phuc",
       img: "./assets/songs/playlists/own-playlists/martin-garrix.jpg",
       songs: allSongs.filter(song => song.artist.includes('Martin Garrix')),
-      play: function() {
-        playSongs.songs = this.songs
-      }
+      backgroundColor: {r: 13, g: 54, b: 75},
+      headerColor: {r: 3, g: 22, b: 32}
     },
     {
       id: 6, 
@@ -834,11 +838,13 @@ const handlePlaylists = {
       description: '',
       owner: "Phuc",
       img: "./assets/songs/playlists/own-playlists/jonas-blue.jpg",
-      songs: allSongs.filter(song => song.artist.includes('Jonas Blue'))
+      songs: allSongs.filter(song => song.artist.includes('Jonas Blue')),
+      backgroundColor: {r: 3, g: 24, b: 60},
+      headerColor: {r: 0, g: 10, b: 26}
     }
   ],
 
-  //render current playlists to mainview
+  //render current playlists to main-view
   renderCurrentPlaylists: function() {
     const currentPlaylistContent = this.allPlaylists
       .filter(playlist => playlist.id <=6 )
@@ -855,6 +861,7 @@ const handlePlaylists = {
         </li>`)
       .join('')
     currentPlaylists.innerHTML = currentPlaylistContent
+    console.log(currentPlaylists)
   },
 
   //play playlist when click "play now" button
