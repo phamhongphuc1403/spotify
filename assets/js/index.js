@@ -131,6 +131,7 @@ function handleResponsive() {
     handleResponsiveBar()
 
     window.onresize = function() {
+        playSongs.changeNowPlayingColor()
         handleTopContainerWidth() 
         handleTextOverflow()
         handlePlaylists()
