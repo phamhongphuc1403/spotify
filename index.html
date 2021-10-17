@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Spotify</title>
     <link rel="stylesheet" href="./assets/css/index.css">
+    <!-- <link rel="stylesheet" href="./assets/css/now-playing.css"> -->
     <!-- <link rel="stylesheet" href="./assets/css/slider.css">  -->
 </head>
 <body>
@@ -144,31 +145,31 @@
                         </div>
                     </li>
                     <li class="playlist">
-                        <img class="playlist-img" src="./assets/songs/playlists/daily-mixes/daily-mix-2.PNG">
+                        <img class="playlist-img" src="./assets/songs/playlists/daily-mixes/daily-mix-3 (3).PNG">
                         <div class="playlist__description">
                             <span class="playlist__description__title">Daily Mix 3</span>
+                            <span class="playlist__description__artist">Justin Bieber, Maroon 5 and more</span>
+                        </div>
+                    </li>
+                    <li class="playlist">
+                        <img class="playlist-img" src="./assets/songs/playlists/daily-mixes/daily-mix-4 (3).PNG">
+                        <div class="playlist__description">
+                            <span class="playlist__description__title">Daily Mix 4</span>
                             <span class="playlist__description__artist">All Time Low, Jonas Brothers and more</span>
                         </div>
                     </li>
                     <li class="playlist">
-                        <img class="playlist-img" src="./assets/songs/playlists/daily-mixes/daily-mix-3.PNG">
+                        <img class="playlist-img" src="./assets/songs/playlists/daily-mixes/daily-mix-5 (2).PNG">
+                        <div class="playlist__description">
+                            <span class="playlist__description__title">Daily Mix 5</span>
+                            <span class="playlist__description__artist">Tobu, Jim Yosef and more</span>
+                        </div>
+                    </li>
+                    <li class="playlist">
+                        <img class="playlist-img" src="./assets/songs/playlists/daily-mixes/daily-mix-6.PNG">
                         <div class="playlist__description">
                             <span class="playlist__description__title">Daily Mix 6</span>
                             <span class="playlist__description__artist">Boston, Kansas, Starship and more</span>
-                        </div>
-                    </li>
-                    <li class="playlist">
-                        <img class="playlist-img" src="./assets/songs/playlists/daily-mixes/daily-mix-4.PNG">
-                        <div class="playlist__description">
-                            <span class="playlist__description__title">Daily Mix 1</span>
-                            <span class="playlist__description__artist">Martin Garrix</span>
-                        </div>
-                    </li>
-                    <li class="playlist">
-                        <img class="playlist-img" src="./assets/songs/playlists/daily-mixes/daily-mix-5.PNG">
-                        <div class="playlist__description">
-                            <span class="playlist__description__title">Daily Mix 1</span>
-                            <span class="playlist__description__artist">Martin Garrix</span>
                         </div>
                     </li>
                 </ul>
@@ -357,24 +358,36 @@
             </div>
         </div>
         <div id="root__now-playing">
+            <div id="root__now-playing__header">
+                <img id="root__now-playing__header__minimize" src='./assets/images/now-playing/minimize.png'>
+                <span id="root__now-playing__header__playlist">Liked Songs</span>
+                <img id="root__now-playing__header__see-more" src='./assets/images/now-playing/see-more.png'>
+            </div>
             <div id="root__now-playing__song">
                 <img id="root__now-playing__song__img" src=''>
-                <div id="root__now-playing__song__info">
-                    <div id="root__now-playing__song__info__name"></div>
-                    <div id="root__now-playing__song__info__artist"></div>  
+                <div id="root__now-playing__song__content">
+                    <div id="root__now-playing__song__info">
+                        <div id="root__now-playing__song__info__name"></div>
+                        <div id="root__now-playing__song__info__artist"></div>  
+                    </div>
+                    <img id="root__now-playing__song__favorite" src="./assets/images/now-playing/favorite.png">
+                    <img id="root__now-playing__song__overlay" src="./assets/images/now-playing/overlay.png">    
                 </div>
-                <img id="root__now-playing__song__favorite" src="./assets/images/now-playing/favorite.png">
-                <img id="root__now-playing__song__overlay" src="./assets/images/now-playing/overlay.png">
             </div>
             <div id="root__now-playing__player-control">
                 <div id="root__now-playing__player-control__buttons">
-                    <img class="player-control-shuffle-repeat shuffle" src="./assets/images/now-playing/shuffle.PNG">
+                    <div id="shuffle">
+                        <img class="player-control-shuffle-repeat shuffle" src="./assets/images/now-playing/shuffle.PNG">
+                        <img class="shuffle-active" src="./assets/images/now-playing/active-dot.png">
+                    </div>
                     <img class="player-control-prev-next prev" src="./assets/images/now-playing/prev.png">
                     <img class="player-control-play-pause" src="">
                     <img class="player-control-prev-next next" src="./assets/images/now-playing/next.PNG">
-                    <img class="player-control-shuffle-repeat repeat" src="./assets/images/now-playing/repeat.PNG">
-                    <img class="shuffle-active" src="./assets/images/now-playing/active-dot.png">
-                    <img class="repeat-active" src="./assets/images/now-playing/active-dot.png">
+                    <div id="repeat">
+                        <img class="player-control-shuffle-repeat repeat" src="./assets/images/now-playing/repeat.PNG">
+                        <img class="repeat-active" src="./assets/images/now-playing/active-dot.png">
+                    </div>
+                    
                 </div>
                 <div id="root__now-playing__player-control__playback-bar">
                     <div id="root__now-playing__player-control__playback-bar__minutes-played">0:00</div>
@@ -393,7 +406,7 @@
                 <img class="media-control fullscreen" src="./assets/images/now-playing/fullscreen.PNG">
             </div>
         </div>       
-    </div>
+    </div>  
     <audio id="audio" src="" preload="metadata"></audio>
     <script src="./assets/js/play-song.js"></script>
     <script src="./assets/js/index.js"></script>

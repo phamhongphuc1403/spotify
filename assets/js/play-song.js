@@ -20,6 +20,23 @@ const rootTop = $('#root__top-container')
 const nowPlaying = $('#root__now-playing')
 
 
+function readTextFile(file, callback) {
+  var rawFile = new XMLHttpRequest();
+  rawFile.overrideMimeType("application/json");
+  rawFile.open("GET", file, true);
+  rawFile.onreadystatechange = function() {
+      if (rawFile.readyState === 4 && rawFile.status == "200") {
+          callback(rawFile.responseText);
+      }
+  }
+  rawFile.send(null);
+}
+
+//usage:
+readTextFile("db.json", function(text) {
+  var data = JSON.parse(text);
+  console.log(data);
+});
 
 
 const allSongs = [
@@ -363,12 +380,14 @@ const playSongs = {
   isRepeatSong: false,
   isRepeatPlaylist: false,
   isMute: false,
+  isSeeking: false,
 
   loadCurrentSong: function() {
     songImg.src = `${this.songs[this.currentIndex].img}`
     songName.innerHTML = `${this.songs[this.currentIndex].name}`
     songArtist.innerHTML = `${this.songs[this.currentIndex].artist}`
     audio.src = `${this.songs[this.currentIndex].path}`
+    this.changeNowPlayingColor()
   },
 
   changeNowPlayingColor: function() {
@@ -404,6 +423,27 @@ const playSongs = {
       currentSecond < 10 ? timePlayed.innerHTML = `${currentMinute}:0${currentSecond}`: timePlayed.innerHTML = `${currentMinute}:${currentSecond}`
   },
 
+    //handle when song plays
+    audioUpdate: function(color = '#b3b3b3') {
+    const _this = this
+  
+    audio.ontimeupdate = function() {
+          
+          //set 'time played' when song plays
+
+      if (_this.isSeeking == false) {
+        _this.handleTimePlayed()
+
+    
+            
+            //handle slider track color when song plays
+        playbackSlider.value = audio.currentTime
+        let thumbValue = playbackSlider.value / playbackSlider.max *100
+        playbackSlider.style.background = `linear-gradient(to right, ${color} 0%, ${color} ${thumbValue}%, #535353 ${thumbValue}%, #535353 100%)`
+      }
+    }                          
+  }, 
+
   handleNextSong: function() {
     this.currentIndex += 1
     this.loadCurrentSong()
@@ -417,20 +457,24 @@ const playSongs = {
     
     //handle slider thumb when drag or click
     playbackSlider.oninput = function() {
+      _this.isSeeking = true
       _this.handleTimePlayed(playbackSlider.value)
       let thumbValue = playbackSlider.value / playbackSlider.max *100
-      setTimeout(_this.audioUpdate)
+      // setTimeout(_this.audioUpdate)
       playbackSlider.style.background = 'linear-gradient(to right, #1db954 0%, #1db954 ' + thumbValue + '%, #535353 ' + thumbValue + '%, #535353 100%)'
 
     }
     playbackSlider.onchange = function() {
+      _this.isSeeking = false
       _this.handleTimePlayed(playbackSlider.value)
-      let thumbValue = playbackSlider.value / playbackSlider.max *100
-      playbackSlider.style.background = 'linear-gradient(to right, #1db954 0%, #1db954 ' + thumbValue + '%, #535353 ' + thumbValue + '%, #535353 100%)'
+
       
       audio.currentTime = playbackSlider.value;      
     }
 
+    playbackSlider.onclick = function(e) {
+      e.stopPropagation()
+    }
 
     //handle slider tracks color
     playbackSlider.onmouseenter = function() {
@@ -539,25 +583,6 @@ const playSongs = {
       volumeBtn.style.opacity = 0.6
     }
   },
-
-  //handle when song plays
-  audioUpdate: function(color = '#b3b3b3') {
-    const _this = this
-
-    audio.ontimeupdate = function() {
-      
-      //set 'time played' when song plays
-      if (playbackSlider.oninput || playbackSlider.onchange || playbackSlider.onclick) {
-        setTimeout(_this.handleTimePlayed());
-      } else {
-        _this.handleTimePlayed()
-      }
-      //handle slider track color when song plays
-      playbackSlider.value = audio.currentTime
-      let thumbValue = playbackSlider.value / playbackSlider.max *100
-      playbackSlider.style.background = `linear-gradient(to right, ${color} 0%, ${color} ${thumbValue}%, #535353 ${thumbValue}%, #535353 100%)`
-    }                          
-  }, 
 
   handleShuffle: {
 
@@ -702,7 +727,8 @@ const playSongs = {
     const _this = this                                              
                                                                     
     //handle play button                                               
-    playBtn.onclick = function() {                                  
+    playBtn.onclick = function(e) {       
+      e.stopPropagation()                           
       _this.isPlaying ? audio.pause() : audio.play()             
       if (_this.currentIndex > _this.songs.length) {  //if the the last song in the playlist is end, go to the first song
         _this.currentIndex = 0
@@ -795,11 +821,11 @@ const playSongs = {
       this.handlePlaybackSliderBar()
       this.handleVolumeSliderBar()
       this.handleBtn()
-      this.changeNowPlayingColor()
+      // this.changeNowPlayingColor()
 
       if (this.isPlaying) {
         audio.play()
-        playBtn.src = `./assets/images/now-playing/pause.pnf`
+        playBtn.src = `./assets/images/now-playing/pause.png`
       } else {
         audio.pause()
         playBtn.src = `./assets/images/now-playing/play.PNG`
@@ -912,8 +938,6 @@ const handlePlaylists = {
       
       playlist.onmouseenter = function() {
         mainView.style.backgroundImage = `linear-gradient(rgba(${handlePlaylists.allPlaylists[index].backgroundColor}, 0.35) 0%, #121212 15%)`
-        // rootTop.style.backgroundColor = `rgba(${handlePlaylists.allPlaylists[index].headerColor}, 0)`
-        // arr.shift()
         arr.unshift(handlePlaylists.allPlaylists[index].headerColor);
       }
     })
@@ -954,12 +978,10 @@ const handlePlaylists = {
             playSongs.currentIndex = 0;
           }
 
-        //   // auto play the playlist
+          // auto play the playlist
           audio.autoplay = true
           playSongs.isPlaying = true
-        //   // playBtn.src = './assets/images/now-playing/pause.png'
-        
-        // //   //handle shuffle
+
 
         
           playSongs.start()
@@ -967,6 +989,8 @@ const handlePlaylists = {
           currentPlaylist.querySelector('.playing').style.zIndex = 2;
           currentPlaylist.querySelector('.playing-shadow').style.opacity = 1
         }
+
+        $('#root__now-playing__header__playlist').innerHTML = `${playlist[0].name}`
       }
     }
   },

@@ -94,25 +94,13 @@ html, body {
 }
 html {
     background-color: #181818;
-}
-#root {
     font-family: Gotham;
     color:white;
     font-stretch: ultra-condensed;
     font-size: 14px;
     font-weight: 700;
     line-height: 16px;
-    height: 100%;
-    width: inherit;
-    /* border: 1px solid red; */
-    display: grid;
-    grid-template-areas:
-        'left-sidebar main right-sidebar'
-        'now-playing now-playing now-playing';
-    grid-template-columns: 200px auto 250px; 
-    grid-template-rows: auto 90px; 
-    overflow: hidden;
-
+    
     
 
     -webkit-touch-callout: none; /* iOS Safari */
@@ -122,9 +110,10 @@ html {
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none; 
 }
-#root * {
+html * {
     box-sizing: border-box;
 }
+
 ::-webkit-scrollbar {
     width: 12px;
     transition: 0.2s ease;
@@ -145,6 +134,18 @@ html {
 ::-webkit-scrollbar-thumb:hover {
     background: #808080; 
     
+}
+
+
+#root {
+    height: 100%;
+    overflow: hidden;
+    display: grid;
+    grid-template-areas:
+        'left-sidebar main right-sidebar'
+        'now-playing now-playing now-playing';
+    grid-template-columns: 200px auto 250px; 
+    grid-template-rows: auto 90px;  
 }
 
 #root__top-container {
@@ -491,7 +492,7 @@ html {
 
 .playlists > .playlist {
     padding: 16px;
-    height: 250px;
+    height: auto;
     background-color: #181818;
     cursor: pointer;
     transition: 0.3s ease;
@@ -611,7 +612,9 @@ html {
     z-index: 5;
 
 }
-
+#root__now-playing__header {
+    display: none;
+}
 
 #root__now-playing__song {
     display: flex;
@@ -623,7 +626,9 @@ html {
 #root__now-playing__song__img {
     width: 56px;
 }
-
+#root__now-playing__song__content {
+    display: flex;
+}
 #root__now-playing__song__info {
     margin: 0 14px;
     font-weight: 500;    
@@ -703,7 +708,7 @@ html {
     margin-bottom: 12px;
     position: relative;
 }
-#root__now-playing__player-control__buttons > img {
+#root__now-playing__player-control__buttons img {
     margin: 0 12px;
 }
 
@@ -718,7 +723,10 @@ html {
 .player-control-prev-next {
     width: 10px;
 }
-
+#shuffle, #repeat {
+    /* border: 1px solid red; */
+    position: relative;
+}
 .player-control-shuffle-repeat {
     width: 15px;  
     z-index: 1;
@@ -735,9 +743,10 @@ html {
 
 .repeat-active, .shuffle-active { 
     position: absolute;
-    bottom: 0px;
-    width: 4px;
-    opacity: 0;
+    bottom: -8px;
+    width: 3px;
+    opacity: 1;
+    left: 5px;
 }
 
 .shuffle-active {

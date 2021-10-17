@@ -1,18 +1,18 @@
 function openMenu() {
-    document.getElementById('root__top__user').onclick = function() {
-        document.getElementById('root__top__user').style.backgroundColor = '#282828'
+    $('#root__top__user').onclick = function() {
+        $('#root__top__user').style.backgroundColor = '#282828'
 
-        if (document.querySelector('.root__top__user__drop-bar')) {
-            document.querySelector('.root__top__user__drop-bar').remove()
+        if ($('.root__top__user__drop-bar')) {
+            $('.root__top__user__drop-bar').remove()
         } else {
-            const userBox = document.getElementById('root__top__user')
+            const userBox = $('#root__top__user')
             const dropBar = document.createElement('ul')
             dropBar.classList.add('root__top__user__drop-bar')
             dropBar.innerHTML = `
                 <li class="drop-bar-item"><span>Account</span><img src="assets/images/top-container/share.png"></li>
                 <li class="drop-bar-item"><span>Profile</span></li>
                 <li class="drop-bar-item"><span>Log out</span></li>`
-            dropBar.style.right = `${document.getElementById('root__right-sidebar').offsetWidth + 32}px`
+            dropBar.style.right = `${$('#root__right-sidebar').offsetWidth + 32}px`
             userBox.appendChild(dropBar)
             
         }
@@ -40,12 +40,11 @@ function handleCurrentPlaylistHover() {
 function handleResponsive() {
     
     function handleTopContainerWidth() {
-        const rootTop = document.getElementById('root__top-container')
-        const mainView = document.getElementById('root__main-view')
+        const rootTop = $('#root__top-container')
+        const mainView = $('#root__main-view')
         
         if (window.outerWidth > 1115) {
             rootTop.style.width = mainView.offsetWidth + 'px'
-            // console.log(rootTop.style.width)
         } else {
             rootTop.style.width = mainView.offsetWidth + 250 + 'px'
             
@@ -54,7 +53,7 @@ function handleResponsive() {
 
     function handleTextOverflow() {
         const currentPlaylistTitle = document.querySelectorAll('#root__main-view__currently-playing__playlists > .current-playlist > .current-playlist__content > span')
-        const currentPlaylistWidth = document.querySelector('#root__main-view__currently-playing__playlists > .current-playlist').offsetWidth
+        const currentPlaylistWidth = $('#root__main-view__currently-playing__playlists > .current-playlist').offsetWidth
         
         for (title of currentPlaylistTitle) {
             if (window.outerWidth > 1115) {
@@ -70,15 +69,15 @@ function handleResponsive() {
     function handlePlaylists() {
         const playlistImgs = document.getElementsByClassName('playlist-img')
         for (let playlistImg of playlistImgs) {
-            playlistImg.style.width = document.querySelector('.playlist').offsetWidth - 32 + 'px'
+            playlistImg.style.width = $('.playlist').offsetWidth - 32 + 'px'
         }
 
     }
     
     function handleResponsiveBar() {
-        const friendsIcon = document.querySelector('#responsive-friends')
-        const friendsBar = document.querySelector('#root__right-sidebar')
-        const rightSidebar = document.querySelector('#root__right-sidebar')
+        const friendsIcon = $('#responsive-friends')
+        const friendsBar = $('#root__right-sidebar')
+        const rightSidebar = $('#root__right-sidebar')
         
         if (window.outerWidth <= 1115) {      
             const profile = document.createElement('div')
@@ -100,9 +99,9 @@ function handleResponsive() {
                         friendsBar.classList.add('slideToLeft')
                     }
                 }
-                document.querySelector('#root__main-view').onclick = function(e) {
+                $('#root__main-view').onclick = function(e) {
                     if (friendsBar.classList.contains('slideToLeft')) {
-                    if (e.target != friendsIcon && e.target != document.querySelector('#root__right-sidebar')) {
+                    if (e.target != friendsIcon && e.target != $('#root__right-sidebar')) {
                         friendsBar.classList.remove('slideToLeft')
                         friendsBar.classList.add('reverseSlideToLeft')
                         setTimeout(function() {
@@ -111,7 +110,7 @@ function handleResponsive() {
                     }
                 }
                 }
-                document.querySelector('#root__main-view').onscroll = function(e) {
+                $('#root__main-view').onscroll = function(e) {
                     if (friendsBar.classList.contains('slideToLeft')) {
                             friendsBar.classList.remove('slideToLeft')
                             friendsBar.classList.add('reverseSlideToLeft')
@@ -130,21 +129,42 @@ function handleResponsive() {
     handlePlaylists()
     handleResponsiveBar()
 
-    window.onresize = function() {
-        playSongs.changeNowPlayingColor()
-        handleTopContainerWidth() 
-        handleTextOverflow()
-        handlePlaylists()
-        handleResponsiveBar()
-    }
 }
 
 
 
+function nowPlayingOnClick() {
+    $('#root__now-playing').onclick = function() {
+        if(!document.getElementById('nowPlaying') && window.outerWidth <= 999) {
+            const head = document.querySelector('head')
+            const link = document.createElement('link')
+            link.setAttribute('rel',"stylesheet")
+            link.setAttribute('href',"./assets/css/now-playing.css")
+            link.setAttribute('id',"nowPlaying")
+            head.appendChild(link)
+        }
+    }
 
+    $('#root__now-playing__header__minimize').onclick = function(e) {
+        e.stopPropagation()
+        document.getElementById('nowPlaying').remove()
+    }
+    if (window.outerWidth > 999 && document.getElementById('nowPlaying')) {
+        document.getElementById('nowPlaying').remove()
+    }
+}
 
 // handleTopContainerOpacity()
 openMenu()
 handleCurrentPlaylistHover()
 handleResponsive() 
+nowPlayingOnClick()
+
+
+window.onresize = function() {
+    playSongs.changeNowPlayingColor()
+    handleResponsive() 
+    nowPlayingOnClick()
+}
+
 
