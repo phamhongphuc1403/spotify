@@ -807,7 +807,7 @@ html * {
 #responsive-menu, #responsive-friends {
     display: none;
 }
-.responsive-friends__profile {
+#responsive-friends__profile {
     display: none;
 }
 
@@ -872,7 +872,7 @@ html * {
 
 
     #root__right-sidebar__friend-activity {
-        margin-top: 150px;
+        margin-top: 80px;
     }
     #root__right-sidebar__users {
         margin-top: 30px;
@@ -896,29 +896,28 @@ html * {
         display: block;
         width: 30px;
     }
-    .responsive-friends__profile {
-        position: absolute;
-        top: 50px;
+    #responsive-friends__profile {
+        margin-top: 30px;
         display: flex;
         align-items: center;
         width: 90%;
     }
-    .responsive-friends__profile > img {
+    #responsive-friends__profile > img {
         width: 48px;
         border-radius: 50%;
         margin-right: 10px;
     }
-    .responsive-friends__profile > .user > .name {
+    #responsive-friends__profile > .user > .name {
         font-size: 13px;
         line-height: 24px;
     }
-    .responsive-friends__profile > .user > .view-profile {
+    #responsive-friends__profile > .user > .view-profile {
         font-size: 10px;
         font-weight: 300;
         color: rgb(175, 175, 175);
     
     }
-    .responsive-friends__profile > .setting {
+    #responsive-friends__profile > .setting {
         width: 16px;
         position: absolute;
         right: 0;
@@ -998,6 +997,59 @@ html * {
         height: 100%;
         transform: translateX(100%);
     }
+    #root__right-sidebar__friend-activity {
+        margin-top: 80px;
+    }
+    #root__right-sidebar__users {
+        margin-top: 30px;
+    }
+    #root__right-sidebar {
+        position: fixed;
+        z-index: 1;
+        top: 0px;
+        right: 0px;
+        width: 250px;
+        height: 100%;
+        transform: translateX(100%);
+    }
+    #root__main-view__responsive-nav {
+        display: flex;
+        align-items: center;
+        justify-content:space-between;
+        margin-bottom: 40px;
+    }
+    #responsive-friends {
+        display: block;
+        width: 30px;
+    }
+    #responsive-friends__profile {
+        margin-top: 30px;
+        display: flex;
+        align-items: center;
+        width: 90%;
+    }
+    #responsive-friends__profile > img {
+        width: 48px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+    #responsive-friends__profile > .user > .name {
+        font-size: 13px;
+        line-height: 24px;
+    }
+    #responsive-friends__profile > .user > .view-profile {
+        font-size: 10px;
+        font-weight: 300;
+        color: rgb(175, 175, 175);
+    
+    }
+    #responsive-friends__profile > .setting {
+        width: 16px;
+        position: absolute;
+        right: 0;
+    }
+
+
 
 
     #root__left-sidebar {
