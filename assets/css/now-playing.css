@@ -158,9 +158,6 @@
         top: 15px;
     }
     
-    #root__now-playing__player-control__playback-bar__minutes-played {
-       
-    }
     #root__now-playing__speed-control__playback-bar__minutes-total {
         right: 0;
     }
@@ -244,10 +241,10 @@
         }
     
     }
-    @media (max-width: 499px) {
+    /* @media (max-width: 499px) {
         #root__now-playing__song__img {
             width: 90%;
             margin: 20px auto;
     
-        }
-    }
+        } */
+    /* } */
