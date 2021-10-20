@@ -1,16 +1,13 @@
 .root__main-view__recently-playing, #root__main-view__currently-playing {
     display: none;
 }
-#root__main-view {
-    display: hidden;
-}
 #root__left-sidebar__navigation .current {
     opacity: 0.6;
     background: transparent
 }
 #on-open-playlist {
     /* width: 1806px; */
-    /* height: 50%; */
+    height: 100%;
     background-color: white;
     display: block;
     z-index: 1;
@@ -61,6 +58,9 @@
     border-radius: 50%;
     margin-right: 4px;
 }
+#on-open-playlist__header__title__playlist-info__owner > span {
+    color: rgb(179, 179, 179);
+}
 #on-open-playlist__body__btns {
     padding: 24px 32px;
     display: flex;
@@ -74,6 +74,7 @@
     color:rgb(179, 179, 179);
     font-weight: 400;
     /* padding: 0 16px; */
+    /* margin-bottom: 60px; */
     
 }
 #on-open-playlist__body__btns__play {

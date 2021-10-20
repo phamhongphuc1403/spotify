@@ -83,8 +83,6 @@
     }
     #root__now-playing__player-control__buttons  {
         display: flex;
-        /* margin-top: 20px; */
-        /* border: 1px solid red; */
         width: 100%;
         justify-content: space-between;
         position: relative;

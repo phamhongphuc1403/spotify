@@ -20,11 +20,13 @@ const rootTop = $('#root__top-container')
 const nowPlaying = $('#root__now-playing')
 const friendsIcon = $('#responsive-friends')
 const friendsBar = $('#root__right-sidebar')
+const onOpenPlaylist = $('#on-open-playlist')
 
 
 let isAtHome = true;
 const trace = [mainView]
 let currentPage = 0;
+
 
 const allSongs = [
   { 
@@ -462,7 +464,7 @@ const allPlaylists = [
 ]
 
 const playSongs = { 
-  songs: allSongs,
+  songs: [...allSongs],
   id: 0,
   currentIndex: 0,
   isPlaying: false,
@@ -523,9 +525,7 @@ const playSongs = {
 
       if (_this.isSeeking == false) {
         _this.handleTimePlayed()
-
-    
-            
+   
             //handle slider track color when song plays
         playbackSlider.value = audio.currentTime
         let thumbValue = playbackSlider.value / playbackSlider.max *100
@@ -912,15 +912,6 @@ const playSongs = {
       this.handlePlaybackSliderBar()
       this.handleVolumeSliderBar()
       this.handleBtn()
-      // this.changeNowPlayingColor()
-
-      if (this.isPlaying) {
-        audio.play()
-        playBtn.src = `./assets/images/now-playing/pause.png`
-      } else {
-        audio.pause()
-        playBtn.src = `./assets/images/now-playing/play.PNG`
-      }
 
       for (let pauseBtns of document.getElementsByClassName('playing')) {
         pauseBtns.style.opacity = 0
@@ -937,15 +928,14 @@ playSongs.start()
 
 
 
-
 const handlePlaylists = {
-  playlists: allPlaylists,
+  playlists: [...allPlaylists],
   //render current playlists to main-view
   renderCurrentPlaylists: function() {
     const currentPlaylistContent = this.playlists
       .filter(playlist => playlist.id <=6 )
       .map(playlist => `
-        <li class="current-playlist" id="${playlist.id}">
+        <li class="current-playlist is-playlist" id="${playlist.id}">
             <img src="${playlist.img}">
             <div class="current-playlist__content">
                 <span>${playlist.name}</span>
@@ -974,50 +964,124 @@ const handlePlaylists = {
       }
     })
   },
-  
-  handleHeaderOpacity: function() {
-        rootTop.style.backgroundColor = `rgba(${this.headerColorArr[0]}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`;
 
+  handleHeaderOpacity: function() {
+    // if (window.getComputedStyle(onOpenPlaylist).display != 'none') {
+    //   rootTop.style.backgroundColor = `rgba(${this.headerColorArr[0]}, ${0.5 + - (225 - Math.ceil(onOpenPlaylist.scrollTop)) / 100})`;
+    //   console.log(rootTop.style.backgroundColor)
+    // } else {
+    //   rootTop.style.backgroundColor = `rgba(${this.headerColorArr[0]}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`;
+    // }
+
+    window.getComputedStyle(onOpenPlaylist).display == 'none' ? rootTop.style.backgroundColor = `rgba(${this.headerColorArr[0]}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`: rootTop.style.backgroundColor = `rgba(${this.headerColorArr[0]}, ${0.5 + - (225 - Math.ceil(onOpenPlaylist.scrollTop)) / 100})`
   },
   //play playlist when click "play now" button
-  playPlaylist: function() {
+  handlePlayOrOpenPlaylist: function() {
     const _this = this
-    const currentPlaylists = document.getElementsByClassName('current-playlist')
+    const playlistArray = document.getElementsByClassName('is-playlist')
     
-    for (let currentPlaylist of currentPlaylists) {
-      const playlist = _this.playlists.filter(playlist => playlist.id == currentPlaylist.getAttribute('id'))   //find playlist in the database that match the id
-      
-      currentPlaylist.querySelector('.play-now').onclick = function(e) {
-        e.stopPropagation()
-        if (playSongs.id == playlist[0].id) {
-          audio.play()
-          playSongs.isPlaying = true
-          currentPlaylist.querySelector('.playing').style.opacity = 1;
-          currentPlaylist.querySelector('.playing').style.zIndex = 2;
-          currentPlaylist.querySelector('.playing-shadow').style.opacity = 1
-        } else {
-          playSongs.songs = playlist[0].songs //choose the first (and only) object of 'playlist' array that contain a playlist
-          playSongs.id = playlist[0].id
-
-          if (playSongs.isShuffle) {
-            playSongs.currentIndex = Math.floor(Math.random() * (playSongs.songs.length - 1)) + 1
+    for (let eachPlaylist of playlistArray) {
+      const thisPlaylistInDB = _this.playlists.filter(playlist => playlist.id == eachPlaylist.getAttribute('id'))   //find playlist in the database that match the id
+     
+      eachPlaylist.onclick = function(e) {       
+        if (Array.from(document.getElementsByClassName('play-now')).includes(e.target) || Array.from(document.getElementsByClassName('playing')).includes(e.target)) {
+          e.stopPropagation()
+          if (playSongs.id == thisPlaylistInDB[0].id) {
+            audio.play()            
           } else {
-            playSongs.currentIndex = 0;
+            playSongs.songs = thisPlaylistInDB[0].songs //choose the first (and only) object of 'playlist' array that contain a playlist
+            playSongs.id = thisPlaylistInDB[0].id
+  
+            if (playSongs.isShuffle) {
+              playSongs.currentIndex = Math.floor(Math.random() * (playSongs.songs.length - 1)) + 1
+            } else {
+              playSongs.currentIndex = 0;
+            }
+  
+            // auto play the playlist
+            audio.autoplay = true
+            playSongs.isPlaying = true
+
+            playSongs.start()
+            eachPlaylist.querySelector('.playing').style.opacity = 1;
+            eachPlaylist.querySelector('.playing').style.zIndex = 2;
+            eachPlaylist.querySelector('.playing-shadow').style.opacity = 1
           }
-
-          // auto play the playlist
-          audio.autoplay = true
-          playSongs.isPlaying = true
-
-
-        
-          playSongs.start()
-          currentPlaylist.querySelector('.playing').style.opacity = 1;
-          currentPlaylist.querySelector('.playing').style.zIndex = 2;
-          currentPlaylist.querySelector('.playing-shadow').style.opacity = 1
+  
+          $('#root__now-playing__header__playlist').innerHTML = `${thisPlaylistInDB[0].name}`
+        } else {
+          isAtHome = false;
+          currentPage += 1;
+          trace.push(onOpenPlaylist)
+          
+          const head = document.querySelector('head')
+          const link = document.createElement('link')
+          link.setAttribute('rel',"stylesheet")
+          link.setAttribute('href',"./assets/css/on-open-playlist.css")
+          link.setAttribute('id',"onOpenPlaylist")
+          head.appendChild(link)
+  
+                
+  
+          onOpenPlaylist.style.width = mainView.offsetWidth + 'px'
+          // onOpenPlaylist.style.height = mainView.offsetHeight + 'px'
+          onOpenPlaylist.style.top = mainView.offsetTop + 'px'
+          onOpenPlaylist.style.left = mainView.offsetLeft + 'px'
+          
+  
+          const renderSongs = thisPlaylistInDB[0].songs.map((song, index) => `
+            <ul class="song">
+              <li class='number'>${index + 1}</li>
+              <li class='title'>
+                <img class='song-img' src='${song.img}'>
+                <div class="song-info">
+                    <div class="song-info__name">${song.name}</div>
+                    <div class="song-info__artist">${song.artist}</div>
+                </div>
+              </li>
+              <li class='album'>${song.album}</li>
+              <li class='date'>Sep 8, 2021</li>
+              <li class='more'>
+                <img class="more__favorite" src="./assets/images/now-playing/favorite.png">
+                <span class="more__time">4:45</span>
+                <img class="more__icon" src='./assets/images/main-view/see-more.PNG'>
+              </li>
+            </ul>`).join('')
+  
+          onOpenPlaylist.innerHTML = `
+            <div id="on-open-playlist__header">
+              <img id="on-open-playlist__header__img" src=${thisPlaylistInDB[0].img}>
+              <div id="on-open-playlist__header__title">
+                <div id="on-open-playlist__header__title__type">playlist</div>
+                <div id="on-open-playlist__header__title__name">${thisPlaylistInDB[0].name}</div>
+                <div id="on-open-playlist__header__title__playlist-info">
+                  <img id="on-open-playlist__header__title__playlist-info__img" src='./assets/images/user/user-avatar.jpg'>
+                  <span id="on-open-playlist__header__title__playlist-info__owner">${thisPlaylistInDB[0].owner} <span>• ${thisPlaylistInDB[0].songs.length} songs</span></span>
+                  </div>
+              </div>
+            </div>
+            <div id="on-open-playlist__body">
+              <div id="on-open-playlist__body__btns">
+                <img id="on-open-playlist__body__btns__play" class="play-now" src="./assets/images/main-view/play-now.PNG">
+                <img id="on-open-playlist__body__btns__see-more" src="./assets/images/main-view/see-more.PNG">
+              </div>
+              <div id="on-open-playlist__body__table">
+                <ul id="on-open-playlist__body__table__header">
+                  <li class='number'>#</li>
+                  <li class='title'>title</li>
+                  <li class='album'>album</li>
+                  <li class='date'>date added</li>
+                  <li class='more' id="more">more</li>
+                </ul>
+                <div id="on-open-playlist__body__table__body">  
+                    ${renderSongs}
+                </div>
+              </div>
+            </div>`
+  
+            onOpenPlaylist.style.backgroundImage = `linear-gradient(rgb(${thisPlaylistInDB[0].backgroundColor}), #181818 600px)`
         }
-
-        $('#root__now-playing__header__playlist').innerHTML = `${playlist[0].name}`
+        setTimeout(function() {fitToScreen()}, 10);
       }
     }
   },
@@ -1025,7 +1089,7 @@ const handlePlaylists = {
   start: function() {
     this.renderCurrentPlaylists()
     this.renderBackground()
-    this.playPlaylist()
+    this.handlePlayOrOpenPlaylist()
     this.handleHeaderOpacity()
   }
 }
@@ -1137,89 +1201,7 @@ function handleCurrentPlaylistHover() {
   })
 }
 
-function playlistOnClick() {
-  const currentPlaylists = Array.from(document.getElementsByClassName('current-playlist'));
-  currentPlaylists.forEach(playlist => {
-    playlist.onclick = function(e) {
-      if (e.target != $('.play-now') && e.target != $('.playing')) {
-        isAtHome = false;
-        const thisPlaylist = allPlaylists.filter(findPlaylist => findPlaylist.id == playlist.getAttribute('id'))
-        
-        const head = document.querySelector('head')
-        const link = document.createElement('link')
-        link.setAttribute('rel',"stylesheet")
-        link.setAttribute('href',"./assets/css/on-open-playlist.css")
-        link.setAttribute('id',"onOpenPlaylist")
-        head.appendChild(link)
 
-        const onOpenPlaylist = $('#on-open-playlist')
-        trace.push(onOpenPlaylist)
-        currentPage += 1
-        
-
-        onOpenPlaylist.style.width = mainView.offsetWidth + 'px'
-        onOpenPlaylist.style.height = mainView.offsetHeight + 'px'
-        onOpenPlaylist.style.top = mainView.offsetTop + 'px'
-        onOpenPlaylist.style.left = mainView.offsetLeft + 'px'
-        
-
-        const renderSongs = thisPlaylist[0].songs.map((song, index) => `
-          <ul class="song">
-            <li class='number'>${index + 1}</li>
-            <li class='title'>
-              <img class='song-img' src='${song.img}'>
-              <div class="song-info">
-                  <div class="song-info__name">${song.name}</div>
-                  <div class="song-info__artist">${song.artist}</div>
-              </div>
-            </li>
-            <li class='album'>${song.album}</li>
-            <li class='date'>Sep 8, 2021</li>
-            <li class='more'>
-              <img class="more__favorite" src="./assets/images/now-playing/favorite.png">
-              <span class="more__time">4:45</span>
-              <img class="more__icon" src='./assets/images/main-view/see-more.PNG'>
-            </li>
-          </ul>`).join('')
-        
-
-        onOpenPlaylist.innerHTML = `
-          <div id="on-open-playlist__header">
-            <img id="on-open-playlist__header__img" src=${thisPlaylist[0].img}>
-            <div id="on-open-playlist__header__title">
-              <div id="on-open-playlist__header__title__type">playlist</div>
-              <div id="on-open-playlist__header__title__name">${thisPlaylist[0].name}</div>
-              <div id="on-open-playlist__header__title__playlist-info">
-                <img id="on-open-playlist__header__title__playlist-info__img" src='./assets/images/user/user-avatar.jpg'>
-                <span id="on-open-playlist__header__title__playlist-info__owner">${thisPlaylist[0].owner} • </span>
-                </div>
-            </div>
-          </div>
-          <div id="on-open-playlist__body">
-            <div id="on-open-playlist__body__btns">
-              <img id="on-open-playlist__body__btns__play" class="play-now" src="./assets/images/main-view/play-now.PNG">
-              <img id="on-open-playlist__body__btns__see-more" src="./assets/images/main-view/see-more.PNG">
-            </div>
-            <div id="on-open-playlist__body__table">
-              <ul id="on-open-playlist__body__table__header">
-                <li class='number'>#</li>
-                <li class='title'>title</li>
-                <li class='album'>album</li>
-                <li class='date'>date added</li>
-                <li class='more' id="more">more</li>
-              </ul>
-              <div id="on-open-playlist__body__table__body">  
-                  ${renderSongs}
-              </div>
-            </div>
-          </div>`
-
-          onOpenPlaylist.style.backgroundImage = `linear-gradient(rgb(${thisPlaylist[0].backgroundColor}), #181818 600px)`
-      } 
-      setTimeout(function() {fitToScreen()}, 10);
-    }
-  })
-}
 
 
 function fitToScreen() {
@@ -1257,7 +1239,7 @@ function moveAction() {
 
 }
 
-const whenNotHome = {
+const handleNavigation = {
   backHome: function() {
     if (!isAtHome) {
       if ($('#onOpenPlaylist')) $('#onOpenPlaylist').remove()
@@ -1269,7 +1251,6 @@ const whenNotHome = {
     $('#root__left-sidebar__logo').onclick = function() { _this.backHome()}
     $('#root__left-sidebar__navigation__home').onclick = function() { _this.backHome()}
   }
-
 }
 
 
@@ -1279,17 +1260,14 @@ const whenNotHome = {
 openMenu()
 handleCurrentPlaylistHover()
 nowPlayingOnClick()
-playlistOnClick()
-whenNotHome.handleBtns()
+handleNavigation.handleBtns()
 handleResponsive.start() 
 
 window.onresize = function() {
   playSongs.changeNowPlayingColor()
   handleResponsive.start() 
   nowPlayingOnClick()
-  playlistOnClick()
   
-  const onOpenPlaylist = $('#on-open-playlist')
   onOpenPlaylist.style.width = mainView.offsetWidth + 'px'
   onOpenPlaylist.style.height = mainView.offsetHeight + 'px'
   onOpenPlaylist.style.top = mainView.offsetTop + 'px'
@@ -1307,4 +1285,9 @@ mainView.onscroll = function() {
       friendsBar.classList.remove('reverseSlideToLeft')
     }, 300)      
   }           
+}
+
+onOpenPlaylist.onscroll = function() {
+  
+  handlePlaylists.handleHeaderOpacity()
 }
