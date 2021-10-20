@@ -161,14 +161,16 @@ html * {
     z-index: 10;
 }
 
+#root__top__move-action {
+    margin-left: 32px;
+}
 #root__top__move-action * {
     width: 32px;
     opacity: 0.7;
     cursor: not-allowed;
-    margin-left: 32px;
 }
 
-#root__top__move-action + #root__top__move-action {
+.root__top__move-action__next {
     transform: rotate(180deg);
     margin-left: 12px;
 }
@@ -264,7 +266,7 @@ html * {
     align-items: center;
 }
 
-#root__left-sidebar__navigation #current {
+#root__left-sidebar__navigation .current {
     opacity: 1;
     color: white;
     background-color: #282828;
@@ -379,7 +381,7 @@ html * {
     display: flex;
     cursor: pointer;
     align-items: center;
-    background-color: #32312e;
+    background-color: rgba(255, 255, 255, .1);
     position: relative;
     transition: .3s ease
 }
@@ -556,11 +558,14 @@ html * {
     width: 48px;
     border-radius: 50%;
     margin-right: 10px;
+    /* border: 1px solid red */
 }
 
 .root__right-sidebar__user__user-content {
     color: #afafaf;
-    width: 100%;
+    min-width: 170px;
+    display: block;
+    /* border: 1px solid red; */
 }
 
 .root__right-sidebar__user__user-content > .user-name-and-activity {
@@ -573,9 +578,32 @@ html * {
 .root__right-sidebar__user__user-content > .user-name-and-activity > .user-name {
     font-size: 13px;
     line-height: 24px;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
 }
-
-
+.user-music__song {
+    display: flex;
+    align-items: center;
+}
+.user-music__song__name {
+    /* border: solid 2px blue; */
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 120px;
+    display: block;
+    overflow: hidden;
+    line-height: 20px
+    /* border: 1px solid red; */
+}
+.user-music__song__artist {
+    /* border: solid 2px blue; */
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    /* min-width: 20px; */
+    display: block;
+    overflow: hidden
+}
 
 .root__right-sidebar__user__user-content > .user-name-and-activity > .user-activity > img {
     width: 12px;
@@ -583,12 +611,12 @@ html * {
 
 .root__right-sidebar__user__user-content > .user-music, .root__right-sidebar__user__user-content > .user-name-and-activity > .user-activity {
     font-size: 11px;
-    font-weight: 500;  
+    font-weight: 500;
 }
 
-.root__right-sidebar__user__user-content > .user-music > .user-music__song > img {
+.root__right-sidebar__user__user-content > .user-music > .user-music__song  img {
     width: 4px;
-    margin: 2px;
+    margin: 4px; 
 }
 
 .root__right-sidebar__user__user-content > .user-music > .user-music__owner > img {
@@ -811,7 +839,9 @@ html * {
     display: none;
 }
 
-
+#on-open-playlist {
+    display: none;
+}
 
 .slideToLeft {
     animation: slideToLeft linear 0.3s forwards; 
@@ -980,7 +1010,7 @@ html * {
         display: flex;
         align-items: center;
         justify-content:space-between;
-        margin-bottom: 40px;
+        margin-bottom: 10px;
         margin-top: 0px;
         width: 100%;
     }
@@ -1016,7 +1046,7 @@ html * {
         display: flex;
         align-items: center;
         justify-content:space-between;
-        margin-bottom: 40px;
+        margin-bottom: 10px;
     }
     #responsive-friends {
         display: block;
@@ -1071,7 +1101,7 @@ html * {
         align-items: center;
         padding: 10px;
     }
-    #root__left-sidebar__navigation #current {
+    #root__left-sidebar__navigation .current {
         background-color: transparent;
     } 
     #root__left-sidebar__navigation > li  {
@@ -1187,18 +1217,19 @@ html * {
     
 
     #root, #root__left-sidebar__my-playlists .my-playlist, 
-    .root__main-view__recently-playing > .introduction > .description, 
-    .root__main-view__recently-playing > .introduction > .description > a, .playlists > .playlist > .playlist__description > .playlist__description__artist, 
+    .playlists > .playlist > .playlist__description > .playlist__description__artist, 
     #root__right-sidebar__friend-activity > span, .root__right-sidebar__user__user-content > .user-name-and-activity > .user-name,
     .root__right-sidebar__user__user-content > .user-music, .root__right-sidebar__user__user-content > .user-name-and-activity > .user-activity {
         font-size: 10px
     }
-    #root__main-view__currently-playing__playlists > .current-playlist > .current-playlist__content > span {
+    .root__main-view__recently-playing > .introduction > .description, 
+    .root__main-view__recently-playing > .introduction > .description > a {
+        font-size: 12px;
+    }
+    #root__main-view__currently-playing__playlists > .current-playlist > .current-playlist__content > span, #root__top-container {
         font-size: 14px;
     }
-    #root__top-container {
-        font-size: 14px;
-    }
+     
     .root__main-view__recently-playing {
         margin-bottom: 20px;
     }
@@ -1268,9 +1299,6 @@ html * {
         /* border: 1px solid red; */
         height: 100%;
     }
-
-
-
     #root__now-playing {
         width: 97vw;
     }

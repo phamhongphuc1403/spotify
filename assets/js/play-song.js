@@ -22,11 +22,444 @@ const friendsIcon = $('#responsive-friends')
 const friendsBar = $('#root__right-sidebar')
 
 
-import database from './database.js'
+let isAtHome = true;
+const trace = [mainView]
+let currentPage = 0;
 
+const allSongs = [
+  { 
+    id: 1, 
+    name: "Hold On", 
+    artist: "Justin Bieber", 
+    img: "./assets/songs/albums/justice__justin-bieber.jpg",
+    path: "./assets/songs/songs/hold-on__justin-bieber.mp3",
+    album: "Justice",
+    backgroundColor: '#095250'
+  },
+  { 
+    id: 2, 
+    name: "Weightless", 
+    artist: "All Time Low",
+    img: "./assets/songs/albums/nothing-personal__all-time-low.jpg",
+    path: "./assets/songs/songs/weightless__all-time-low.mp3",
+    album: "Nothing Personal",
+    backgroundColor: '#70684e'
+  },
+  { 
+    id: 3, 
+    name: "Break Your Little Heart", 
+    artist: "All Time Low",
+    img: "./assets/songs/albums/nothing-personal__all-time-low.jpg",
+    path: "./assets/songs/songs/break-your-little-heart__all-time-low.mp3",
+    album: "Nothing Personal",
+    backgroundColor: '#70684e'
+  },
+  { 
+    id: 4,
+    name: "Damned If I Do Ya (Damned If I Don't)", 
+    artist: "All Time Low", 
+    img: "./assets/songs/albums/nothing-personal__all-time-low.jpg",
+    path: "./assets/songs/songs/damn-if-i-do-ya__all-time-low.mp3",
+    album: "Nothing Personal",
+    backgroundColor: '#70684e'
+  },
+  { 
+    id: 5, 
+    name: "Stella", 
+    artist: "All Time Low",
+    img: "./assets/songs/albums/nothing-personal__all-time-low.jpg",
+    path: "./assets/songs/songs/stella__all-time-low.mp3",
+    album: "Nothing Personal",
+    backgroundColor: '#70684e'
+  },
+  { 
+    id: 6, 
+    name: "Runaways", 
+    artist: "All Time Low",
+    img: "./assets/songs/albums/future-hearts__all-time-low.jpg",
+    path: "./assets/songs/songs/runaways__all-time-low.mp3",
+    album: "Future Hearts",
+    backgroundColor: '#466668'
+  },
+  { 
+    id: 7, 
+    name: "Australia", 
+    artist: "Jonas Brothers",
+    img: "./assets/songs/albums/jonas-brothers__jonas-brothers.jpg",
+    path: "./assets/songs/songs/australia__jonas-brothers.mp3",
+    album: "Jonas Brothers",
+    backgroundColor: '#585657'
+  },
+  { 
+    id: 8, 
+    name: "Hesitate", 
+    artist: "Jonas Brothers",
+    img: "./assets/songs/albums/happiness-begins__jonas-brothers.jpg",
+    path: "./assets/songs/songs/hesitate__jonas-brothers.mp3",
+    album: "Happiness Begins",
+    backgroundColor: '#5c6e6e'
+  },
+  { 
+    id: 9, 
+    name: "Rollercoaster", 
+    artist: "Jonas Brothers",
+    img: "./assets/songs/albums/happiness-begins__jonas-brothers.jpg",
+    path: "./assets/songs/songs/rollercoaster__jonas-brothers.mp3",
+    album: "Happiness Begins",
+    backgroundColor: '#5c6e6e'
+  },
+  { id: 10, 
+    name: "Die Young",
+    artist: "Ke$ha", 
+    img: "./assets/songs/albums/warrior__kehsa.jpg",
+    path: "./assets/songs/songs/die-young__kesha.mp3",
+    album: "Warrior",
+    backgroundColor: '#5c6e6e'
+  },
+  { 
+    id: 11, 
+    name: "Best Song Ever", 
+    artist: "One Direction",
+    img: "./assets/songs/albums/midnight-memories__one-direction.jpg",
+    path: "./assets/songs/songs/best-song-ever__one-direction.mp3",
+    album: "Midnight Memories",
+    backgroundColor: '#6a4240'
+  },
+  { 
+    id: 12, 
+    name: "Daylight", 
+    artist: "Maroon 5",
+    img: "./assets/songs/albums/overexposed__maroon-5.jpg",
+    path: "./assets/songs/songs/daylight__maroon-5.mp3",
+    album: "Overexposed",
+    backgroundColor: '#743b53',
+  },
+  { 
+    id: 13, 
+    name: "Summer", 
+    artist: "Calvin Harris",
+    img: "./assets/songs/albums/motion__calvin-harris.jpg",
+    path: "./assets/songs/songs/summer__calvin-harris.mp3",
+    album: "Motion",
+    backgroundColor: '#545658'
+  },
+  { 
+    id: 14, 
+    name: "More Than A Feeling", 
+    artist: "Boston",
+    img: "./assets/songs/albums/boston__boston.jpg",
+    path: "./assets/songs/songs/more-than-a-feeling__boston.mp3",
+    album: "Boston",
+    backgroundColor: '#812824'
+  },
+  { 
+    id: 15, 
+    name: "Good Times", 
+    artist: "All Time Low",
+    img: "./assets/songs/albums/last-young-renegade__all-time-low.jpg",
+    path: "./assets/songs/songs/good-times__all-time-low.mp3",
+    album: "Last Young Renegade",
+    backgroundColor: '#29373c'
+  },
+  { 
+    id: 16, 
+    name: "Missing You", 
+    artist: "All Time Low",
+    img: "./assets/songs/albums/future-hearts__all-time-low.jpg",
+    path: "./assets/songs/songs/missing-you__all-time-low.mp3",
+    album: "Future Hearts",
+    backgroundColor: '#466668'
+  },
+  { 
+    id: 17, 
+    name: "Kids In The Dark", 
+    artist: "All Time Low",
+    img: "./assets/songs/albums/future-hearts__all-time-low.jpg",
+    path: "./assets/songs/songs/kids-in-the-dark__all-time-low.mp3",
+    album: "Future Hearts",
+    backgroundColor: '#466668'
+  },
+  { 
+    id: 18, 
+    name: "Dear Maria Count Me In", 
+    artist: "All Time Low",
+    img: "./assets/songs/albums/so-wrong-its-right__all-time-low.jpg",
+    path: "./assets/songs/songs/dear-maria-count-me-in__all-time-low.mp3",
+    album: "So Wrong, It's Right",
+    backgroundColor: '#665303'
+  },
+  { 
+    id: 19, 
+    name: "Time Bomb", 
+    artist: "All Time Low",
+    img: "./assets/songs/albums/dirty-work__all-time-low.jpg",
+    path: "./assets/songs/songs/time-bomb__all-time-low.mp3",
+    album: "Dirty Work",
+    backgroundColor: '#02446c'
+  },
+  { 
+    id: 20, 
+    name: "Life of the party", 
+    artist: "All Time Low",
+    img: "./assets/songs/albums/last-young-renegade__all-time-low.jpg",
+    path: "./assets/songs/songs/life-of-the-party__all-time-low.mp3",
+    album: "Last Young Renegade",
+    backgroundColor: '#29373c'
+  },
+  { 
+    id: 21, 
+    name: "Something's Gotta Give", 
+    artist: "All Time Low",
+    img: "./assets/songs/albums/future-hearts__all-time-low.jpg",
+    path: "./assets/songs/songs/somethings-gotta-give__all-time-low.mp3",
+    album: "Future Hearts",
+    backgroundColor: '#466668'
+  },
+  { 
+    id: 22, 
+    name: "Once In A Lifetime", 
+    artist: "All Time Low",
+    img: "./assets/songs/singles/once-in-a-lifetime__all-time-low.jpg",
+    path: "./assets/songs/songs/once-in-a-lifetime__all-time-low.mp3",
+    album: "Once In A Life Time",
+    backgroundColor: '#623023'
+  },
+  { 
+    id: 23, 
+    name: "Monsters (feat. blackbear)", 
+    artist: "All Time Low, blackbear",
+    img: "./assets/songs/albums/wake-up-sun-shine__all-time-low.jpg",
+    path: "./assets/songs/songs/monsters__all-time-low.mp3",
+    album: "Wake Up, Sunshine",
+    backgroundColor: '#64593c'
+  },
+  { 
+    id: 24, 
+    name: "Used To Love (with Dean Lewis)", 
+    artist: "Martin Garrix, Dean Lewis",
+    img: "./assets/songs/singles/used-to-love__martin-garrix.jpg",
+    path: "./assets/songs/songs/used-to-love__martin-garrix.mp3",
+    album: "Used To Love (with Dean Lewis)",
+    backgroundColor: '#203e51'
+  },
+  { 
+    id: 25, 
+    name: "Drown (feat. Cliton Kane)", 
+    artist: "Martin Garrix, Cliton Kane",
+    img: "./assets/songs/singles/drown__martin-garrix.jpg",
+    path: "./assets/songs/songs/drown__martin-garrix.mp3",
+    album: "Drown (feat. Cliton Kane",
+    backgroundColor: '#484747'
+  },
+  { 
+    id: 26, 
+    name: "No Sleep (feat. Bonn)", 
+    artist: "Martin Garrix, Bonn",
+    img: "./assets/songs/singles/no-sleep__martin-garrix.jpg",
+    path: "./assets/songs/songs/no-sleep__martin-garrix.mp3",
+    album: "No Sleep (feat. Bonn)",
+    backgroundColor: '#523825'
+  },
+  { 
+    id: 27, 
+    name: "High On Life (feat. Bonn)", 
+    artist: "Martin Garrix, Bonn",
+    img: "./assets/songs/singles/high-on-life__martin-garrix.jpg",
+    path: "./assets/songs/songs/high-on-life__martin-garrix.mp3",
+    album: "High On Life (feat. Bonn)",
+    backgroundColor: '#3b3e3e'
+  },
+  { 
+    id: 28, 
+    name: "Summer Days (feat. Macklemore & Patrick Stump of Fall Out Boy)", 
+    artist: "Martin Garrix, Macklemore, Fall Out Boy",
+    img: "./assets/songs/singles/summer-days__martin-garrix.jpg",
+    path: "./assets/songs/songs/summer-days__martin-garrix.mp3",
+    album: "Summer Days (feat. Macklemore & Patrick Stump of Fall Out Boy)",
+    backgroundColor: '#2e5a62',
+  },  
+  { 
+    id: 29, 
+    name: "These Are The Times (feat. JRM)", 
+    artist: "Martin Garrix, JRM",
+    img: "./assets/songs/singles/these-are-the-times__martin-garrix.jpg",
+    path: "./assets/songs/songs/these-are-the-times__martin-garrix.mp3",
+    album: "These Are The Times (feat. JRM)",
+    backgroundColor: '#545454'
+  },
+  { 
+    id: 30, 
+    name: "Burn Out (feat. Dewain Whitmore)", 
+    artist: "Martin Garrix, Dewain Whitmore",
+    img: "./assets/songs/singles/burn-out__martin-garrix.jpg",
+    path: "./assets/songs/songs/burn-out__martin-garrix.mp3",
+    album: "Burn Out (feat. Dewain Whitmore)",
+    backgroundColor: '#1d162b'
+  },
+  { 
+    id: 31, 
+    name: "Higher Ground (feat. John Martin)", 
+    artist: "Martin Garrix, John Martin",
+    img: "./assets/songs/singles/higher-ground__martin-garrix.jpg",
+    path: "./assets/songs/songs/higher-ground__martin-garrix.mp3",
+    album: "Higher Ground (feat. John Martin)",
+    backgroundColor: '#4e4e4e'
+  },
+  { 
+    id: 32, 
+    name: "Forbidden Voices", 
+    artist: "Martin Garrix",
+    img: "./assets/songs/singles/forbidden-voices__martin-garrix.jpg",
+    path: "./assets/songs/songs/forbidden-voices__martin-garrix.mp3",
+    album: "Forbidden Voices",
+    backgroundColor: '#2f2f2f'
+  },
+  { 
+    id: 33, 
+    name: "Waiting For Tomorrow (feat. Mike Shinoda)", 
+    artist: "Martin Garrix, Mike Shinoda",
+    img: "./assets/songs/albums/bylaw-ep__martin-garrix.jpg",
+    path: "./assets/songs/songs/waiting-for-tomorrow__martin-garrix.mp3",
+    album: "BYLAW EP",
+    backgroundColor: '#3c1f29'
+  },
+  { 
+    id: 34, 
+    name: "Sucker", 
+    artist: "Jonas Brothers",
+    img: "./assets/songs/albums/happiness-begins__jonas-brothers.jpg",
+    path: "./assets/songs/songs/sucker__jonas-brothers.mp3",
+    album: "Happiness Begins",
+    backgroundColor: '#5c6e6e'
+  },
+  { 
+    id: 35, 
+    name: "Only Human", 
+    artist: "Jonas Brothers",
+    img: "./assets/songs/albums/happiness-begins__jonas-brothers.jpg",
+    path: "./assets/songs/songs/only-human__jonas-brothers.mp3",
+    album: "Happiness Begins",
+    backgroundColor: '#5c6e6e'
+  },
+  { 
+    id: 36, 
+    name: "By Your Side", 
+    artist: "Jonas Blue, RAYE",
+    img: "./assets/songs/albums/blue__jonas-blue.jpg",
+    path: "./assets/songs/songs/by-your-side__jonas-blue.mp3",
+    album: "Blue",
+    backgroundColor: '#435864'
+  },
+  { 
+    id: 37, 
+    name: "Mama", 
+    artist: "Jonas Blue, William Singe",
+    img: "./assets/songs/albums/blue__jonas-blue.jpg",
+    path: "./assets/songs/songs/mama__jonas-blue.mp3",
+    album: "Blue",
+    backgroundColor: '#435864'
+  },
+  { 
+    id: 38, 
+    name: "Polaroid", 
+    artist: "Jonas Blue, Liam Payne, Lennon Stella",
+    img: "./assets/songs/albums/blue__jonas-blue.jpg",
+    path: "./assets/songs/songs/polaroid__jonas-blue.mp3",
+    album: "Blue",
+    backgroundColor: '#435864'
+  },
+  { 
+    id: 39, 
+    name: "Rise", 
+    artist: "Jonas Blue, Jack & Jack",
+    img: "./assets/songs/albums/blue__jonas-blue.jpg",
+    path: "./assets/songs/songs/rise__jonas-blue.mp3",
+    album: "Blue",
+    backgroundColor: '#435864'
+  },
+  { 
+    id: 40, 
+    name: "Younger", 
+    artist: "Jonas Blue, HRVY",
+    img: "./assets/songs/singles/younger__jonas-blue.jpg",
+    path: "./assets/songs/songs/younger__jonas-blue.mp3",
+    album: "Younger",
+    backgroundColor: '#85171d'
+  },
+  { 
+    id: 41, 
+    name: "Perfect Stranger", 
+    artist: "Jonas Blue, JP Cooper",
+    img: "./assets/songs/albums/blue__jonas-blue.jpg",
+    path: "./assets/songs/songs/perfect-stranger__jonas-blue.mp3",
+    album: "Blue",
+    backgroundColor: '#435864'
+  },
 
-const allSongs = database.songs
+]
 
+const allPlaylists = [ 
+  {
+    id: 1, 
+    name: "All Time Low", 
+    description: '',
+    owner: "Phuc",
+    img: "./assets/songs/playlists/own-playlists/all-time-low.jpg",
+    songs: allSongs.filter(song => song.artist.includes('All Time Low')),
+    backgroundColor: '142, 128, 86',
+    headerColor: '64, 58, 38'
+  },
+  {
+    id: 2, 
+    name: "Liked Songs", 
+    description: '',
+    owner: "Phuc",
+    img: "./assets/songs/playlists/own-playlists/liked-songs.jpg",
+    songs: allSongs,
+    backgroundColor: '74, 53, 144',
+    headerColor: '32, 22, 64'
+  },
+  {
+    id: 3, 
+    name: "NoCopyrightSounds", 
+    description: '',
+    owner: "Phuc",
+    img: "./assets/songs/playlists/own-playlists/nocopyrightsounds.jpg",
+    songs: allSongs.filter(song => song.id < 4),
+    backgroundColor: '83, 83, 83',
+    headerColor: '33, 33, 33'
+  },
+  {
+    id: 4, 
+    name: "Jonas Brothers", 
+    description: '',
+    owner: "Phuc",
+    img: "./assets/songs/playlists/own-playlists/jonas-brothers.jpg",
+    songs: allSongs.filter(song => song.artist.includes('Jonas Brothers')),
+    backgroundColor: '180, 200, 200',
+    headerColor: '80, 90, 90'
+  },
+  {
+    id: 5, 
+    name: "Martin Garrix", 
+    description: '',
+    owner: "Phuc",
+    img: "./assets/songs/playlists/own-playlists/martin-garrix.jpg",
+    songs: allSongs.filter(song => song.artist.includes('Martin Garrix')),
+    backgroundColor: '13, 54, 75',
+    headerColor: '3, 22, 32'
+  },
+  {
+    id: 6, 
+    name: "Jonas Blue", 
+    description: '',
+    owner: "Phuc",
+    img: "./assets/songs/playlists/own-playlists/jonas-blue.jpg",
+    songs: allSongs.filter(song => song.artist.includes('Jonas Blue')),
+    backgroundColor: '3, 24, 60',
+    headerColor: '0, 10, 26'
+  }
+]
 
 const playSongs = { 
   songs: allSongs,
@@ -434,7 +867,8 @@ const playSongs = {
     }
     
     for (let pauseBtns of document.getElementsByClassName('playing')) {
-      pauseBtns.onclick = function() {
+      pauseBtns.onclick = function(e) {
+        e.stopPropagation()
         pauseBtns.style.opacity = 0
         pauseBtns.style.zIndex = -1
         audio.pause()
@@ -505,10 +939,10 @@ playSongs.start()
 
 
 const handlePlaylists = {
-  allPlaylists: database.playlists,
+  playlists: allPlaylists,
   //render current playlists to main-view
   renderCurrentPlaylists: function() {
-    const currentPlaylistContent = this.allPlaylists
+    const currentPlaylistContent = this.playlists
       .filter(playlist => playlist.id <=6 )
       .map(playlist => `
         <li class="current-playlist" id="${playlist.id}">
@@ -524,25 +958,26 @@ const handlePlaylists = {
       .join('')
     currentPlaylists.innerHTML = currentPlaylistContent
   },
-  headerColorArr: [database.playlists[0].headerColor],
+  
+  headerColorArr: [allPlaylists[0].headerColor],
+  
   renderBackground: function() {
     const _this = this
+
     const currentPlaylists = Array.from(document.getElementsByClassName('current-playlist'));
     currentPlaylists.forEach((playlist, index) => {
       
       playlist.onmouseenter = function() {
-        mainView.style.backgroundImage = `linear-gradient(rgba(${handlePlaylists.allPlaylists[index].backgroundColor}, 0.35) 0%, #121212 15%)`
-        rootTop.style.backgroundColor = `rgba(${handlePlaylists.allPlaylists[index].backgroundColor}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`;
-        _this.headerColorArr.unshift(handlePlaylists.allPlaylists[index].headerColor);
+        mainView.style.backgroundImage = `linear-gradient(rgba(${handlePlaylists.playlists[index].backgroundColor}, 0.35) 0%, #121212 15%)`
+        rootTop.style.backgroundColor = `rgba(${handlePlaylists.playlists[index].backgroundColor}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`;
+        _this.headerColorArr.unshift(handlePlaylists.playlists[index].headerColor);
       }
     })
   },
+  
   handleHeaderOpacity: function() {
-      // if (100 - Math.ceil(mainView.scrollTop) <= 0 && window.outerWidth > 1024) {
         rootTop.style.backgroundColor = `rgba(${this.headerColorArr[0]}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`;
-      // } else {
-      //   rootTop.style.backgroundColor = 'transparent'
-      // }
+
   },
   //play playlist when click "play now" button
   playPlaylist: function() {
@@ -550,10 +985,10 @@ const handlePlaylists = {
     const currentPlaylists = document.getElementsByClassName('current-playlist')
     
     for (let currentPlaylist of currentPlaylists) {
-      const playlist = _this.allPlaylists.filter(playlist => playlist.id == currentPlaylist.getAttribute('id'))   //find playlist in the database that match the id
+      const playlist = _this.playlists.filter(playlist => playlist.id == currentPlaylist.getAttribute('id'))   //find playlist in the database that match the id
       
-      currentPlaylist.querySelector('.play-now').onclick = function() {
-        
+      currentPlaylist.querySelector('.play-now').onclick = function(e) {
+        e.stopPropagation()
         if (playSongs.id == playlist[0].id) {
           audio.play()
           playSongs.isPlaying = true
@@ -591,6 +1026,7 @@ const handlePlaylists = {
     this.renderCurrentPlaylists()
     this.renderBackground()
     this.playPlaylist()
+    this.handleHeaderOpacity()
   }
 }
 handlePlaylists.start()
@@ -661,7 +1097,7 @@ const handleResponsive = {
   }
 }
 
-handleResponsive.start() 
+
 
 
 function openMenu() {
@@ -691,19 +1127,114 @@ function handleCurrentPlaylistHover() {
       playlist.onmouseover = function() {
           playlist.querySelector('.play-now-shadow').style.opacity= '1';
           playlist.querySelector('.play-now').style.opacity = '1';
-          playlist.style.backgroundColor = '#54524a'
+          playlist.style.backgroundColor = 'rgba(255, 255, 255, .2)'
       }
       playlist.onmouseout = function() {
           playlist.querySelector('.play-now-shadow').style.opacity= '0';
           playlist.querySelector('.play-now').style.opacity = '0';
-          playlist.style.backgroundColor = '#32312e' 
+          playlist.style.backgroundColor = 'rgba(255, 255, 255, .1)' 
       }
   })
+}
+
+function playlistOnClick() {
+  const currentPlaylists = Array.from(document.getElementsByClassName('current-playlist'));
+  currentPlaylists.forEach(playlist => {
+    playlist.onclick = function(e) {
+      if (e.target != $('.play-now') && e.target != $('.playing')) {
+        isAtHome = false;
+        const thisPlaylist = allPlaylists.filter(findPlaylist => findPlaylist.id == playlist.getAttribute('id'))
+        
+        const head = document.querySelector('head')
+        const link = document.createElement('link')
+        link.setAttribute('rel',"stylesheet")
+        link.setAttribute('href',"./assets/css/on-open-playlist.css")
+        link.setAttribute('id',"onOpenPlaylist")
+        head.appendChild(link)
+
+        const onOpenPlaylist = $('#on-open-playlist')
+        trace.push(onOpenPlaylist)
+        currentPage += 1
+        
+
+        onOpenPlaylist.style.width = mainView.offsetWidth + 'px'
+        onOpenPlaylist.style.height = mainView.offsetHeight + 'px'
+        onOpenPlaylist.style.top = mainView.offsetTop + 'px'
+        onOpenPlaylist.style.left = mainView.offsetLeft + 'px'
+        
+
+        const renderSongs = thisPlaylist[0].songs.map((song, index) => `
+          <ul class="song">
+            <li class='number'>${index + 1}</li>
+            <li class='title'>
+              <img class='song-img' src='${song.img}'>
+              <div class="song-info">
+                  <div class="song-info__name">${song.name}</div>
+                  <div class="song-info__artist">${song.artist}</div>
+              </div>
+            </li>
+            <li class='album'>${song.album}</li>
+            <li class='date'>Sep 8, 2021</li>
+            <li class='more'>
+              <img class="more__favorite" src="./assets/images/now-playing/favorite.png">
+              <span class="more__time">4:45</span>
+              <img class="more__icon" src='./assets/images/main-view/see-more.PNG'>
+            </li>
+          </ul>`).join('')
+        
+
+        onOpenPlaylist.innerHTML = `
+          <div id="on-open-playlist__header">
+            <img id="on-open-playlist__header__img" src=${thisPlaylist[0].img}>
+            <div id="on-open-playlist__header__title">
+              <div id="on-open-playlist__header__title__type">playlist</div>
+              <div id="on-open-playlist__header__title__name">${thisPlaylist[0].name}</div>
+              <div id="on-open-playlist__header__title__playlist-info">
+                <img id="on-open-playlist__header__title__playlist-info__img" src='./assets/images/user/user-avatar.jpg'>
+                <span id="on-open-playlist__header__title__playlist-info__owner">${thisPlaylist[0].owner} • </span>
+                </div>
+            </div>
+          </div>
+          <div id="on-open-playlist__body">
+            <div id="on-open-playlist__body__btns">
+              <img id="on-open-playlist__body__btns__play" class="play-now" src="./assets/images/main-view/play-now.PNG">
+              <img id="on-open-playlist__body__btns__see-more" src="./assets/images/main-view/see-more.PNG">
+            </div>
+            <div id="on-open-playlist__body__table">
+              <ul id="on-open-playlist__body__table__header">
+                <li class='number'>#</li>
+                <li class='title'>title</li>
+                <li class='album'>album</li>
+                <li class='date'>date added</li>
+                <li class='more' id="more">more</li>
+              </ul>
+              <div id="on-open-playlist__body__table__body">  
+                  ${renderSongs}
+              </div>
+            </div>
+          </div>`
+
+          onOpenPlaylist.style.backgroundImage = `linear-gradient(rgb(${thisPlaylist[0].backgroundColor}), #181818 600px)`
+      } 
+      setTimeout(function() {fitToScreen()}, 10);
+    }
+  })
+}
+
+
+function fitToScreen() {
+  let fontsize = window.getComputedStyle($('#on-open-playlist__header__title__name')).fontSize
+  $('#on-open-playlist__header__title__name').style.fontSize = parseFloat(fontsize) - 1 + 'px'
+  
+  if ($('#on-open-playlist__header__title__name').offsetWidth > 730) {
+    fitToScreen()
+  }
 }
 
 function nowPlayingOnClick() {
   nowPlaying.onclick = function() {
       if(!document.getElementById('nowPlaying') && window.outerWidth <= 999) {
+        isAtHome = false
           const head = document.querySelector('head')
           const link = document.createElement('link')
           link.setAttribute('rel',"stylesheet")
@@ -722,18 +1253,47 @@ function nowPlayingOnClick() {
   }
 }
 
+function moveAction() {
+
+}
+
+const whenNotHome = {
+  backHome: function() {
+    if (!isAtHome) {
+      if ($('#onOpenPlaylist')) $('#onOpenPlaylist').remove()
+      isAtHome = true;
+    }
+  },
+  handleBtns: function() {
+    const _this = this
+    $('#root__left-sidebar__logo').onclick = function() { _this.backHome()}
+    $('#root__left-sidebar__navigation__home').onclick = function() { _this.backHome()}
+  }
+
+}
+
+
+
+
 
 openMenu()
 handleCurrentPlaylistHover()
 nowPlayingOnClick()
-
-
-
+playlistOnClick()
+whenNotHome.handleBtns()
+handleResponsive.start() 
 
 window.onresize = function() {
   playSongs.changeNowPlayingColor()
   handleResponsive.start() 
   nowPlayingOnClick()
+  playlistOnClick()
+  
+  const onOpenPlaylist = $('#on-open-playlist')
+  onOpenPlaylist.style.width = mainView.offsetWidth + 'px'
+  onOpenPlaylist.style.height = mainView.offsetHeight + 'px'
+  onOpenPlaylist.style.top = mainView.offsetTop + 'px'
+  onOpenPlaylist.style.left = mainView.offsetLeft + 'px'
 }
 
 
