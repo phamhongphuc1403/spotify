@@ -840,7 +840,197 @@ html * {
 
 #on-open-playlist {
     display: none;
+    height: 100%;
+    background-color: white;
+    /* display: block; */
+    z-index: 1;
+    position: absolute;
+    overflow: overlay;
+    box-sizing: border-box;
+    background-image: linear-gradient(#a19263, #181818 600px);
+    background-attachment: local;
 }
+#on-open-playlist__header {
+    height: 336px;
+    padding: 0 32px 24px;
+    display: flex;
+    align-items: flex-end;
+}
+#on-open-playlist__header__img {
+    width: 232px;
+    box-shadow: 0 4px 60px rgb(0 0 0 / 50%);
+    margin-right: 24px;
+}
+#on-open-playlist__header__title {
+    /* max-width: 702px; */
+}
+#on-open-playlist__header__title__type{
+    font-size: 12px;
+    line-height: 16px;
+    text-transform: uppercase;
+}
+#on-open-playlist__header__title__name {
+    padding: 7.680px 0;
+    font-size: 96px;
+    /* font-size: 4.75vw; */
+    white-space: nowrap;
+    line-height: 96px;
+    display: inline;
+}
+
+#on-open-playlist__header__title__playlist-info {
+    margin-top: 8px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+#on-open-playlist__header__title__playlist-info__img {
+    width: 24px;
+    border-radius: 50%;
+    margin-right: 4px;
+}
+#on-open-playlist__header__title__playlist-info__owner > span {
+    color: rgb(179, 179, 179);
+}
+#on-open-playlist__body__btns {
+    padding: 24px 32px;
+    display: flex;
+    align-items: center;
+
+}
+
+#on-open-playlist__body {
+    background-color: rgba(0, 0, 0, 0.1);
+    /* border: 1px solid red; */
+    color:rgb(179, 179, 179);
+    font-weight: 400;
+    padding-bottom:120px;
+    /* margin-bottom: 60px; */
+    
+}
+#on-open-playlist__body__btns__play {
+    width: 56px;
+    margin-right: 36px;
+}
+
+#on-open-playlist__body__btns__see-more {
+    width: 24px;
+    opacity: 0.6;
+}
+#on-open-playlist__body__table {
+    padding: 0 32px;
+    
+}
+#on-open-playlist__body__table__header {
+    padding: 0 16px;
+    margin-bottom: 16px;
+    display: grid;
+    grid-template-columns: 16px minmax(0, 4fr) minmax(0, 3fr) 2fr 1fr;
+    grid-gap: 16px;
+    height: 36px;
+    width: 100%;
+    /* border: 1px solid red; */
+    text-transform: uppercase;
+    align-items: center;
+    font-size: 12px; 
+}
+/* #on-open-playlist__body__table__body * {
+    display: block
+} */
+.number {
+    /* border: 1px solid green; */
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.title {
+    /* border: 1px solid green; */
+    display: flex;
+}
+.title > img {
+    width: 40px;
+    margin-right: 16px;
+}
+
+.title > .song-info {
+    /* border: 1px solid green; */
+    max-width: 280px;
+    min-width: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+}
+
+
+.title > .song-info > .song-info__name {
+    /* border: 1px solid blue; */
+    
+
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 600;
+    color: white;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+}
+
+.title > .song-info > .song-info__artist {
+    /* border: 1px solid red; */
+    line-height: 16px;
+    font-size: 14px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+
+}
+.album {
+    /* border: 1px solid green; */
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+    
+}
+.date {
+    /* border: 1px solid green; */
+}
+.more {
+    /* border: 1px solid green; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#more {
+    /* border: 1px solid red; */
+    justify-content: flex-end;
+    margin-right: 27px;
+}
+.more > .more__favorite {
+    width: 16px;    
+}
+.more__icon {
+    width: 16px;
+    visibility: hidden;
+}
+.song {
+    display: grid;
+    grid-template-columns: 16px minmax(0, 4fr) minmax(0, 3fr) 2fr 1fr;
+    grid-gap: 16px;
+    padding: 0 16px;
+    width: 100%;
+    align-items: center;
+    height: 54px;
+    /* border: 1px solid red; */
+    border-radius: 4px;
+    /* background-color: red; */
+}
+
 
 .slideToLeft {
     animation: slideToLeft linear 0.3s forwards; 
@@ -885,7 +1075,7 @@ html * {
         overflow-x: hidden;
     }
     #root__top-container {
-        position: relative;
+        position: absolute;
         top: 0;
         background-color: transparent;
     }
@@ -1302,3 +1492,5 @@ html * {
         width: 97vw;
     }
 }
+
+
