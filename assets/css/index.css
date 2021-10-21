@@ -921,6 +921,9 @@ html * {
     padding: 0 32px;
     
 }
+#position-fixed-header {
+    height: 36px;
+}
 #on-open-playlist__body__table__header {
     padding: 0 16px;
     margin-bottom: 16px;

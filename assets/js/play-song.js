@@ -1043,13 +1043,15 @@ const handlePlaylists = {
                 <img id="on-open-playlist__body__btns__see-more" src="./assets/images/main-view/see-more.PNG">
               </div>
               <div id="on-open-playlist__body__table">
-                <ul id="on-open-playlist__body__table__header">
-                  <li class='number'>#</li>
-                  <li class='title'>title</li>
-                  <li class='album'>album</li>
-                  <li class='date'>date added</li>
-                  <li class='more' id="more">more</li>
-                </ul>
+                <div id="position-fixed-header">
+                  <ul id="on-open-playlist__body__table__header">
+                    <li class='number'>#</li>
+                    <li class='title'>title</li>
+                    <li class='album'>album</li>
+                    <li class='date'>date added</li>
+                    <li class='more' id="more">more</li>
+                  </ul>
+                </div>
                 <div id="on-open-playlist__body__table__body">  
                     ${renderSongs}
                 </div>
@@ -1126,9 +1128,7 @@ const handleResponsive = {
           if (e.target != friendsIcon && e.target != friendsBar) {
             friendsBar.classList.remove('slideToLeft')
             friendsBar.classList.add('reverseSlideToLeft')
-            setTimeout(function() {
-              friendsBar.classList.remove('reverseSlideToLeft')
-            }, 300)
+            setTimeout(function() {friendsBar.classList.remove('reverseSlideToLeft')}, 300)
           }
         }
       }
@@ -1229,7 +1229,29 @@ const handleNavigation = {
   }
 }
 
+function handlePlaylistHeaderOnscroll() {
+  const tableHeader = $('#position-fixed-header')
+  if (onOpenPlaylist.style.display == 'block' && (rootTop.offsetTop - onOpenPlaylist.scrollTop) <= -380) {
+    tableHeader.style.cssText = `
+      position: fixed; 
+      top: 60px;
+      left: ${onOpenPlaylist.offsetLeft}px;
+      width: ${onOpenPlaylist.offsetWidth}px;
+      padding: 0 32px;
+      background-color: #181818;`
 
+    $('#on-open-playlist__body__table__body').style.marginTop = '40px'
+  } else {
+    tableHeader.style.cssText = `
+      position: relative; 
+      top: 0;
+      left: 0px;
+      width: auto;
+      padding: 0;
+      background-color: rgba(0,0,0,0);`
+    $('#on-open-playlist__body__table__body').style.marginTop = '0px'
+  }
+}
 
 
 
@@ -1260,4 +1282,7 @@ mainView.onscroll = function() {
 
 onOpenPlaylist.onscroll = function() {
   handlePlaylists.handleHeaderOpacity()
+  handlePlaylistHeaderOnscroll()
 }
+
+console.log($('#root__top-container').offsetTop + $('#root__top-container').offsetHeight)
