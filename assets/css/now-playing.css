@@ -37,6 +37,7 @@
         width: 40vh;
         display: block;
         margin: 20px auto;
+        box-shadow: 0 4px 60px rgb(0 0 0 / 50%);
 
     }
     #root__now-playing__song__content {

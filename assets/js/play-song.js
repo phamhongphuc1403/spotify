@@ -486,8 +486,9 @@ const playSongs = {
   changeNowPlayingColor: function() {
     if (window.outerWidth > 999) {
       nowPlaying.style.backgroundColor = '#181818'
+      nowPlaying.style.backgroundImage = ''
     } else {
-      nowPlaying.style.backgroundColor = this.songs[this.currentIndex].backgroundColor
+      nowPlaying.style.backgroundImage = `linear-gradient(${this.songs[this.currentIndex].backgroundColor} 90%, #181818)`
     }
   },
 
@@ -521,13 +522,23 @@ const playSongs = {
     const _this = this
   
     audio.ontimeupdate = function() {
-          
-          //set 'time played' when song plays
+      
+      if ($('#on-open-playlist__body__btns__play')) {
+        if ($('#on-open-playlist__body__btns__play').className == _this.id && _this.isPlaying) {
+          $('#on-open-playlist__body__btns__play').src='./assets/images/main-view/pause-playlist.PNG'
+          $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/pause-playlist.PNG'
+        } else {
+          $('#on-open-playlist__body__btns__play').src='./assets/images/main-view/play-now-playlist.PNG'
+          $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/play-now-playlist.PNG'
+        }
+      }
+
+      //set 'time played' when song plays
 
       if (_this.isSeeking == false) {
         _this.handleTimePlayed()
    
-            //handle slider track color when song plays
+         //handle slider track color when song plays
         playbackSlider.value = audio.currentTime
         let thumbValue = playbackSlider.value / playbackSlider.max *100
         playbackSlider.style.background = `linear-gradient(to right, ${color} 0%, ${color} ${thumbValue}%, #535353 ${thumbValue}%, #535353 100%)`
@@ -545,7 +556,6 @@ const playSongs = {
 
   handlePlaybackSliderBar: function() {   
     const _this = this
-    
     //handle slider thumb when drag or click
     playbackSlider.oninput = function() {
       _this.isSeeking = true
@@ -830,20 +840,14 @@ const playSongs = {
 
     //handle previous button
     prevBtn.onclick = function() {
+      audio.autoplay = true
       
       if (audio.currentTime < 2.5) {      // go to the previous song if the current song is playing less than 2.5 seconds
         _this.currentIndex -= 1
         if (_this.currentIndex < 0) _this.currentIndex = _this.songs.length - 1   //if the current song is the first in the playlist, go to the last song
         _this.loadCurrentSong()
-        audio.autoplay = true
-        _this.isPlaying = true;
-        playBtn.src = `./assets/images/now-playing/pause.png`
-      
       } else {      //replay the song if the current song is playing more than 2.5 seconds
         _this.loadCurrentSong()
-        audio.autoplay = true
-        _this.isPlaying = true;
-        playBtn.src = `./assets/images/now-playing/pause.png`
       }
     }
 
@@ -853,8 +857,6 @@ const playSongs = {
       if (_this.currentIndex >= _this.songs.length) _this.currentIndex = 0    //if it's the the last song in the playlist, play the first song
       _this.loadCurrentSong()
       audio.autoplay = true
-      _this.isPlaying = true;
-      playBtn.src = `./assets/images/now-playing/pause.png`
     }
 
     //handle shuffle button
@@ -866,15 +868,12 @@ const playSongs = {
     repeatBtn.onclick = function() {
       _this.isRepeatPlaylist ? _this.handleRepeat.repeatSong() : _this.isRepeatSong ? _this.handleRepeat.noRepeat() : _this.handleRepeat.repeatPlaylist()
     }
-    
-    //handle pause btn in playlist box
-    for (let pauseBtns of document.getElementsByClassName('playing')) {
-      pauseBtns.onclick = function(e) {
-        e.stopPropagation()
-        audio.pause()
-      }
-    }
-   
+        
+    this.handleAudioPlaying()
+  },
+
+  handleAudioPlaying: function() {
+    _this = this
     audio.onplay = function() {
       //hide all playing btn in playlist box...
       for (let pauseBtns of document.getElementsByClassName('playing')) {
@@ -885,11 +884,7 @@ const playSongs = {
         pauseBtnShadows.style.opacity = 0
       }
 
-
-      //execpt the one is playing
-
-      _this.isPlaying = true;
-      playBtn.src = `./assets/images/now-playing/pause.png`
+      //except the one is playing
       const pauseBtn = document.getElementsByClassName('playing')[_this.id - 1]
       const pauseBtnShadow = document.getElementsByClassName('playing-shadow')[_this.id - 1]
       if (pauseBtn) {
@@ -897,11 +892,15 @@ const playSongs = {
         pauseBtn.style.zIndex = 2;
         pauseBtnShadow.style.opacity = 1;
       }
-
+      if ($('#on-open-playlist__body__btns__play')) if($('#on-open-playlist__body__btns__play').className == _this.id) {
+        $('#on-open-playlist__body__btns__play').src = './assets/images/main-view/pause-playlist.PNG'
+        $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/pause-playlist.PNG'
+      }
+      _this.isPlaying = true;
+      playBtn.src = `./assets/images/now-playing/pause.png`
+      $('title').innerText = `${_this.songs[_this.currentIndex].name} · ${_this.songs[_this.currentIndex].artist}`
     }
     audio.onpause = function() {
-      _this.isPlaying = false;
-      playBtn.src = `./assets/images/now-playing/play.PNG`
       const pauseBtn = document.getElementsByClassName('playing')[_this.id - 1]
       const pauseBtnShadow = document.getElementsByClassName('playing-shadow')[_this.id - 1]
       if (pauseBtn) {
@@ -909,6 +908,13 @@ const playSongs = {
         pauseBtn.style.zIndex = -1;
         pauseBtnShadow.style.opacity = 0; 
       }
+      if ($('#on-open-playlist__body__btns__play')) if($('#on-open-playlist__body__btns__play').className == _this.id) {
+        $('#on-open-playlist__body__btns__play').src = './assets/images/main-view/play-now-playlist.PNG'
+        $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/play-now-playlist.PNG'
+      }
+      _this.isPlaying = false;
+      playBtn.src = `./assets/images/now-playing/play.PNG`
+      $('title').innerText = `Spotify - Made by Phuc1403`
     }
   },
   start: function() {  //wrap all function into one 
@@ -977,95 +983,128 @@ const handlePlaylists = {
     for (let eachPlaylist of playlistArray) {
       const thisPlaylistInDB = _this.playlists.filter(playlist => playlist.id == eachPlaylist.getAttribute('id'))   //find playlist in the database that match the id
      
+      function playPlaylist() {
+        if (playSongs.id == thisPlaylistInDB[0].id) {
+          if (playSongs.isPlaying) {audio.pause()} else {audio.play()}
+        } else {
+          playSongs.songs = thisPlaylistInDB[0].songs //choose the first (and only) object of 'playlist' array that contain a playlist
+          playSongs.id = thisPlaylistInDB[0].id
+
+          if (playSongs.isShuffle) {
+            playSongs.currentIndex = Math.floor(Math.random() * (playSongs.songs.length - 1)) + 1
+          } else {
+            playSongs.currentIndex = 0;
+          }
+
+          // auto play the playlist
+          audio.autoplay = true
+          playSongs.start()
+        }
+
+        $('#root__now-playing__header__playlist').innerHTML = `${thisPlaylistInDB[0].name}`
+      }
+
+
       eachPlaylist.onclick = function(e) {       
         if (Array.from(document.getElementsByClassName('play-now')).includes(e.target) || Array.from(document.getElementsByClassName('playing')).includes(e.target)) {
           e.stopPropagation()
-          if (playSongs.id == thisPlaylistInDB[0].id) {audio.play()} else {
-            playSongs.songs = thisPlaylistInDB[0].songs //choose the first (and only) object of 'playlist' array that contain a playlist
-            playSongs.id = thisPlaylistInDB[0].id
-  
-            if (playSongs.isShuffle) {
-              playSongs.currentIndex = Math.floor(Math.random() * (playSongs.songs.length - 1)) + 1
-            } else {
-              playSongs.currentIndex = 0;
-            }
-  
-            // auto play the playlist
-            audio.autoplay = true
-            playSongs.isPlaying = true
-
-            playSongs.start()
-          }
-  
-          $('#root__now-playing__header__playlist').innerHTML = `${thisPlaylistInDB[0].name}`
+          playPlaylist()
         } else {
           handleNavigation.farFromHome()
           currentPage += 1;
           trace.push(onOpenPlaylist)
 
-          onOpenPlaylist.style.display = 'block'
-          onOpenPlaylist.style.backgroundImage = `linear-gradient(rgb(${thisPlaylistInDB[0].backgroundColor}), #181818 600px)`
           
-          const renderSongs = thisPlaylistInDB[0].songs.map((song, index) => `
-            <ul class="song">
-              <li class='number'>${index + 1}</li>
-              <li class='title'>
-                <img class='song-img' src='${song.img}'>
-                <div class="song-info">
-                    <div class="song-info__name">${song.name}</div>
-                    <div class="song-info__artist">${song.artist}</div>
-                </div>
-              </li>
-              <li class='album'>${song.album}</li>
-              <li class='date'>Sep 8, 2021</li>
-              <li class='more'>
-                <img class="more__favorite" src="./assets/images/now-playing/favorite.png">
-                <span class="more__time">4:45</span>
-                <img class="more__icon" src='./assets/images/main-view/see-more.PNG'>
-              </li>
-            </ul>`).join('')
-  
-          onOpenPlaylist.innerHTML = `
-            <div id="on-open-playlist__header">
-              <img id="on-open-playlist__header__img" src=${thisPlaylistInDB[0].img}>
-              <div id="on-open-playlist__header__title">
-                <div id="on-open-playlist__header__title__type">playlist</div>
-                <div id="on-open-playlist__header__title__name">${thisPlaylistInDB[0].name}</div>
-                <div id="on-open-playlist__header__title__playlist-info">
-                  <img id="on-open-playlist__header__title__playlist-info__img" src='./assets/images/user/user-avatar.jpg'>
-                  <span id="on-open-playlist__header__title__playlist-info__owner">${thisPlaylistInDB[0].owner} <span>• ${thisPlaylistInDB[0].songs.length} songs</span></span>
+          function renderPlaylistPage() {
+            const renderSongs = thisPlaylistInDB[0].songs.map((song, index) => `
+              <ul class="song">
+                <li class='number'>${index + 1}</li>
+                <li class='title'>
+                  <img class='song-img' src='${song.img}'>
+                  <div class="song-info">
+                      <div class="song-info__name">${song.name}</div>
+                      <div class="song-info__artist">${song.artist}</div>
                   </div>
-              </div>
-            </div>
-            <div id="on-open-playlist__body">
-              <div id="on-open-playlist__body__btns">
-                <img id="on-open-playlist__body__btns__play" class="play-now" src="./assets/images/main-view/play-now.PNG">
-                <img id="on-open-playlist__body__btns__see-more" src="./assets/images/main-view/see-more.PNG">
-              </div>
-              <div id="on-open-playlist__body__table">
-                <div id="position-fixed-header">
-                  <ul id="on-open-playlist__body__table__header">
-                    <li class='number'>#</li>
-                    <li class='title'>title</li>
-                    <li class='album'>album</li>
-                    <li class='date'>date added</li>
-                    <li class='more' id="more">more</li>
-                  </ul>
+                </li>
+                <li class='album'>${song.album}</li>
+                <li class='date'>Sep 8, 2021</li>
+                <li class='more'>
+                  <img class="more__favorite" src="./assets/images/now-playing/favorite.png">
+                  <span class="more__time">4:45</span>
+                  <img class="more__icon" src='./assets/images/main-view/see-more.PNG'>
+                </li>
+              </ul>`).join('')
+  
+            onOpenPlaylist.innerHTML = `
+              <div id="on-open-playlist__header">
+                <img id="on-open-playlist__header__img" src=${thisPlaylistInDB[0].img}>
+                <div id="on-open-playlist__header__title">
+                  <div id="on-open-playlist__header__title__type">playlist</div>
+                  <div id="on-open-playlist__header__title__name">${thisPlaylistInDB[0].name}</div>
+                  <div id="on-open-playlist__header__title__playlist-info">
+                    <img id="on-open-playlist__header__title__playlist-info__img" src='./assets/images/user/user-avatar.jpg'>
+                    <span id="on-open-playlist__header__title__playlist-info__owner">${thisPlaylistInDB[0].owner} <span>• ${thisPlaylistInDB[0].songs.length} songs</span></span>
+                    </div>
                 </div>
-                <div id="on-open-playlist__body__table__body">  
-                    ${renderSongs}
-                </div>
               </div>
-            </div>`
-    
-          function fitToScreen() {
-            let fontsize = window.getComputedStyle($('#on-open-playlist__header__title__name')).fontSize
-            if (fontsize != '14px') {$('#on-open-playlist__header__title__name').style.fontSize = parseFloat(fontsize) - 1 + 'px'} else {fitToScreen()}
-             if ($('#on-open-playlist__header__title__name').offsetWidth > 730) {
-              fitToScreen()
+              <div id="on-open-playlist__body">
+                <div id="on-open-playlist__body__btns">
+                  <img id="on-open-playlist__body__btns__play" class="${thisPlaylistInDB[0].id}" src="./assets/images/main-view/play-now-playlist.PNG">
+                  <img id="on-open-playlist__body__btns__see-more" src="./assets/images/main-view/see-more.PNG">
+                </div>
+                <div id="on-open-playlist__body__table">
+                  <div id="position-fixed-header">
+                    <ul id="on-open-playlist__body__table__header">
+                      <li class='number'>#</li>
+                      <li class='title'>title</li>
+                      <li class='album'>album</li>
+                      <li class='date'>date added</li>
+                      <li class='more' id="more"><img src='./assets/images/main-view/duration.PNG'></li>
+                    </ul>
+                  </div>
+                  <div id="on-open-playlist__body__table__body">  
+                      ${renderSongs}
+                  </div>
+                </div>
+              </div>`
+            $('#root__top__add-play-btn__playlist-name').innerText = thisPlaylistInDB[0].name
+          }
+          
+          function stylePlaylistPage() {
+            function fitToScreen() {
+              let fontsize = window.getComputedStyle($('#on-open-playlist__header__title__name')).fontSize
+              console.log(fontsize)
+              if (fontsize != '14px') {$('#on-open-playlist__header__title__name').style.fontSize = parseFloat(fontsize) - 1 + 'px'} else {fitToScreen()}
+               if ($('#on-open-playlist__header__title__name').offsetWidth > 730) {
+                fitToScreen()
+              }
+            }
+            // setTimeout(() => {fitToScreen()}, 1000);
+            onOpenPlaylist.style.display = 'block'
+            onOpenPlaylist.style.backgroundImage = `linear-gradient(rgb(${thisPlaylistInDB[0].backgroundColor}), #181818 600px)`
+            
+            if ($('#on-open-playlist__header__title__name').innerText.length < 15) {
+              $('#on-open-playlist__header__title__name').style.fontSize = '96px'
+            } else {
+              $('#on-open-playlist__header__title__name').style.fontSize = '70px'
+            }
+
+          }
+
+          function handlePlaylistPageButtons() {
+            $('#root__top__add-play-btn__play-btn').onclick = function() {
+              if ($('#root__top__add-play-btn__play-btn').style.opacity == 1) {
+                playPlaylist()
+              }
+            }
+            $('#on-open-playlist__body__btns__play').onclick = function() {
+              playPlaylist()
             }
           }
-          setTimeout(() => {fitToScreen()}, 10);
+
+          renderPlaylistPage()
+          stylePlaylistPage()
+          handlePlaylistPageButtons()
         }
       }
     }
@@ -1210,8 +1249,17 @@ function nowPlayingOnClick() {
 const handleNavigation = {
   backHome: function() {
     if (!isAtHome) {
-      if (onOpenPlaylist.style.display == 'block') onOpenPlaylist.style.display = 'none'
-
+      if (onOpenPlaylist.style.display == 'block') {
+        onOpenPlaylist.style.display = 'none';
+        $('#root__top__add-play-btn__play-btn').style.opacity = 0
+        $('#root__top__add-play-btn__playlist-name').style.opacity = 0
+        $('#root__top__add-play-btn__play-btn').style.display = 'none'
+        $('#root__top__add-play-btn__playlist-name').style.display = 'none'
+        setTimeout(() => {
+          $('#root__top__add-play-btn__play-btn').style.display = ''
+          $('#root__top__add-play-btn__playlist-name').style.display = ''
+        }, 10);
+      }
       isAtHome = true;
       homeBtn.querySelector('img').src = './assets/images/left-sidebar/home-active.PNG'
       homeBtn.classList.add('current')
@@ -1240,16 +1288,23 @@ function handlePlaylistHeaderOnscroll() {
       padding: 0 32px;
       background-color: #181818;`
 
-    $('#on-open-playlist__body__table__body').style.marginTop = '40px'
+    $('#on-open-playlist__body__table__body').style.marginTop = '52px'
   } else {
     tableHeader.style.cssText = `
       position: relative; 
       top: 0;
       left: 0px;
       width: auto;
-      padding: 0;
-      background-color: rgba(0,0,0,0);`
-    $('#on-open-playlist__body__table__body').style.marginTop = '0px'
+      padding: 0;`
+    $('#on-open-playlist__body__table__body').style.marginTop = '16px'
+  }
+  
+  if (onOpenPlaylist.style.display == 'block' && (rootTop.offsetTop - onOpenPlaylist.scrollTop) <= -318) {
+    $('#root__top__add-play-btn__play-btn').style.opacity = 1
+    setTimeout(() => {$('#root__top__add-play-btn__playlist-name').style.opacity = 1}, 33);
+  } else {
+    $('#root__top__add-play-btn__play-btn').style.opacity = 0
+    setTimeout(() => {$('#root__top__add-play-btn__playlist-name').style.opacity = 0}, 33);
   }
 }
 
@@ -1284,5 +1339,3 @@ onOpenPlaylist.onscroll = function() {
   handlePlaylists.handleHeaderOpacity()
   handlePlaylistHeaderOnscroll()
 }
-
-console.log($('#root__top-container').offsetTop + $('#root__top-container').offsetHeight)

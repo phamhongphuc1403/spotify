@@ -174,6 +174,25 @@ html * {
     margin-left: 12px;
 }
 
+#root__top__add-play-btn {
+    display: flex;
+    align-items: center;
+}
+#root__top__add-play-btn__play-btn {
+    width: 40px;
+    display: block;
+    margin-left: 16px;
+    margin-right: 16px;
+    opacity: 0;
+    transition: 33ms ease;
+}
+#root__top__add-play-btn__playlist-name {
+    font-size: 24px;
+    line-height: 28px;
+    opacity: 0;
+    transition: 0.5s ease;
+}
+
 #root__top__user {
     border-radius: 23px;
     height: 28px;
@@ -655,6 +674,8 @@ html * {
 }
 #root__now-playing__song__content {
     display: flex;
+    align-items: center;
+    /* height: 56px; */
 }
 #root__now-playing__song__info {
     margin: 0 14px;
@@ -663,10 +684,11 @@ html * {
     text-overflow: ellipsis; 
     white-space: nowrap; 
     overflow: hidden;
+    height: 32px;
 }
 
 #root__now-playing__song__info__name {
-    line-height: 16px;
+    line-height: 22px;
     text-overflow: ellipsis; 
     white-space: nowrap; 
     overflow: hidden;
@@ -843,7 +865,7 @@ html * {
     height: 100%;
     background-color: white;
     /* display: block; */
-    z-index: 1;
+    z-index: 3;
     position: absolute;
     overflow: overlay;
     box-sizing: border-box;
@@ -863,6 +885,8 @@ html * {
 }
 #on-open-playlist__header__title {
     /* max-width: 702px; */
+    border: 1px solid red;
+    width: 100%;
 }
 #on-open-playlist__header__title__type{
     font-size: 12px;
@@ -871,11 +895,11 @@ html * {
 }
 #on-open-playlist__header__title__name {
     padding: 7.680px 0;
-    font-size: 96px;
+    font-size: 90px;
     /* font-size: 4.75vw; */
-    white-space: nowrap;
+    /* white-space: nowrap; */
     line-height: 96px;
-    display: inline;
+    /* display: inline; */
 }
 
 #on-open-playlist__header__title__playlist-info {
@@ -919,27 +943,27 @@ html * {
 }
 #on-open-playlist__body__table {
     padding: 0 32px;
-    
 }
 #position-fixed-header {
     height: 36px;
+    border-bottom: 1px solid rgba(255,255,255,.1);
 }
+#on-open-playlist__body__btns__play:hover, #root__top__add-play-btn__play-btn:hover {
+    transform: scale(1.05);
+}
+
 #on-open-playlist__body__table__header {
     padding: 0 16px;
-    margin-bottom: 16px;
     display: grid;
-    grid-template-columns: 16px minmax(0, 4fr) minmax(0, 3fr) 2fr 1fr;
+    grid-template-columns: 16px minmax(0, 4fr) minmax(0, 3fr) 1.5fr 1.5fr;
     grid-gap: 16px;
     height: 36px;
     width: 100%;
-    /* border: 1px solid red; */
     text-transform: uppercase;
     align-items: center;
     font-size: 12px; 
+    /* border: 1px solid red; */
 }
-/* #on-open-playlist__body__table__body * {
-    display: block
-} */
 .number {
     /* border: 1px solid green; */
     font-size: 16px;
@@ -969,9 +993,6 @@ html * {
 
 
 .title > .song-info > .song-info__name {
-    /* border: 1px solid blue; */
-    
-
     font-size: 16px;
     line-height: 24px;
     font-weight: 600;
@@ -1009,10 +1030,13 @@ html * {
     align-items: center;
     justify-content: space-between;
 }
+.more > img {
+    width: 16px;
+}
 #more {
     /* border: 1px solid red; */
     justify-content: flex-end;
-    margin-right: 27px;
+    margin-right: 55px;
 }
 .more > .more__favorite {
     width: 16px;    
@@ -1023,7 +1047,7 @@ html * {
 }
 .song {
     display: grid;
-    grid-template-columns: 16px minmax(0, 4fr) minmax(0, 3fr) 2fr 1fr;
+    grid-template-columns: 16px minmax(0, 4fr) minmax(0, 3fr) 1.5fr 1.5fr;
     grid-gap: 16px;
     padding: 0 16px;
     width: 100%;
@@ -1032,6 +1056,9 @@ html * {
     /* border: 1px solid red; */
     border-radius: 4px;
     /* background-color: red; */
+}
+.song:first-child {
+    margin-top: 16px;
 }
 
 
@@ -1064,7 +1091,14 @@ html * {
 }
 
 
-
+@media (max-width: 1279px) {
+    #on-open-playlist__header__img {
+        width: 192px;
+    }
+    /* #on-open-playlist__header__title__name {
+        font-size: 75px;
+    } */
+}
 
 /* large tablets and small pcs */
 @media (max-width: 1115px) and (min-width: 1000px) {
@@ -1174,6 +1208,11 @@ html * {
     .list, .remote, .fullscreen {
         display: none;
     }
+
+
+    /* #on-open-playlist__header__title__name {
+        font-size: 90px;
+    } */
 }
 
 
@@ -1188,7 +1227,9 @@ html * {
     #root__top-container {
         display: none;
     }
-
+    #root__top__add-play-btn__playlist-name, #root__top__add-play-btn__play-btn {
+        display: none;
+    }
     #root__main-view {
         padding: 10px;
         overflow-x: hidden;
