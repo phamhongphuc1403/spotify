@@ -686,13 +686,12 @@ const playSongs = {
   },
 
   handleShuffle: {
-
     shuffle: function() {
       playSongs.isShuffle = true
 
       //random order of other songs
       playSongs.songs.forEach(obj => {
-        obj.order = Math.random() * Math.random()
+        obj.order =  Math.floor(Math.random() * (playSongs.songs.length - 1)) + 1
       })
       playSongs.songs[playSongs.currentIndex].order = 0
       playSongs.currentIndex = 0
@@ -1071,24 +1070,25 @@ const handlePlaylists = {
           }
           
           function stylePlaylistPage() {
-            function fitToScreen() {
-              let fontsize = window.getComputedStyle($('#on-open-playlist__header__title__name')).fontSize
-              console.log(fontsize)
-              if (fontsize != '14px') {$('#on-open-playlist__header__title__name').style.fontSize = parseFloat(fontsize) - 1 + 'px'} else {fitToScreen()}
-               if ($('#on-open-playlist__header__title__name').offsetWidth > 730) {
-                fitToScreen()
-              }
-            }
-            // setTimeout(() => {fitToScreen()}, 1000);
             onOpenPlaylist.style.display = 'block'
             onOpenPlaylist.style.backgroundImage = `linear-gradient(rgb(${thisPlaylistInDB[0].backgroundColor}), #181818 600px)`
+            let titleFontSize = window.getComputedStyle($('#on-open-playlist__header__title__name')).fontSize
+            let headerContentWidth = $('#on-open-playlist').offsetWidth - 310
             
-            if ($('#on-open-playlist__header__title__name').innerText.length < 15) {
-              $('#on-open-playlist__header__title__name').style.fontSize = '96px'
+            function fitToDiv(size) {
+              $('#on-open-playlist__header__title__name').style.fontSize = parseFloat(size) - 1 + 'px'
+              titleFontSize = parseFloat(size) - 1
+              // console.log(window.getComputedStyle($('#on-open-playlist__header__title__name')).fontSize)
+              if ($('#on-open-playlist__header__title__name').offsetWidth > headerContentWidth) {
+                fitToDiv(titleFontSize)
+              }
+            } 
+            if (window.outerWidth > 768) {
+              fitToDiv(titleFontSize)
             } else {
-              $('#on-open-playlist__header__title__name').style.fontSize = '70px'
+              $('#on-open-playlist__header__title__name').style.fontSize = '5vw'
             }
-
+            handleResponsive.handlePlaylistPage.handlePageWidth()
           }
 
           function handlePlaylistPageButtons() {
@@ -1120,17 +1120,44 @@ handlePlaylists.start()
 
 
 const handleResponsive = {
-  
-  handleTopContainerWidth: function() {
+  handleMainView: {
+    handleTopContainerWidth: function() {
       if (window.outerWidth > 1115) {
           rootTop.style.width = mainView.offsetWidth + 'px'
       } else {
           rootTop.style.width = mainView.offsetWidth + 250 + 'px'
           
       }        
+    },
+    
+    handleResponsiveBar: function() {                               
+      if (friendsIcon) {
+            
+        friendsIcon.onclick = function() {
+              
+          if (!friendsBar.classList.contains('slideToLeft')) {     
+              friendsBar.classList.add('slideToLeft')
+          }
+        }
+        $('#root__main-view').onclick = function(e) {
+          if (friendsBar.classList.contains('slideToLeft')) {
+            if (e.target != friendsIcon && e.target != friendsBar) {
+              friendsBar.classList.remove('slideToLeft')
+              friendsBar.classList.add('reverseSlideToLeft')
+              setTimeout(function() {friendsBar.classList.remove('reverseSlideToLeft')}, 300)
+            }
+          }
+        }
+      }
+    },
+    handle: function() {
+      this.handleTopContainerWidth();
+      this.handleResponsiveBar()
+    }
   },
 
-  handleTextOverflow: function() {
+  handlePlaylist: {
+    handleTextOverflow: function() {
       const currentPlaylistTitle = document.querySelectorAll('#root__main-view__currently-playing__playlists > .current-playlist > .current-playlist__content > span')
       const currentPlaylistWidth = $('#root__main-view__currently-playing__playlists > .current-playlist').offsetWidth
       
@@ -1143,47 +1170,59 @@ const handleResponsive = {
           }
           
       }
-  },
+    },
 
-  handlePlaylists: function() {
+    handleImgResize: function() {
       const playlistImgs = document.getElementsByClassName('playlist-img')
       for (let playlistImg of playlistImgs) {
           playlistImg.style.width = $('.playlist').offsetWidth - 32 + 'px'
       }
-
-  },
-  
-  handleResponsiveBar: function() {                               
-    if (friendsIcon) {
-          
-      friendsIcon.onclick = function() {
-            
-        if (!friendsBar.classList.contains('slideToLeft')) {     
-            friendsBar.classList.add('slideToLeft')
-        }
-      }
-      $('#root__main-view').onclick = function(e) {
-        if (friendsBar.classList.contains('slideToLeft')) {
-          if (e.target != friendsIcon && e.target != friendsBar) {
-            friendsBar.classList.remove('slideToLeft')
-            friendsBar.classList.add('reverseSlideToLeft')
-            setTimeout(function() {friendsBar.classList.remove('reverseSlideToLeft')}, 300)
-          }
-        }
-      }
+    },
+    handle: function() {
+      this.handleTextOverflow();
+      this.handleImgResize()
     }
   },
-  handleOnOpenPlaylistWidth: function() {
-    onOpenPlaylist.style.width = mainView.offsetWidth + 'px'
-    onOpenPlaylist.style.top = mainView.offsetTop + 'px'
-    onOpenPlaylist.style.left = mainView.offsetLeft + 'px'
+  
+  handlePlaylistPage: {
+    handlePageWidth: function() {
+      onOpenPlaylist.style.width = mainView.offsetWidth + 'px'
+      onOpenPlaylist.style.top = mainView.offsetTop + 'px'
+      onOpenPlaylist.style.left = mainView.offsetLeft + 'px'
+    },
+    currentFontSizeArr: [],
+    handleTextWidth: function() {
+      if(onOpenPlaylist.style.display == 'block') {
+        if (window.outerWidth > 768) {
+          let currentFontSize = parseFloat(window.getComputedStyle($('#on-open-playlist__header__title__name')).fontSize)
+          if (!this.currentFontSizeArr.includes(currentFontSize)) this.currentFontSizeArr.unshift(currentFontSize)
+          if ($('#on-open-playlist__header__title__name').offsetWidth >= $('#on-open-playlist__header__title').offsetWidth - 15) {
+            $('#on-open-playlist__header__title__name').style.fontSize = currentFontSize - 15 + 'px'
+            currentFontSize = parseFloat(window.getComputedStyle($('#on-open-playlist__header__title__name')).fontSize)
+            this.currentFontSizeArr.unshift(currentFontSize)
+          }
+          if ($('#on-open-playlist__header__title__name').offsetWidth < $('#on-open-playlist__header__title').offsetWidth - 170) {
+            this.currentFontSizeArr.shift()
+            $('#on-open-playlist__header__title__name').style.fontSize = this.currentFontSizeArr[0] + 'px'
+            currentFontSize = parseFloat(window.getComputedStyle($('#on-open-playlist__header__title__name')).fontSize)
+          }
+        } else {
+          $('#on-open-playlist__header__title__name').style.fontSize = '5vw'
+        }
+
+        $('.song-info').maxWidth = $('.title').clientWidth - 56 + 'px'
+      }
+    },
+    handle: function() {
+      this.handlePageWidth();
+      this.handleTextWidth()
+    }
   },
+
   start: function() {
-    this.handleTextOverflow()
-    this.handleTopContainerWidth()
-    this.handlePlaylists()
-    this.handleResponsiveBar()
-    this.handleOnOpenPlaylistWidth()
+    this.handleMainView.handle()
+    this.handlePlaylist.handle()
+    this.handlePlaylistPage.handle()
   }
 }
 
@@ -1279,32 +1318,34 @@ const handleNavigation = {
 
 function handlePlaylistHeaderOnscroll() {
   const tableHeader = $('#position-fixed-header')
-  if (onOpenPlaylist.style.display == 'block' && (rootTop.offsetTop - onOpenPlaylist.scrollTop) <= -380) {
-    tableHeader.style.cssText = `
-      position: fixed; 
-      top: 60px;
-      left: ${onOpenPlaylist.offsetLeft}px;
-      width: ${onOpenPlaylist.offsetWidth}px;
-      padding: 0 32px;
-      background-color: #181818;`
+  if (onOpenPlaylist.style.display == 'block') {
+    if ((rootTop.offsetTop - onOpenPlaylist.scrollTop) <= -380 && window.outerWidth > 999) {
+      tableHeader.style.cssText = `
+        position: fixed; 
+        top: 60px;
+        left: ${onOpenPlaylist.offsetLeft}px;
+        width: ${onOpenPlaylist.offsetWidth}px;
+        padding: 0 32px;
+        background-color: #181818;`
 
-    $('#on-open-playlist__body__table__body').style.marginTop = '52px'
-  } else {
-    tableHeader.style.cssText = `
-      position: relative; 
-      top: 0;
-      left: 0px;
-      width: auto;
-      padding: 0;`
-    $('#on-open-playlist__body__table__body').style.marginTop = '16px'
-  }
-  
-  if (onOpenPlaylist.style.display == 'block' && (rootTop.offsetTop - onOpenPlaylist.scrollTop) <= -318) {
-    $('#root__top__add-play-btn__play-btn').style.opacity = 1
-    setTimeout(() => {$('#root__top__add-play-btn__playlist-name').style.opacity = 1}, 33);
-  } else {
-    $('#root__top__add-play-btn__play-btn').style.opacity = 0
-    setTimeout(() => {$('#root__top__add-play-btn__playlist-name').style.opacity = 0}, 33);
+      $('#on-open-playlist__body__table__body').style.marginTop = '52px'
+    } else if(window.outerWidth > 650){
+      tableHeader.style.cssText = `
+        position: relative; 
+        top: 0;
+        left: 0px;
+        width: auto;
+        padding: 0;`
+      $('#on-open-playlist__body__table__body').style.marginTop = '16px'
+    }
+    
+    if (onOpenPlaylist.style.display == 'block' && (rootTop.offsetTop - onOpenPlaylist.scrollTop) <= -318) {
+      $('#root__top__add-play-btn__play-btn').style.opacity = 1
+      setTimeout(() => {$('#root__top__add-play-btn__playlist-name').style.opacity = 1}, 33);
+    } else {
+      $('#root__top__add-play-btn__play-btn').style.opacity = 0
+      setTimeout(() => {$('#root__top__add-play-btn__playlist-name').style.opacity = 0}, 33);
+    }
   }
 }
 
@@ -1320,6 +1361,7 @@ window.onresize = function() {
   playSongs.changeNowPlayingColor()
   handleResponsive.start() 
   nowPlayingOnClick()
+  handlePlaylistHeaderOnscroll()
 }
 
 
