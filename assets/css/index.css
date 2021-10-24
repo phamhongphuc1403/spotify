@@ -869,9 +869,12 @@ html * {
     position: absolute;
     overflow: overlay;
     box-sizing: border-box;
-    background-image: linear-gradient(#a19263, #181818 600px);
+    /* background-image: linear-gradient(#a19263, #181818 600px); */
     background-attachment: local;
     /* border: 5px solid yellow; */
+}
+#on-open-playlist__return-home {
+    display: none;
 }
 #on-open-playlist__header {
 
@@ -971,6 +974,10 @@ html * {
     font-size: 12px; 
     /* border: 1px solid red; */
 }
+.play-this-song {
+    display: none;
+    width: 16px;
+}
 .number {
     /* border: 1px solid green; */
     font-size: 16px;
@@ -1041,7 +1048,7 @@ html * {
 }
 #more {
     /* border: 1px solid red; */
-    justify-content: flex-end;
+    justify-content: space-around;
     /* margin-right: 55px; */
 }
 .more > .more__favorite {
@@ -1049,6 +1056,7 @@ html * {
 }
 .more__icon {
     width: 16px;
+    opacity: 0;
 }
 .song {
     display: grid;
@@ -1501,6 +1509,13 @@ html * {
     #on-open-playlist {
         padding: 10px;
     }
+    #on-open-playlist__return-home {
+        display: block;
+        position: absolute;
+        top: 20px;
+        left: 10px;
+        width: 30px;
+    }
     #on-open-playlist__body {
         background-color: transparent;
     }
@@ -1512,7 +1527,11 @@ html * {
         grid-template-columns: 16px minmax(0, 6fr) minmax(0, 3fr) 1fr;
         padding: 0;
     }
-
+    #more {
+        /* border: 1px solid red; */
+        justify-content: flex-start;
+        /* margin-right: 55px; */
+    }
 
     .song {
         grid-template-columns: 16px minmax(0, 6fr) minmax(0, 3fr) 1fr;
@@ -1550,6 +1569,9 @@ html * {
 
 
 @media (max-width: 650px) {
+    #on-open-playlist__return-home {
+        width: 20px;
+    }
     #on-open-playlist__header__title__name {
         line-height: 20px;
         /* font-size: 50px; */
@@ -1558,11 +1580,11 @@ html * {
     #on-open-playlist__body__btns {
         padding: 10px 0;
     }
-    .album {
+    #position-fixed-header, .album {
         display: none;
     }
-    #position-fixed-header {
-        display: none;
+    .more__icon {
+        opacity: 1;
     }
     .song {
         grid-template-columns: 16px minmax(0, 6fr) 1fr;

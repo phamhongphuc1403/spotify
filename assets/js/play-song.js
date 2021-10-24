@@ -465,8 +465,8 @@ const allPlaylists = [
 ]
 
 const playSongs = { 
-  songs: [...allSongs],
-  id: 0,
+  songs: [...allPlaylists[1].songs],
+  id: 2,
   currentIndex: 0,
   isPlaying: false,
   isShuffle: true,
@@ -710,7 +710,9 @@ const playSongs = {
     noShuffle: function() {
       playSongs.isShuffle = false
       //sort songs by id
+      const currentSong = playSongs.songs[playSongs.currentIndex]
       playSongs.songs.sort((a,b) => a.id - b.id)
+      playSongs.currentIndex = playSongs.songs.indexOf(currentSong)
       
       //change shuffle button to default
       shuffleBtn.src="./assets/images/now-playing/shuffle.PNG"
@@ -899,6 +901,8 @@ const playSongs = {
       playBtn.src = `./assets/images/now-playing/pause.png`
       $('title').innerText = `${_this.songs[_this.currentIndex].name} · ${_this.songs[_this.currentIndex].artist}`
     }
+
+
     audio.onpause = function() {
       const pauseBtn = document.getElementsByClassName('playing')[_this.id - 1]
       const pauseBtnShadow = document.getElementsByClassName('playing-shadow')[_this.id - 1]
@@ -1003,7 +1007,6 @@ const handlePlaylists = {
         $('#root__now-playing__header__playlist').innerHTML = `${thisPlaylistInDB[0].name}`
       }
 
-
       eachPlaylist.onclick = function(e) {       
         if (Array.from(document.getElementsByClassName('play-now')).includes(e.target) || Array.from(document.getElementsByClassName('playing')).includes(e.target)) {
           e.stopPropagation()
@@ -1013,11 +1016,11 @@ const handlePlaylists = {
           currentPage += 1;
           trace.push(onOpenPlaylist)
 
-          
+          // <img width="16px" class="playing-song" src='./assets/images/main-view/playing.gif'>
           function renderPlaylistPage() {
             const renderSongs = thisPlaylistInDB[0].songs.map((song, index) => `
-              <ul class="song">
-                <li class='number'>${index + 1}</li>
+              <ul class="song" id="${song.id}">
+                <li class='number'><img class="play-this-song" src='./assets/images/main-view/play-this-song.PNG'><span>${index + 1}</span></li>
                 <li class='title'>
                   <img class='song-img' src='${song.img}'>
                   <div class="song-info">
@@ -1035,6 +1038,7 @@ const handlePlaylists = {
               </ul>`).join('')
   
             onOpenPlaylist.innerHTML = `
+              <img src='./assets/images/main-view/back.png' id="on-open-playlist__return-home">
               <div id="on-open-playlist__header">
                 <img id="on-open-playlist__header__img" src=${thisPlaylistInDB[0].img}>
                 <div id="on-open-playlist__header__title">
@@ -1078,7 +1082,6 @@ const handlePlaylists = {
             function fitToDiv(size) {
               $('#on-open-playlist__header__title__name').style.fontSize = parseFloat(size) - 1 + 'px'
               titleFontSize = parseFloat(size) - 1
-              // console.log(window.getComputedStyle($('#on-open-playlist__header__title__name')).fontSize)
               if ($('#on-open-playlist__header__title__name').offsetWidth > headerContentWidth) {
                 fitToDiv(titleFontSize)
               }
@@ -1100,6 +1103,47 @@ const handlePlaylists = {
             $('#on-open-playlist__body__btns__play').onclick = function() {
               playPlaylist()
             }
+            $('#on-open-playlist__return-home').onclick = function() {
+              handleNavigation.homeComing()
+            }
+
+            Array.from(document.querySelectorAll('.song')).forEach(song => {
+
+              function playThisSong() {
+                const thisSong = allSongs.filter(findSong => findSong.id == song.getAttribute('id'))
+                playSongs.songs = thisPlaylistInDB[0].songs
+                playSongs.id = thisPlaylistInDB[0].id
+                // console.log(playSongs.songs)
+                // console.log(...thisSong)
+                playSongs.currentIndex = playSongs.songs.indexOf(...thisSong)
+                // console.log(playSongs.songs.indexOf(...thisSong))
+                playSongs.start()
+                audio.play()
+                // console.log(playSongs.songs)
+              }
+
+
+
+              song.onmouseover = function() {
+                if (window.outerWidth > 651) {
+                  song.style.backgroundColor = 'rgb(255,255,255,0.1)'
+                  song.querySelector('.play-this-song').style.display = 'block'
+                  song.querySelector('.number span').style.display = 'none'
+                }
+
+                song.querySelector('.play-this-song').onclick = function() {
+                  playThisSong()
+                }
+              }
+              song.onmouseout = function() {
+                if (window.outerWidth > 651) {
+                  song.style.backgroundColor = 'rgb(255,255,255,0.0)'
+                  song.querySelector('.play-this-song').style.display = 'none'
+                  song.querySelector('.number span').style.display = 'block'
+                }
+              }
+            })
+           
           }
 
           renderPlaylistPage()
@@ -1286,7 +1330,7 @@ function nowPlayingOnClick() {
 }
 
 const handleNavigation = {
-  backHome: function() {
+  homeComing: function() {
     if (!isAtHome) {
       if (onOpenPlaylist.style.display == 'block') {
         onOpenPlaylist.style.display = 'none';
@@ -1311,8 +1355,8 @@ const handleNavigation = {
   },
   handleBtns: function() {
     const _this = this
-    $('#root__left-sidebar__logo').onclick = function() { _this.backHome()}
-    homeBtn.onclick = function() { _this.backHome()}
+    $('#root__left-sidebar__logo').onclick = function() { _this.homeComing()}
+    homeBtn.onclick = function() { _this.homeComing()}
   }
 }
 
