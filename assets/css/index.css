@@ -355,6 +355,10 @@ html * {
     font-weight: 500;
     font-size: 14px;
     cursor: default;
+    max-width: 170px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
 }
 
 #root__left-sidebar__my-playlists .my-playlist:hover {
@@ -900,17 +904,14 @@ html * {
 #on-open-playlist__header__title__name {
     padding: 7.680px 0;
     font-size: 90px;
-    /* white-space: nowrap; */
     line-height: 96px;
     display: inline-block;
-    /* border: 1px solid blue; */
-    /* width: auto; */
-    /* word-break: break-word; */
-    /* overflow-wrap: break-word; */
-    /* display: inline-block; */
-    /* position: relative; */
 }
-
+#on-open-playlist__header__title__description {
+    line-height: 20px;
+    color: rgb(179, 179, 179);
+    font-weight: 400;
+}
 #on-open-playlist__header__title__playlist-info {
     margin-top: 8px;
     font-size: 14px;
@@ -924,6 +925,7 @@ html * {
 }
 #on-open-playlist__header__title__playlist-info__owner > span {
     color: rgb(179, 179, 179);
+    font-weight: 400;
 }
 #on-open-playlist__body__btns {
     padding: 24px 32px;

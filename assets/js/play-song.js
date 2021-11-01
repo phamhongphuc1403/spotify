@@ -499,14 +499,13 @@ const allSongs = [
     backgroundColor: '#525147',
     tag: ['favorite', 'rock']
   },
-
   { 
     id: 48, 
     name: "Burning Heart - From &quotRocky IV&quot Soundtrack", 
     artist: ["Survivor"],
     img: "./assets/songs/albums/rocky-iv__survivor.jpg",
     path: "./assets/songs/songs/burning-heart__survivor.mp3",
-    album: "Knee Deep In The Hoopla",
+    album: "Rocky IV",
     backgroundColor: '#72322e',
     tag: ['favorite', 'rock']
   },
@@ -515,12 +514,21 @@ const allSongs = [
     name: "Sweet Child O' Mine", 
     artist: ["Gun N' Roses"],
     img: "./assets/songs/albums/appetite-for-destruction__gun-n-roses.jpg",
-    path: "./assets/songs/songs/sweet-child-o-mine__gun-n-roses.mp3",
-    album: "Knee Deep In The Hoopla",
+    path: "./assets/songs/songs/sweet-child-o-mine__guns-n-roses.mp3",
+    album: "Appetite For Destruction",
     backgroundColor: '#63212c',
     tag: ['favorite', 'rock']
   },
-
+  { 
+    id: 50, 
+    name: "Carry On Wayward Son", 
+    artist: ["Kansas"],
+    img: "./assets/songs/albums/leftoverture__kansas.jpg",
+    path: "./assets/songs/songs/carry-on-wayward-son__kansas.mp3",
+    album: "Leftoverture",
+    backgroundColor: '#645951',
+    tag: ['favorite', 'rock']
+  },
 
 ]
 
@@ -549,12 +557,12 @@ const allPlaylists = [
   },
   {
     id: 3, 
-    name: "NoCopyrightSounds", 
-    description: '',
+    name: "I Built This Playlist On Rock And Roll", 
+    description: 'Most of these songs are come from Lost Santos Rock Radio',
     owner: "Phuc",
-    img: "./assets/songs/playlists/own-playlists/nocopyrightsounds.jpg",
-    songs: allSongs.filter(song => song.id < 4),
-    backgroundColor: '83, 83, 83',
+    img: "./assets/songs/playlists/own-playlists/i-built-this-playlist-on-rock-and-roll.jpg",
+    songs: allSongs.filter(song => song.tag.includes('rock')),
+    backgroundColor: '42, 102, 80',
     headerColor: '33, 33, 33',
     tag: ['own playlist', ]
   },
@@ -566,7 +574,7 @@ const allPlaylists = [
     img: "./assets/songs/playlists/own-playlists/jonas-brothers.jpg",
     songs: allSongs.filter(song => song.artist.includes('Jonas Brothers')),
     backgroundColor: '180, 200, 200',
-    headerColor: '80, 90, 90',
+    headerColor: '16, 42, 32',
     tag: ['own playlist', ]
   },
   {
@@ -1098,7 +1106,16 @@ const handlePlaylists = {
       .join('')
     currentPlaylists.innerHTML = currentPlaylistContent
   },
+  renderOwnPlaylists: function() {
+    const ownPlaylists = this.playlists
+      .filter(playlist => playlist.owner == 'Phuc')
+      .map(playlist => `
+        <li class="my-playlist" id="${playlist.id}">${playlist.name}</li>
+      `).join('')
+     
+    $('#root__left-sidebar__my-playlists').innerHTML = ownPlaylists
     
+  },
   renderBackground: function() {
     const _this = this
 
@@ -1180,6 +1197,7 @@ const handlePlaylists = {
                 <div id="on-open-playlist__header__title">
                   <div id="on-open-playlist__header__title__type">playlist</div>
                   <div id="on-open-playlist__header__title__name">${thisPlaylistInDB[0].name}</div>
+                  <div id="on-open-playlist__header__title__description">${thisPlaylistInDB[0].description}</div>
                   <div id="on-open-playlist__header__title__playlist-info">
                     <img id="on-open-playlist__header__title__playlist-info__img" src='./assets/images/user/user-avatar.jpg'>
                     <span id="on-open-playlist__header__title__playlist-info__owner">${thisPlaylistInDB[0].owner} <span>• ${thisPlaylistInDB[0].songs.length} songs</span></span>
@@ -1198,7 +1216,7 @@ const handlePlaylists = {
                       <li class='title'>title</li>
                       <li class='album'>album</li>
                       <li class='date'>date added</li>
-                      <li class='more' id="more"><img src='./assets/images/main-view/duration.PNG'></li>
+                      <li class='more' id="more"><img src='./assets/images/main-view/duration.png'></li>
                     </ul>
                   </div>
                   <div id="on-open-playlist__body__table__body">  
@@ -1211,6 +1229,7 @@ const handlePlaylists = {
           
           function stylePlaylistPage() {
             onOpenPlaylist.style.display = 'block'
+            $('#on-open-playlist__header__title__name').style.whiteSpace = 'nowrap'
             onOpenPlaylist.style.backgroundImage = `linear-gradient(rgb(${thisPlaylistInDB[0].backgroundColor}), #181818 600px)`
             let titleFontSize = window.getComputedStyle($('#on-open-playlist__header__title__name')).fontSize
             let headerContentWidth = $('#on-open-playlist').offsetWidth - 310
@@ -1218,6 +1237,7 @@ const handlePlaylists = {
             function fitToDiv(size) {
               $('#on-open-playlist__header__title__name').style.fontSize = parseFloat(size) - 1 + 'px'
               titleFontSize = parseFloat(size) - 1
+              
               if ($('#on-open-playlist__header__title__name').offsetWidth > headerContentWidth) {
                 fitToDiv(titleFontSize)
               }
@@ -1291,6 +1311,7 @@ const handlePlaylists = {
     }
   },
   start: function() {
+    this.renderOwnPlaylists()
     this.renderCurrentPlaylists()
     this.renderBackground()
     this.handlePlayOrOpenPlaylist()
@@ -1375,6 +1396,7 @@ const handleResponsive = {
     handleTextWidth: function() {
       if(onOpenPlaylist.style.display == 'block') {
         if (window.outerWidth > 768) {
+          $('#on-open-playlist__header__title__name').style.whiteSpace = 'normal'
           let currentFontSize = parseFloat(window.getComputedStyle($('#on-open-playlist__header__title__name')).fontSize)
           if (!this.currentFontSizeArr.includes(currentFontSize)) this.currentFontSizeArr.unshift(currentFontSize)
           if ($('#on-open-playlist__header__title__name').offsetWidth >= $('#on-open-playlist__header__title').offsetWidth - 15) {
