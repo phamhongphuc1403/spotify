@@ -167,7 +167,7 @@ const allSongs = [
     path: "./assets/songs/songs/more-than-a-feeling__boston.mp3",
     album: "Boston",
     backgroundColor: '#812824',
-    tag: ['favorite', ]
+    tag: ['favorite', 'rock']
   },
   { 
     id: 15, 
@@ -445,7 +445,7 @@ const allSongs = [
     artist: ["Vicetone", "Meron Ryan"],
     img: "./assets/songs/singles/walk-thru-fire__vicetone.jpg",
     path: "./assets/songs/songs/walk-thru-fire__vicetone__meron-ryan.mp3",
-    album: "Blue",
+    album: "Walk Thru Fire",
     backgroundColor: '#8d0b16',
     tag: ['favorite', ]
   },
@@ -455,7 +455,7 @@ const allSongs = [
     artist: ["Vicetone", "Daisy Guttridge"],
     img: "./assets/songs/singles/waiting__vicetone.jpg",
     path: "./assets/songs/songs/waiting__vicetone__daisy-guttridge.mp3",
-    album: "Blue",
+    album: "Waiting",
     backgroundColor: '#9d131d',
     tag: ['favorite', ]
   },
@@ -465,7 +465,7 @@ const allSongs = [
     artist: ["Vicetone", "Daisy Guttridge"],
     img: "./assets/songs/singles/something-strange__vicetone.jpg",
     path: "./assets/songs/songs/something-strange__vicetone__haley-reinhart.mp3",
-    album: "Blue",
+    album: "Something Strange",
     backgroundColor: '#1e4062',
     tag: ['favorite', ]
   },
@@ -475,30 +475,51 @@ const allSongs = [
     artist: ["Martin Jensen", "Bjrnskov"],
     img: "./assets/songs/singles/somebody-im-not__martin-jensen.jpg",
     path: "./assets/songs/songs/somebody-im-not__martin-jensen__bjrnskov.mp3",
-    album: "Blue",
+    album: "Somebody I'm Not",
     backgroundColor: '#083347',
     tag: ['favorite', ]
   },
-  // { 
-  //   id: 41, 
-  //   name: "Perfect Stranger", 
-  //   artist: ["Jonas Blue", "JP Cooper"],
-  //   img: "./assets/songs/albums/blue__jonas-blue.jpg",
-  //   path: "./assets/songs/songs/perfect-stranger__jonas-blue.mp3",
-  //   album: "Blue",
-  //   backgroundColor: '#435864',
-  //   tag: ['favorite', ]
-  // },
-  // { 
-  //   id: 41, 
-  //   name: "Perfect Stranger", 
-  //   artist: "Jonas Blue, JP Cooper",
-  //   img: "./assets/songs/albums/blue__jonas-blue.jpg",
-  //   path: "./assets/songs/songs/perfect-stranger__jonas-blue.mp3",
-  //   album: "Blue",
-  //   backgroundColor: '#435864',
-  //   tag: ['favorite', ]
-  // },
+  { 
+    id: 46, 
+    name: "Peace Of Mind", 
+    artist: ["Boston"],
+    img: "./assets/songs/albums/boston__boston.jpg",
+    path: "./assets/songs/songs/peace-of-mind__boston.mp3",
+    album: "Boston",
+    backgroundColor: '#812824',
+    tag: ['favorite', 'rock']
+  },
+  { 
+    id: 47, 
+    name: "We Built This City", 
+    artist: ["Starship"],
+    img: "./assets/songs/albums/knee-deep-in-the-hoopla__starship.jpg",
+    path: "./assets/songs/songs/we-built-this-city__starship.mp3",
+    album: "Knee Deep In The Hoopla",
+    backgroundColor: '#525147',
+    tag: ['favorite', 'rock']
+  },
+
+  { 
+    id: 48, 
+    name: "Burning Heart - From &quotRocky IV&quot Soundtrack", 
+    artist: ["Survivor"],
+    img: "./assets/songs/albums/rocky-iv__survivor.jpg",
+    path: "./assets/songs/songs/burning-heart__survivor.mp3",
+    album: "Knee Deep In The Hoopla",
+    backgroundColor: '#72322e',
+    tag: ['favorite', 'rock']
+  },
+  { 
+    id: 49, 
+    name: "Sweet Child O' Mine", 
+    artist: ["Gun N' Roses"],
+    img: "./assets/songs/albums/appetite-for-destruction__gun-n-roses.jpg",
+    path: "./assets/songs/songs/sweet-child-o-mine__gun-n-roses.mp3",
+    album: "Knee Deep In The Hoopla",
+    backgroundColor: '#63212c',
+    tag: ['favorite', 'rock']
+  },
 
 
 ]
@@ -634,7 +655,8 @@ const playSongs = {
       if ($('#on-open-playlist__body__btns__play')) {
         if ($('#on-open-playlist__body__btns__play').className == _this.id && _this.isPlaying) {
           $('#on-open-playlist__body__btns__play').src='./assets/images/main-view/pause-playlist.PNG'
-          $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/pause-playlist.PNG'
+          $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/pause-playlist.PNG' 
+          Array.from(onOpenPlaylist.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0].querySelector('.song-info__name').style.color = '#1db753'
         } else {
           $('#on-open-playlist__body__btns__play').src='./assets/images/main-view/play-now-playlist.PNG'
           $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/play-now-playlist.PNG'
@@ -993,6 +1015,7 @@ const playSongs = {
         pauseBtnShadows.style.opacity = 0
       }
 
+
       //except the one is playing
       const pauseBtn = document.getElementsByClassName('playing')[_this.id - 1]
       const pauseBtnShadow = document.getElementsByClassName('playing-shadow')[_this.id - 1]
@@ -1001,9 +1024,15 @@ const playSongs = {
         pauseBtn.style.zIndex = 2;
         pauseBtnShadow.style.opacity = 1;
       }
+
+
       if ($('#on-open-playlist__body__btns__play')) if($('#on-open-playlist__body__btns__play').className == _this.id) {
         $('#on-open-playlist__body__btns__play').src = './assets/images/main-view/pause-playlist.PNG'
         $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/pause-playlist.PNG'
+        Array.from(onOpenPlaylist.getElementsByClassName('song')).forEach(song => {
+          song.querySelector('.song-info__name').style.color = 'white'
+        })
+        Array.from(onOpenPlaylist.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0].querySelector('.song-info__name').style.color = '#1db753'
       }
       _this.isPlaying = true;
       playBtn.src = `./assets/images/now-playing/pause.png`
@@ -1022,6 +1051,7 @@ const playSongs = {
       if ($('#on-open-playlist__body__btns__play')) if($('#on-open-playlist__body__btns__play').className == _this.id) {
         $('#on-open-playlist__body__btns__play').src = './assets/images/main-view/play-now-playlist.PNG'
         $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/play-now-playlist.PNG'
+        Array.from(onOpenPlaylist.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0].querySelector('.song-info__name').style.color = 'white'
       }
       _this.isPlaying = false;
       playBtn.src = `./assets/images/now-playing/play.PNG`
@@ -1123,7 +1153,6 @@ const handlePlaylists = {
           handleNavigation.farFromHome()
           currentPage += 1;
           trace.push(onOpenPlaylist)
-          // <img width="16px" class="playing-song" src='./assets/images/main-view/playing.gif'>
           function renderPlaylistPage() {
             const renderSongs = thisPlaylistInDB[0].songs.map((song, index) => `
               <ul class="song" id="${song.id}">
@@ -1143,7 +1172,7 @@ const handlePlaylists = {
                   <img class="more__icon" src='./assets/images/main-view/see-more.PNG'>
                 </li>
               </ul>`).join('')
-  
+             
             onOpenPlaylist.innerHTML = `
               <img src='./assets/images/main-view/back.png' id="on-open-playlist__return-home">
               <div id="on-open-playlist__header">

@@ -675,7 +675,6 @@ html * {
 #root__now-playing__song__content {
     display: flex;
     align-items: center;
-    /* height: 56px; */
 }
 #root__now-playing__song__info {
     margin: 0 14px;
@@ -1435,11 +1434,15 @@ html * {
         display: none;
     }
     #root__now-playing__song {
-        width: 80%;
+        width: 90%;
         height: 100%;
     }
     #root__now-playing__song__img {
         width: 32px;
+    }
+    #root__now-playing__song__content {
+        justify-content: space-between;
+        width: 100%;
     }
     #root__now-playing__player-control {
         position: absolute;
@@ -1459,9 +1462,6 @@ html * {
     }
     .player-control-shuffle-repeat, .shuffle-active, .player-control-prev-next, #root__now-playing__player-control__playback-bar__minutes-played, #root__now-playing__speed-control__playback-bar__minutes-total {
         display: none;
-    }
-    #root__now-playing__song__info {   
-        max-width: 200px;
     }
     #root__top__move-action:last-child {
         display: none;
