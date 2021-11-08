@@ -366,6 +366,10 @@ html * {
     color:white;
 }
 
+/* #root__left-sidebar__my-playlists .current {
+    color:white;
+} */
+
 #root__main-view {
     grid-area: main;
     padding: 24px 32px 0px;

@@ -529,6 +529,16 @@ const allSongs = [
     backgroundColor: '#645951',
     tag: ['favorite', 'rock']
   },
+  { 
+    id: 51, 
+    name: "Who's In Your Head", 
+    artist: ["Jonas Brothers"],
+    img: "./assets/songs/albums/setlist-the-remember-this-tour__jonas-brothers.jpg",
+    path: "./assets/songs/songs/whos-in-your-head__jonas-brothers.mp3",
+    album: "Setlist: The Remember This Tour",
+    backgroundColor: '#4a6b21',
+    tag: ['favorite', 'rock']
+  },
 
 ]
 
@@ -563,7 +573,7 @@ const allPlaylists = [
     img: "./assets/songs/playlists/own-playlists/i-built-this-playlist-on-rock-and-roll.jpg",
     songs: allSongs.filter(song => song.tag.includes('rock')),
     backgroundColor: '42, 102, 80',
-    headerColor: '33, 33, 33',
+    headerColor: '16, 42, 32',
     tag: ['own playlist', ]
   },
   {
@@ -574,7 +584,7 @@ const allPlaylists = [
     img: "./assets/songs/playlists/own-playlists/jonas-brothers.jpg",
     songs: allSongs.filter(song => song.artist.includes('Jonas Brothers')),
     backgroundColor: '180, 200, 200',
-    headerColor: '16, 42, 32',
+    headerColor: '80, 90, 90',
     tag: ['own playlist', ]
   },
   {
@@ -664,7 +674,7 @@ const playSongs = {
         if ($('#on-open-playlist__body__btns__play').className == _this.id && _this.isPlaying) {
           $('#on-open-playlist__body__btns__play').src='./assets/images/main-view/pause-playlist.PNG'
           $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/pause-playlist.PNG' 
-          Array.from(onOpenPlaylist.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0].querySelector('.song-info__name').style.color = '#1db753'
+          // Array.from(onOpenPlaylist.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0].querySelector('.song-info__name').style.color = '#1db753'
         } else {
           $('#on-open-playlist__body__btns__play').src='./assets/images/main-view/play-now-playlist.PNG'
           $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/play-now-playlist.PNG'
@@ -1110,33 +1120,40 @@ const handlePlaylists = {
     const ownPlaylists = this.playlists
       .filter(playlist => playlist.owner == 'Phuc')
       .map(playlist => `
-        <li class="my-playlist" id="${playlist.id}">${playlist.name}</li>
+        <li class="my-playlist is-playlist" id="${playlist.id}">${playlist.name}</li>
       `).join('')
      
     $('#root__left-sidebar__my-playlists').innerHTML = ownPlaylists
     
   },
-  renderBackground: function() {
-    const _this = this
 
-    const currentPlaylists = Array.from(document.getElementsByClassName('current-playlist'));
-    currentPlaylists.forEach((playlist, index) => {
-      
-      playlist.onmouseenter = function() {
-        mainView.style.backgroundImage = `linear-gradient(rgba(${handlePlaylists.playlists[index].backgroundColor}, 0.35) 0%, #121212 15%)`
-        rootTop.style.backgroundColor = `rgba(${handlePlaylists.playlists[index].backgroundColor}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`;
-        _this.headerColorArr.unshift(handlePlaylists.playlists[index].headerColor);
-      }
-    })
+  handleMainViewBackground: {
+    renderBackground: function() {  
+      const currentPlaylists = Array.from(document.getElementsByClassName('current-playlist'));
+      currentPlaylists.forEach((playlist, index) => {
+        
+        playlist.onmouseenter = function() {
+          mainView.style.backgroundImage = `linear-gradient(rgba(${handlePlaylists.playlists[index].backgroundColor}, 0.35) 0%, #121212 15%)`
+          rootTop.style.backgroundColor = `rgba(${handlePlaylists.playlists[index].backgroundColor}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`;
+          handlePlaylists.headerColorArr.unshift(handlePlaylists.playlists[index].headerColor);
+        }
+      })
+    },
+    handleHeaderOpacity: function() {
+      rootTop.style.backgroundColor = `rgba(${handlePlaylists.headerColorArr[0]}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})` 
+    },
+    start: function() {
+      this.renderBackground();
+      this.handleHeaderOpacity()
+    }
   },
+  
 
-  handleHeaderOpacity: function() {
-    window.getComputedStyle(onOpenPlaylist).display == 'none' ? rootTop.style.backgroundColor = `rgba(${this.headerColorArr[0]}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`: rootTop.style.backgroundColor = `rgba(${this.headerColorArr[0]}, ${0.5 + - (225 - Math.ceil(onOpenPlaylist.scrollTop)) / 100})`
-  },
+  
   //play playlist when click "play now" button
   handlePlayOrOpenPlaylist: function() {
     const _this = this
-    const playlistArray = document.getElementsByClassName('is-playlist')
+    const playlistArray = Array.from(document.getElementsByClassName('is-playlist'))
     
     for (let eachPlaylist of playlistArray) {
       const thisPlaylistInDB = _this.playlists.filter(playlist => playlist.id == eachPlaylist.getAttribute('id'))   //find playlist in the database that match the id
@@ -1161,151 +1178,177 @@ const handlePlaylists = {
 
         $('#root__now-playing__header__playlist').innerHTML = `${thisPlaylistInDB[0].name}`
       }
+      
+      const openPlaylist = {
+        
+        renderPlaylistPage: function() {
+          const renderSongs = thisPlaylistInDB[0].songs.map((song, index) => `
+            <ul class="song" id="${song.id}">
+              <li class='number'><img class="play-this-song" src='./assets/images/main-view/play-this-song.PNG'><span>${index + 1}</span></li>
+              <li class='title'>
+                <img class='song-img' src='${song.img}'>
+                <div class="song-info">
+                    <div class="song-info__name">${song.name}</div>
+                    <div class="song-info__artist">${song.artist.join(', ')}</div>
+                </div>
+              </li>
+              <li class='album'>${song.album}</li>
+              <li class='date'>Sep 8, 2021</li>
+              <li class='more'>
+                <img class="more__favorite" src="./assets/images/now-playing/favorite.png">
+                <span class="more__time">4:45</span>
+                <img class="more__icon" src='./assets/images/main-view/see-more.PNG'>
+              </li>
+            </ul>`).join('')
+           
+          onOpenPlaylist.innerHTML = `
+            <img src='./assets/images/main-view/back.png' id="on-open-playlist__return-home">
+            <div id="on-open-playlist__header">
+              <img id="on-open-playlist__header__img" src=${thisPlaylistInDB[0].img}>
+              <div id="on-open-playlist__header__title">
+                <div id="on-open-playlist__header__title__type">playlist</div>
+                <div id="on-open-playlist__header__title__name">${thisPlaylistInDB[0].name}</div>
+                <div id="on-open-playlist__header__title__description">${thisPlaylistInDB[0].description}</div>
+                <div id="on-open-playlist__header__title__playlist-info">
+                  <img id="on-open-playlist__header__title__playlist-info__img" src='./assets/images/user/user-avatar.jpg'>
+                  <span id="on-open-playlist__header__title__playlist-info__owner">${thisPlaylistInDB[0].owner} <span>• ${thisPlaylistInDB[0].songs.length} songs</span></span>
+                  </div>
+              </div>
+            </div>
+            <div id="on-open-playlist__body">
+              <div id="on-open-playlist__body__btns">
+                <img id="on-open-playlist__body__btns__play" class="${thisPlaylistInDB[0].id}" src="./assets/images/main-view/play-now-playlist.PNG">
+                <img id="on-open-playlist__body__btns__see-more" src="./assets/images/main-view/see-more.PNG">
+              </div>
+              <div id="on-open-playlist__body__table">
+                <div id="position-fixed-header">
+                  <ul id="on-open-playlist__body__table__header">
+                    <li class='number'>#</li>
+                    <li class='title'>title</li>
+                    <li class='album'>album</li>
+                    <li class='date'>date added</li>
+                    <li class='more' id="more"><img src='./assets/images/main-view/duration.png'></li>
+                  </ul>
+                </div>
+                <div id="on-open-playlist__body__table__body">  
+                    ${renderSongs}
+                </div>
+              </div>
+            </div>`
+          $('#root__top__add-play-btn__playlist-name').innerText = thisPlaylistInDB[0].name
+        },
+        
+        stylePlaylistPage: function() {
+          onOpenPlaylist.style.display = 'block'
+          $('#on-open-playlist__header__title__name').style.whiteSpace = 'nowrap'
+          onOpenPlaylist.style.backgroundImage = `linear-gradient(rgb(${thisPlaylistInDB[0].backgroundColor}), #181818 600px)`
+          let titleFontSize = window.getComputedStyle($('#on-open-playlist__header__title__name')).fontSize
+          let headerContentWidth = $('#on-open-playlist').offsetWidth - 310
+          
+          function fitToDiv(size) {
+            $('#on-open-playlist__header__title__name').style.fontSize = parseFloat(size) - 1 + 'px'
+            titleFontSize = parseFloat(size) - 1
+            
+            if ($('#on-open-playlist__header__title__name').offsetWidth > headerContentWidth) {
+              fitToDiv(titleFontSize)
+            }
+          } 
+          if (window.outerWidth > 768) {
+            fitToDiv(titleFontSize)
+          } else {
+            $('#on-open-playlist__header__title__name').style.fontSize = '5vw'
+          }
+          handleResponsive.handlePlaylistPage.handlePageSize()
+          onOpenPlaylist.scrollTop = 0;
+          mainView.scrollTop = 0
+          
+          Array.from($('#root__left-sidebar__my-playlists').getElementsByClassName('is-playlist'))
+            .filter(playlist => playlist.id != eachPlaylist.id)
+            .forEach(playlist => {
+              playlist.style.color = '#b3b3b3'
+              playlist.onmouseenter = function() { playlist.style.color = 'white'}
+              playlist.onmouseleave = function() { playlist.style.color = '#b3b3b3'}
+            })
+          playlistArray.filter(playlist => playlist.id == eachPlaylist.id && playlist.className.includes('my-playlist'))[0].style.color = 'white'
+          
+        },
+
+        handlePlaylistPageButtons: function() {
+          $('#root__top__add-play-btn__play-btn').onclick = function() {
+            if ($('#root__top__add-play-btn__play-btn').style.opacity == 1) {
+              playPlaylist()
+            }
+          }
+          $('#on-open-playlist__body__btns__play').onclick = function() {
+            playPlaylist()
+          }
+          $('#on-open-playlist__return-home').onclick = function() {
+            handleNavigation.homeComing()
+          }
+
+          Array.from(document.querySelectorAll('.song')).forEach(song => {
+
+            function playThisSong() {
+              const thisSong = allSongs.filter(findSong => findSong.id == song.getAttribute('id'))
+              playSongs.songs = [...thisPlaylistInDB[0].songs]
+              playSongs.id = thisPlaylistInDB[0].id
+              playSongs.currentIndex = playSongs.songs.indexOf(...thisSong)
+              playSongs.start()
+              audio.play()
+            }
+
+
+
+            song.onmouseover = function() {
+              if (window.outerWidth > 651) {
+                song.style.backgroundColor = 'rgb(255,255,255,0.1)'
+                song.querySelector('.play-this-song').style.display = 'block'
+                song.querySelector('.number span').style.display = 'none'
+              }
+
+              song.querySelector('.play-this-song').onclick = function() {
+                playThisSong()
+              }
+            }
+            song.onmouseout = function() {
+              if (window.outerWidth > 651) {
+                song.style.backgroundColor = 'rgb(255,255,255,0.0)'
+                song.querySelector('.play-this-song').style.display = 'none'
+                song.querySelector('.number span').style.display = 'block'
+              }
+            }
+            song.onclick = function() {
+              if (window.outerWidth < 1000) {
+                playThisSong()
+              }
+            }
+          })
+         
+        },
+
+        
+        start: function() {
+          handleNavigation.farFromHome()
+          currentPage += 1;
+          trace.push(onOpenPlaylist)
+          this.renderPlaylistPage()
+          this.stylePlaylistPage()
+          this.handlePlaylistPageButtons()
+
+          onOpenPlaylist.onscroll = function() {
+            rootTop.style.backgroundColor = `rgba(${thisPlaylistInDB[0].headerColor}, ${0.5 + - (225 - Math.ceil(onOpenPlaylist.scrollTop)) / 100})`
+            handlePlaylistHeaderOnscroll()
+          }
+        }
+      }
+
 
       eachPlaylist.onclick = function(e) {       
         if (Array.from(document.getElementsByClassName('play-now')).includes(e.target) || Array.from(document.getElementsByClassName('playing')).includes(e.target)) {
           e.stopPropagation()
           playPlaylist()
         } else {
-          handleNavigation.farFromHome()
-          currentPage += 1;
-          trace.push(onOpenPlaylist)
-          function renderPlaylistPage() {
-            const renderSongs = thisPlaylistInDB[0].songs.map((song, index) => `
-              <ul class="song" id="${song.id}">
-                <li class='number'><img class="play-this-song" src='./assets/images/main-view/play-this-song.PNG'><span>${index + 1}</span></li>
-                <li class='title'>
-                  <img class='song-img' src='${song.img}'>
-                  <div class="song-info">
-                      <div class="song-info__name">${song.name}</div>
-                      <div class="song-info__artist">${song.artist.join(', ')}</div>
-                  </div>
-                </li>
-                <li class='album'>${song.album}</li>
-                <li class='date'>Sep 8, 2021</li>
-                <li class='more'>
-                  <img class="more__favorite" src="./assets/images/now-playing/favorite.png">
-                  <span class="more__time">4:45</span>
-                  <img class="more__icon" src='./assets/images/main-view/see-more.PNG'>
-                </li>
-              </ul>`).join('')
-             
-            onOpenPlaylist.innerHTML = `
-              <img src='./assets/images/main-view/back.png' id="on-open-playlist__return-home">
-              <div id="on-open-playlist__header">
-                <img id="on-open-playlist__header__img" src=${thisPlaylistInDB[0].img}>
-                <div id="on-open-playlist__header__title">
-                  <div id="on-open-playlist__header__title__type">playlist</div>
-                  <div id="on-open-playlist__header__title__name">${thisPlaylistInDB[0].name}</div>
-                  <div id="on-open-playlist__header__title__description">${thisPlaylistInDB[0].description}</div>
-                  <div id="on-open-playlist__header__title__playlist-info">
-                    <img id="on-open-playlist__header__title__playlist-info__img" src='./assets/images/user/user-avatar.jpg'>
-                    <span id="on-open-playlist__header__title__playlist-info__owner">${thisPlaylistInDB[0].owner} <span>• ${thisPlaylistInDB[0].songs.length} songs</span></span>
-                    </div>
-                </div>
-              </div>
-              <div id="on-open-playlist__body">
-                <div id="on-open-playlist__body__btns">
-                  <img id="on-open-playlist__body__btns__play" class="${thisPlaylistInDB[0].id}" src="./assets/images/main-view/play-now-playlist.PNG">
-                  <img id="on-open-playlist__body__btns__see-more" src="./assets/images/main-view/see-more.PNG">
-                </div>
-                <div id="on-open-playlist__body__table">
-                  <div id="position-fixed-header">
-                    <ul id="on-open-playlist__body__table__header">
-                      <li class='number'>#</li>
-                      <li class='title'>title</li>
-                      <li class='album'>album</li>
-                      <li class='date'>date added</li>
-                      <li class='more' id="more"><img src='./assets/images/main-view/duration.png'></li>
-                    </ul>
-                  </div>
-                  <div id="on-open-playlist__body__table__body">  
-                      ${renderSongs}
-                  </div>
-                </div>
-              </div>`
-            $('#root__top__add-play-btn__playlist-name').innerText = thisPlaylistInDB[0].name
-          }
-          
-          function stylePlaylistPage() {
-            onOpenPlaylist.style.display = 'block'
-            $('#on-open-playlist__header__title__name').style.whiteSpace = 'nowrap'
-            onOpenPlaylist.style.backgroundImage = `linear-gradient(rgb(${thisPlaylistInDB[0].backgroundColor}), #181818 600px)`
-            let titleFontSize = window.getComputedStyle($('#on-open-playlist__header__title__name')).fontSize
-            let headerContentWidth = $('#on-open-playlist').offsetWidth - 310
-            
-            function fitToDiv(size) {
-              $('#on-open-playlist__header__title__name').style.fontSize = parseFloat(size) - 1 + 'px'
-              titleFontSize = parseFloat(size) - 1
-              
-              if ($('#on-open-playlist__header__title__name').offsetWidth > headerContentWidth) {
-                fitToDiv(titleFontSize)
-              }
-            } 
-            if (window.outerWidth > 768) {
-              fitToDiv(titleFontSize)
-            } else {
-              $('#on-open-playlist__header__title__name').style.fontSize = '5vw'
-            }
-            handleResponsive.handlePlaylistPage.handlePageWidth()
-          }
-
-          function handlePlaylistPageButtons() {
-            $('#root__top__add-play-btn__play-btn').onclick = function() {
-              if ($('#root__top__add-play-btn__play-btn').style.opacity == 1) {
-                playPlaylist()
-              }
-            }
-            $('#on-open-playlist__body__btns__play').onclick = function() {
-              playPlaylist()
-            }
-            $('#on-open-playlist__return-home').onclick = function() {
-              handleNavigation.homeComing()
-            }
-
-            Array.from(document.querySelectorAll('.song')).forEach(song => {
-
-              function playThisSong() {
-                const thisSong = allSongs.filter(findSong => findSong.id == song.getAttribute('id'))
-                playSongs.songs = [...thisPlaylistInDB[0].songs]
-                playSongs.id = thisPlaylistInDB[0].id
-                playSongs.currentIndex = playSongs.songs.indexOf(...thisSong)
-                playSongs.start()
-                audio.play()
-              }
-
-
-
-              song.onmouseover = function() {
-                if (window.outerWidth > 651) {
-                  song.style.backgroundColor = 'rgb(255,255,255,0.1)'
-                  song.querySelector('.play-this-song').style.display = 'block'
-                  song.querySelector('.number span').style.display = 'none'
-                }
-
-                song.querySelector('.play-this-song').onclick = function() {
-                  playThisSong()
-                }
-              }
-              song.onmouseout = function() {
-                if (window.outerWidth > 651) {
-                  song.style.backgroundColor = 'rgb(255,255,255,0.0)'
-                  song.querySelector('.play-this-song').style.display = 'none'
-                  song.querySelector('.number span').style.display = 'block'
-                }
-              }
-              song.onclick = function() {
-                if (window.outerWidth < 1000) {
-                  playThisSong()
-                }
-              }
-            })
-           
-          }
-
-          renderPlaylistPage()
-          stylePlaylistPage()
-          handlePlaylistPageButtons()
+          openPlaylist.start()
         }
       }
     }
@@ -1313,9 +1356,8 @@ const handlePlaylists = {
   start: function() {
     this.renderOwnPlaylists()
     this.renderCurrentPlaylists()
-    this.renderBackground()
     this.handlePlayOrOpenPlaylist()
-    this.handleHeaderOpacity()
+    this.handleMainViewBackground.start()
   }
 }
 handlePlaylists.start()
@@ -1387,8 +1429,9 @@ const handleResponsive = {
   },
   
   handlePlaylistPage: {
-    handlePageWidth: function() {
+    handlePageSize: function() {
       onOpenPlaylist.style.width = mainView.offsetWidth + 'px'
+      onOpenPlaylist.style.height = mainView.offsetHeight + 'px'
       onOpenPlaylist.style.top = mainView.offsetTop + 'px'
       onOpenPlaylist.style.left = mainView.offsetLeft + 'px'
     },
@@ -1417,7 +1460,7 @@ const handleResponsive = {
       }
     },
     handle: function() {
-      this.handlePageWidth();
+      this.handlePageSize();
       this.handleTextWidth()
     }
   },
@@ -1501,6 +1544,13 @@ const handleNavigation = {
           $('#root__top__add-play-btn__play-btn').style.display = ''
           $('#root__top__add-play-btn__playlist-name').style.display = ''
         }, 10);
+        mainView.scrollTop = 0
+        rootTop.style.backgroundColor = 'transparent'
+        Array.from($('#root__left-sidebar__my-playlists').getElementsByClassName('is-playlist')).forEach(playlist => {
+          playlist.style.color = '#b3b3b3'
+          playlist.onmouseenter = function() { playlist.style.color = 'white'}
+          playlist.onmouseleave = function() { playlist.style.color = '#b3b3b3'}
+        })
       }
       isAtHome = true;
       homeBtn.querySelector('img').src = './assets/images/left-sidebar/home-active.PNG'
@@ -1518,6 +1568,7 @@ const handleNavigation = {
     homeBtn.onclick = function() { _this.homeComing()}
   }
 }
+
 
 function handlePlaylistHeaderOnscroll() {
   const tableHeader = $('#position-fixed-header')
@@ -1554,6 +1605,7 @@ function handlePlaylistHeaderOnscroll() {
 
 
 
+
 openMenu()
 handleCurrentPlaylistHover()
 nowPlayingOnClick()
@@ -1569,7 +1621,7 @@ window.onresize = function() {
 
 
 mainView.onscroll = function() {
-  handlePlaylists.handleHeaderOpacity()
+  handlePlaylists.handleMainViewBackground.handleHeaderOpacity()
 
   if (friendsBar.classList.contains('slideToLeft')) {
     friendsBar.classList.remove('slideToLeft')
@@ -1580,7 +1632,3 @@ mainView.onscroll = function() {
   }           
 }
 
-onOpenPlaylist.onscroll = function() {
-  handlePlaylists.handleHeaderOpacity()
-  handlePlaylistHeaderOnscroll()
-}
