@@ -800,7 +800,7 @@ html * {
 .repeat-active, .shuffle-active { 
     position: absolute;
     bottom: -8px;
-    width: 3px;
+    width: 4px;
     opacity: 1;
     left: 5px;
 }

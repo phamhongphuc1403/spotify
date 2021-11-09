@@ -537,7 +537,7 @@ const allSongs = [
     path: "./assets/songs/songs/whos-in-your-head__jonas-brothers.mp3",
     album: "Setlist: The Remember This Tour",
     backgroundColor: '#4a6b21',
-    tag: ['favorite', 'rock']
+    tag: ['favorite', ]
   },
 
 ]
@@ -674,7 +674,7 @@ const playSongs = {
         if ($('#on-open-playlist__body__btns__play').className == _this.id && _this.isPlaying) {
           $('#on-open-playlist__body__btns__play').src='./assets/images/main-view/pause-playlist.PNG'
           $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/pause-playlist.PNG' 
-          // Array.from(onOpenPlaylist.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0].querySelector('.song-info__name').style.color = '#1db753'
+          Array.from(onOpenPlaylist.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0].querySelector('.song-info__name').style.color = '#1db753'
         } else {
           $('#on-open-playlist__body__btns__play').src='./assets/images/main-view/play-now-playlist.PNG'
           $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/play-now-playlist.PNG'
@@ -1263,14 +1263,17 @@ const handlePlaylists = {
           mainView.scrollTop = 0
           
           Array.from($('#root__left-sidebar__my-playlists').getElementsByClassName('is-playlist'))
-            .filter(playlist => playlist.id != eachPlaylist.id)
-            .forEach(playlist => {
-              playlist.style.color = '#b3b3b3'
-              playlist.onmouseenter = function() { playlist.style.color = 'white'}
-              playlist.onmouseleave = function() { playlist.style.color = '#b3b3b3'}
+            .filter(otherPlaylist => otherPlaylist.id != eachPlaylist.id)
+            .forEach(otherPlaylist => {
+              otherPlaylist.style.color = '#b3b3b3'
+              otherPlaylist.onmouseenter = function() { playlist.style.color = 'white'}
+              otherPlaylist.onmouseleave = function() { playlist.style.color = '#b3b3b3'}
             })
-          playlistArray.filter(playlist => playlist.id == eachPlaylist.id && playlist.className.includes('my-playlist'))[0].style.color = 'white'
-          
+
+          const currentPlaylist = playlistArray.filter(playlist => playlist.id == eachPlaylist.id && playlist.className.includes('my-playlist'))[0]
+          currentPlaylist.style.color = 'white'
+          currentPlaylist.onmouseenter = function() { currentPlaylist.style.color = 'white'}
+          currentPlaylist.onmouseleave = function() { currentPlaylist.style.color = 'white'}
         },
 
         handlePlaylistPageButtons: function() {
