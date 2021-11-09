@@ -613,7 +613,7 @@ const allPlaylists = [
 
 const playSongs = { 
   songs: [...allPlaylists[1].songs],
-  id: 2,
+  id: allPlaylists[1].id,
   currentIndex: 0,
   isPlaying: false,
   isShuffle: true,
@@ -665,16 +665,19 @@ const playSongs = {
   },
 
     //handle when song plays
-  audioUpdate: function(color = '#b3b3b3') {
+    audioPlaying: function(color = '#b3b3b3') {
     const _this = this
   
     audio.ontimeupdate = function() {
-      
       if ($('#on-open-playlist__body__btns__play')) {
         if ($('#on-open-playlist__body__btns__play').className == _this.id && _this.isPlaying) {
           $('#on-open-playlist__body__btns__play').src='./assets/images/main-view/pause-playlist.PNG'
           $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/pause-playlist.PNG' 
-          Array.from(onOpenPlaylist.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0].querySelector('.song-info__name').style.color = '#1db753'
+
+          Array.from(onOpenPlaylist.getElementsByClassName('song')).forEach(song => song.querySelector('.play-this-song').src = './assets/images/main-view/play-this-song.PNG')
+          const playingSong = Array.from(onOpenPlaylist.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0]
+          playingSong.querySelector('.song-info__name').style.color = '#1db753'
+          playingSong.querySelector('.play-this-song').src = './assets/images/main-view/pause-this-song.PNG'
         } else {
           $('#on-open-playlist__body__btns__play').src='./assets/images/main-view/play-now-playlist.PNG'
           $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/play-now-playlist.PNG'
@@ -709,7 +712,7 @@ const playSongs = {
       _this.isSeeking = true
       _this.handleTimePlayed(playbackSlider.value)
       let thumbValue = playbackSlider.value / playbackSlider.max *100
-      // setTimeout(_this.audioUpdate)
+      // setTimeout(_this.audioPlaying)
       playbackSlider.style.background = 'linear-gradient(to right, #1db954 0%, #1db954 ' + thumbValue + '%, #535353 ' + thumbValue + '%, #535353 100%)'
 
     }
@@ -737,7 +740,7 @@ const playSongs = {
       head.appendChild(link)
 
       //change slider track color when hover
-      _this.audioUpdate('#1db954')
+      _this.audioPlaying('#1db954')
       let thumbValue = playbackSlider.value / playbackSlider.max *100
       playbackSlider.style.background = 'linear-gradient(to right, #1db954 0%, #1db954 ' + thumbValue + '%, #535353 ' + thumbValue + '%, #535353 100%)'
     }
@@ -749,7 +752,7 @@ const playSongs = {
       sliderHover.remove()
 
       //change slider track color to default
-      _this.audioUpdate()
+      _this.audioPlaying()
       let thumbValue = playbackSlider.value / playbackSlider.max *100
       playbackSlider.style.background = 'linear-gradient(to right,#b3b3b3 0%, #b3b3b3 ' + thumbValue + '%, #535353 ' + thumbValue + '%, #535353 100%)'
     }
@@ -1018,10 +1021,10 @@ const playSongs = {
       _this.isRepeatPlaylist ? _this.handleRepeat.repeatSong() : _this.isRepeatSong ? _this.handleRepeat.noRepeat() : _this.handleRepeat.repeatPlaylist()
     }
         
-    this.handleAudioPlaying()
+    this.handlePlayOrPauseAudio()
   },
 
-  handleAudioPlaying: function() {
+  handlePlayOrPauseAudio: function() {
     _this = this
     audio.onplay = function() {
       //hide all playing btn in playlist box...
@@ -1050,7 +1053,9 @@ const playSongs = {
         Array.from(onOpenPlaylist.getElementsByClassName('song')).forEach(song => {
           song.querySelector('.song-info__name').style.color = 'white'
         })
-        Array.from(onOpenPlaylist.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0].querySelector('.song-info__name').style.color = '#1db753'
+        const playingSong = Array.from(onOpenPlaylist.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0]
+        playingSong.querySelector('.song-info__name').style.color = '#1db753'
+        playingSong.querySelector('.play-this-song').src = './assets/images/main-view/pause-this-song.PNG'
       }
       _this.isPlaying = true;
       playBtn.src = `./assets/images/now-playing/pause.png`
@@ -1069,7 +1074,10 @@ const playSongs = {
       if ($('#on-open-playlist__body__btns__play')) if($('#on-open-playlist__body__btns__play').className == _this.id) {
         $('#on-open-playlist__body__btns__play').src = './assets/images/main-view/play-now-playlist.PNG'
         $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/play-now-playlist.PNG'
-        Array.from(onOpenPlaylist.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0].querySelector('.song-info__name').style.color = 'white'
+        Array.from(onOpenPlaylist.getElementsByClassName('song')).forEach(song => {
+          song.querySelector('.song-info__name').style.color = 'white'
+          song.querySelector('.play-this-song').src = './assets/images/main-view/play-this-song.PNG'
+        })
       }
       _this.isPlaying = false;
       playBtn.src = `./assets/images/now-playing/play.PNG`
@@ -1082,7 +1090,7 @@ const playSongs = {
       this.handleTimeTotal()
       this.isRepeatPlaylist ? this.handleRepeat.repeatPlaylist() : this.isRepeatSong ? this.handleRepeat.repeatSong() : this.handleRepeat.noRepeat()
       this.isShuffle ? this.handleShuffle.shuffle() : this.handleShuffle.noShuffle()
-      this.audioUpdate()
+      this.audioPlaying()
       this.handlePlaybackSliderBar()
       this.handleVolumeSliderBar()
       this.handleBtn()
@@ -1266,8 +1274,8 @@ const handlePlaylists = {
             .filter(otherPlaylist => otherPlaylist.id != eachPlaylist.id)
             .forEach(otherPlaylist => {
               otherPlaylist.style.color = '#b3b3b3'
-              otherPlaylist.onmouseenter = function() { playlist.style.color = 'white'}
-              otherPlaylist.onmouseleave = function() { playlist.style.color = '#b3b3b3'}
+              otherPlaylist.onmouseenter = function() { otherPlaylist.style.color = 'white'}
+              otherPlaylist.onmouseleave = function() { otherPlaylist.style.color = '#b3b3b3'}
             })
 
           const currentPlaylist = playlistArray.filter(playlist => playlist.id == eachPlaylist.id && playlist.className.includes('my-playlist'))[0]
@@ -1292,15 +1300,21 @@ const handlePlaylists = {
           Array.from(document.querySelectorAll('.song')).forEach(song => {
 
             function playThisSong() {
-              const thisSong = allSongs.filter(findSong => findSong.id == song.getAttribute('id'))
-              playSongs.songs = [...thisPlaylistInDB[0].songs]
-              playSongs.id = thisPlaylistInDB[0].id
-              playSongs.currentIndex = playSongs.songs.indexOf(...thisSong)
-              playSongs.start()
-              audio.play()
+              const thisSong = allSongs.filter(findSong => findSong.id == song.getAttribute('id'))[0]
+              if (song.querySelector('.play-this-song').src.includes('assets/images/main-view/pause-this-song.PNG')) {
+                audio.pause()
+              } else {
+                if (playSongs.id == thisPlaylistInDB[0].id && playSongs.currentIndex == playSongs.songs.indexOf(thisSong)) {
+                  audio.play()
+                } else {
+                  playSongs.songs = [...thisPlaylistInDB[0].songs]
+                  playSongs.id = thisPlaylistInDB[0].id
+                  playSongs.currentIndex = playSongs.songs.indexOf(thisSong)
+                  playSongs.start()
+                  audio.play()
+                }
+              }
             }
-
-
 
             song.onmouseover = function() {
               if (window.outerWidth > 651) {
@@ -1322,7 +1336,12 @@ const handlePlaylists = {
             }
             song.onclick = function() {
               if (window.outerWidth < 1000) {
-                playThisSong()
+                const thisSong = allSongs.filter(findSong => findSong.id == song.getAttribute('id'))[0]
+                playSongs.songs = [...thisPlaylistInDB[0].songs]
+                playSongs.id = thisPlaylistInDB[0].id
+                playSongs.currentIndex = playSongs.songs.indexOf(thisSong)
+                playSongs.start()
+                audio.play()
               }
             }
           })
@@ -1634,4 +1653,3 @@ mainView.onscroll = function() {
     }, 300)      
   }           
 }
-
