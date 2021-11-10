@@ -22,7 +22,7 @@ const friendsIcon = $('#responsive-friends')
 const friendsBar = $('#root__right-sidebar')
 const onOpenPlaylist = $('#on-open-playlist')
 const homeBtn = $('#root__left-sidebar__navigation__home')
-
+const queuePage = $('#queue')
 
 let isAtHome = true;
 const trace = [mainView]
@@ -853,9 +853,6 @@ const playSongs = {
 
       //add active shuffle button
       shuffleBtn.src = './assets/images/now-playing/shuffle-active.PNG'
-      shuffleBtn.style.opacity = 0.8
-      $('.shuffle-active').style.opacity = 0.8
-      this.shuffleActive()
     },
     
     noShuffle: function() {
@@ -867,26 +864,7 @@ const playSongs = {
       
       //change shuffle button to default
       shuffleBtn.src="./assets/images/now-playing/shuffle.PNG"
-      $('.shuffle-active').style.opacity = 0
-      this.shuffleActive()
     },
-
-    shuffleActive: function() {
-      const shuffleActiveDot = $('.shuffle-active')
-      shuffleBtn.onmouseover = function() {
-        if (playSongs.isShuffle) {
-          shuffleBtn.style.opacity = 1
-          shuffleActiveDot.style.opacity = 1
-        }
-      }
-      shuffleBtn.onmouseout = function() {
-        if (playSongs.isShuffle) {
-          shuffleBtn.style.opacity = 0.8
-          shuffleActiveDot.style.opacity = 0.8
-        }
-      }
-    }
-
   },
   
   handleRepeat: {
@@ -912,15 +890,6 @@ const playSongs = {
       
       //change repeat button to default
       repeatBtn.src = './assets/images/now-playing/repeat.PNG'
-      repeatBtn.style.opacity = 0.6
-      $('.repeat-active').style.opacity = 0
-
-      repeatBtn.onmouseover = function() {
-        repeatBtn.style.opacity = 1
-      }
-      repeatBtn.onmouseout = function() {
-        repeatBtn.style.opacity = 0.6
-      }
     },
 
     
@@ -943,9 +912,6 @@ const playSongs = {
 
       // add repeat playlist button
       repeatBtn.src = './assets/images/now-playing/repeat-playlist-active.PNG'
-      repeatBtn.style.opacity = 0.8
-      $('.repeat-active').style.opacity = 0.8
-      this.handleRepeatHover()
     },
 
     repeatSong: function() {
@@ -954,26 +920,7 @@ const playSongs = {
       audio.loop = true
 
       repeatBtn.src = './assets/images/now-playing/repeat-song-active.PNG'
-      this.handleRepeatHover()
-    },
-
-    //handle repeat button when hover
-    handleRepeatHover: function() {
-      const repeatActive = $('.repeat-active')
-      repeatBtn.onmouseover = function() {
-        if (playSongs.isRepeatPlaylist || playSongs.isRepeatSong) {
-          repeatBtn.style.opacity = 1
-          repeatActive.style.opacity = 1
-        }
-      }
-      repeatBtn.onmouseout = function() {
-        if (playSongs.isRepeatPlaylist || playSongs.isRepeatSong) {
-          repeatBtn.style.opacity = 0.8
-          repeatActive.style.opacity = 0.8
-        }
-      }
     }
-
   },                                                          
                                                                       
   handleBtn: function() {                                             
@@ -1014,11 +961,13 @@ const playSongs = {
     //handle shuffle button
     shuffleBtn.onclick = function() {
       _this.isShuffle ? _this.handleShuffle.noShuffle() : _this.handleShuffle.shuffle()
+      handleActiveBtns(_this.isShuffle, shuffleBtn, $('.shuffle-active'))
     }
 
     //handle repeat button
     repeatBtn.onclick = function() {
       _this.isRepeatPlaylist ? _this.handleRepeat.repeatSong() : _this.isRepeatSong ? _this.handleRepeat.noRepeat() : _this.handleRepeat.repeatPlaylist()
+      handleActiveBtns(_this.isRepeatPlaylist || _this.isRepeatSong, repeatBtn, $('.repeat-active'))
     }
         
     this.handlePlayOrPauseAudio()
@@ -1094,6 +1043,8 @@ const playSongs = {
       this.handlePlaybackSliderBar()
       this.handleVolumeSliderBar()
       this.handleBtn()
+      handleActiveBtns(this.isShuffle, shuffleBtn, $('.shuffle-active'))
+      handleActiveBtns(this.isRepeatPlaylist || _this.isRepeatSong, repeatBtn, $('.repeat-active'))
     }
   }
 }
@@ -1266,7 +1217,7 @@ const handlePlaylists = {
           } else {
             $('#on-open-playlist__header__title__name').style.fontSize = '5vw'
           }
-          handleResponsive.handlePlaylistPage.handlePageSize()
+          handleResponsive.handlePlaylistPage.handlePageSize(onOpenPlaylist)
           onOpenPlaylist.scrollTop = 0;
           mainView.scrollTop = 0
           
@@ -1451,11 +1402,12 @@ const handleResponsive = {
   },
   
   handlePlaylistPage: {
-    handlePageSize: function() {
-      onOpenPlaylist.style.width = mainView.offsetWidth + 'px'
-      onOpenPlaylist.style.height = mainView.offsetHeight + 'px'
-      onOpenPlaylist.style.top = mainView.offsetTop + 'px'
-      onOpenPlaylist.style.left = mainView.offsetLeft + 'px'
+    handlePageSize: function(page) {
+      page.style.width = mainView.offsetWidth + 'px'
+      page.style.height = mainView.offsetHeight + 'px'
+      page.style.top = mainView.offsetTop + 'px'
+      page.style.left = mainView.offsetLeft + 'px'
+      
     },
     currentFontSizeArr: [],
     handleTextWidth: function() {
@@ -1482,7 +1434,8 @@ const handleResponsive = {
       }
     },
     handle: function() {
-      this.handlePageSize();
+      this.handlePageSize(onOpenPlaylist);
+      this.handlePageSize(queuePage);
       this.handleTextWidth()
     }
   },
@@ -1514,6 +1467,71 @@ function openMenu() {
       }
   }
 }
+
+function openQueuePage() {
+  $('.list').onclick = function() {
+    if (window.getComputedStyle(queuePage).display == 'none') {
+      queuePage.style.display = 'block'
+      $('.list').src= './assets/images/now-playing/list-active.PNG'
+      handleActiveBtns(true, $('.list'), $('.list-active'))
+    } else {
+      queuePage.style.display = 'none'
+      $('.list').src= './assets/images/now-playing/list.PNG'
+      handleActiveBtns(false, $('.list'), $('.list-active'))
+    }
+    Array.from(queuePage.getElementsByClassName('song-info')).forEach(songInfo => songInfo.style.maxWidth = queuePage.querySelector('.title').offsetWidth - 100 + 'px')
+  }
+}
+
+function renderQueuePage() {
+  const playingSong = playSongs.songs[playSongs.currentIndex]
+  $('#queue__now-playing-song').innerHTML = `
+    <ul class="song">
+      <li class='number'>1<img class="play-this-song" src='./assets/images/main-view/play-this-song.PNG'></li>
+      <li class='title'>
+        <img class='song-img' src=${playingSong.img}>
+        <div class="song-info">
+            <div class="song-info__name">${playingSong.name}</div>
+            <div class="song-info__artist">${playingSong.artist}</div>
+        </div>
+      </li>
+      <li class='album'>${playingSong.album}</li>
+      <li class='more'>
+        <img class="more__favorite" src="./assets/images/now-playing/favorite.png">
+        <span class="more__time">4:45</span>
+        <img class="more__icon" src='./assets/images/main-view/see-more.PNG'>
+      </li>
+    </ul>
+  `
+
+  $('#queue__now-playing-song').querySelector('.number').style.color = '#1db753'
+  $('#queue__now-playing-song').querySelector('.song-info__name').style.color = '#1db753'
+
+  
+  const nextUpSongs = playSongs.songs.slice(playSongs.currentIndex + 1)
+  
+  $('#queue__next-up-songs').innerHTML = nextUpSongs.map((song, index) => `
+    <ul class="song">
+      <li class='number'>${index + 2}<img class="play-this-song" src='./assets/images/main-view/play-this-song.PNG'></li>
+      <li class='title'>
+          <img class='song-img' src=${song.img}>
+          <div class="song-info">
+              <div class="song-info__name">${song.name}</div>
+              <div class="song-info__artist">${song.artist}</div>
+          </div>
+      </li>
+      <li class='album'>${song.album}</li>
+      <li class='more'>
+          <img class="more__favorite" src="./assets/images/now-playing/favorite.png">
+          <span class="more__time">4:45</span>
+          <img class="more__icon" src='./assets/images/main-view/see-more.PNG'>
+      </li>
+    </ul>
+  `).join('')
+}
+openQueuePage()
+renderQueuePage()
+
 
 function handleCurrentPlaylistHover() {
   const currentPlaylists = Array.from(document.getElementsByClassName('current-playlist'));
@@ -1653,3 +1671,32 @@ mainView.onscroll = function() {
     }, 300)      
   }           
 }
+
+
+function handleActiveBtns(boolean, button, buttonDot) {
+  if (boolean) {
+    button.style.opacity = 0.8;
+    buttonDot.style.opacity = 0.8;
+
+    button.onmouseover = function() {
+      button.style.opacity = 1;
+      buttonDot.style.opacity = 1;
+    }
+    button.onmouseleave = function() {
+      button.style.opacity = 0.8;
+      buttonDot.style.opacity = 0.8;
+    }
+  } else {
+    button.style.opacity = 0.6;
+    buttonDot.style.opacity = 0;
+
+    button.onmouseover = function() {
+      button.style.opacity = 1;
+    }
+    button.onmouseleave = function() {
+      button.style.opacity = 0.6;
+    }
+  }
+}
+
+

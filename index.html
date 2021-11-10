@@ -12,9 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Spotify - Made by Phuc1403</title>
     <link rel="stylesheet" href="./assets/css/index.css">
-    <!-- <link rel="stylesheet" href="./assets/css/now-playing.css"> -->
-    <!-- <link rel="stylesheet" href="./assets/css/slider.css">  -->
-    <!-- <link rel="stylesheet" href="./assets/css/on-open-playlist.css"> -->
+    <link rel="stylesheet" href="./assets/css/playlistPage.css">
 </head>
 <body>
     <div id="root">
@@ -379,9 +377,54 @@
                 </div> -->
             </div>
         
-        
+            <div id="queue">
+                <div id="queue-text">Queue</div>
+                <div id="queue__now-playing-text">Now playing</div>
+                <div id="queue__now-playing-song">
+                    <!-- <ul class="song">
+                        <li class='number'>1<img class="play-this-song" src='./assets/images/main-view/play-this-song.PNG'></li>
+                        <li class='title'>
+                            <img class='song-img' src='./assets/songs/albums/nothing-personal__all-time-low.jpg'>
+                            <div class="song-info">
+                                <div class="song-info__name">Weightless</div>
+                                <div class="song-info__artist">All Time Low</div>
+                            </div>
+                        </li>
+                        <li class='album'>Nothing Personal</li>
+                        <li class='more'>
+                            <img class="more__favorite" src="./assets/images/now-playing/favorite.png">
+                            <span class="more__time">4:45</span>
+                            <img class="more__icon" src='./assets/images/main-view/see-more.PNG'>
+                        </li>
+                    </ul> -->
+                </div>
+                
+                <div id="queue__next-up-text">Next up:</div>
+                <div id="queue__next-up-songs">
+                    <!-- <ul class="song">
+                        <li class='number'>1<img class="play-this-song" src='./assets/images/main-view/play-this-song.PNG'></li>
+                        <li class='title'>
+                            <img class='song-img' src='./assets/songs/albums/nothing-personal__all-time-low.jpg'>
+                            <div class="song-info">
+                                <div class="song-info__name">Weightless</div>
+                                <div class="song-info__artist">All Time Low</div>
+                            </div>
+                        </li>
+                        <li class='album'>Nothing Personal</li>
+                        <li class='more'>
+                            <img class="more__favorite" src="./assets/images/now-playing/favorite.png">
+                            <span class="more__time">4:45</span>
+                            <img class="more__icon" src='./assets/images/main-view/see-more.PNG'>
+                        </li>
+                    </ul> -->
+                </div>
+            </div>
         
         </div>
+
+
+
+
         <div id="root__right-sidebar">
             <div id="responsive-friends__profile">
                 <img src="./assets/images/user/user-avatar.jpg">
@@ -483,7 +526,10 @@
                 </div>
             </div>
             <div id="root__now-playing__media-control">
-                <img class="media-control list" src="./assets/images/now-playing/list.PNG">
+                <div id="list">
+                    <img class="media-control list" src="./assets/images/now-playing/list.PNG">
+                    <img class="list-active" src="./assets/images/now-playing/active-dot.png">
+                </div>
                 <img class="media-control remote" src="./assets/images/now-playing/remote.PNG">
                 <div id="root__now-playing__media-control__volume-bar">
                     <img class="volume-btn" src="./assets/images/now-playing/volume-big.PNG">
