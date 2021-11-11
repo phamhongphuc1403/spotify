@@ -539,7 +539,36 @@ const allSongs = [
     backgroundColor: '#4a6b21',
     tag: ['favorite', ]
   },
-
+  { 
+    id: 52, 
+    name: "Seven Nation Army", 
+    artist: ["The White Stripes"],
+    img: "./assets/songs/albums/elephant__the-white-stripes.jpg",
+    path: "./assets/songs/songs/seven-nation-army__the-white-stripes.mp3",
+    album: "Elephant",
+    backgroundColor: '#bc3204',
+    tag: ['favorite', 'rock']
+  },
+  { 
+    id: 53, 
+    name: "Rain", 
+    artist: ["The Cult"],
+    img: "./assets/songs/albums/love__the-cult.jpg",
+    path: "./assets/songs/songs/rain__the-cult.mp3",
+    album: "Love",
+    backgroundColor: '#071923',
+    tag: ['favorite', 'rock']
+  },
+  { 
+    id: 54, 
+    name: "House Of The Rising Sun", 
+    artist: ["The Animals"],
+    img: "./assets/songs/albums/the-animals__the-animals.jpg",
+    path: "./assets/songs/songs/house-of-the-rising-sun__the-animals.mp3",
+    album: "The Animals",
+    backgroundColor: '#516062',
+    tag: ['favorite', 'rock']
+  },
 ]
 
 const allPlaylists = [ 
@@ -611,12 +640,23 @@ const allPlaylists = [
   }
 ]
 
+function shuffleSongsInPlaylists() {
+  allPlaylists.forEach(playlist => {
+    playlist.songs.forEach(song => song.order = Math.floor(Math.random() * (playlist.songs.length - 1)) + 1)
+    playlist.songs.sort((a, b) => a.order - b.order)
+  })
+  allPlaylists[1].songs.forEach((song,index) => song.id = index + 1)
+  console.log(allPlaylists[1].songs)
+}
+shuffleSongsInPlaylists()
+
+
 const playSongs = { 
   songs: [...allPlaylists[1].songs],
   id: allPlaylists[1].id,
   currentIndex: 0,
   isPlaying: false,
-  isShuffle: true,
+  isShuffle: false,
   isRepeatSong: false,
   isRepeatPlaylist: false,
   isMute: false,
@@ -885,7 +925,8 @@ const playSongs = {
           playSongs.isPlaying = false;                                      
         audio.autoplay = false                                        
           playBtn.src = `./assets/images/now-playing/play.PNG`          
-        }                                                               
+        }
+        renderQueuePage()                                                               
       }      
       
       //change repeat button to default
@@ -908,6 +949,7 @@ const playSongs = {
           playSongs.isPlaying = true;
           playSongs.loadCurrentSong() 
         }           
+        renderQueuePage()
       }
 
       // add repeat playlist button
@@ -934,6 +976,7 @@ const playSongs = {
         _this.currentIndex = 0
         _this.loadCurrentSong()
         audio.autoplay = true
+        renderQueuePage()
       }
     }
 
@@ -948,6 +991,7 @@ const playSongs = {
       } else {      //replay the song if the current song is playing more than 2.5 seconds
         _this.loadCurrentSong()
       }
+      renderQueuePage()
     }
 
     //handle next button
@@ -956,12 +1000,14 @@ const playSongs = {
       if (_this.currentIndex >= _this.songs.length) _this.currentIndex = 0    //if it's the the last song in the playlist, play the first song
       _this.loadCurrentSong()
       audio.autoplay = true
+      renderQueuePage()
     }
 
     //handle shuffle button
     shuffleBtn.onclick = function() {
       _this.isShuffle ? _this.handleShuffle.noShuffle() : _this.handleShuffle.shuffle()
       handleActiveBtns(_this.isShuffle, shuffleBtn, $('.shuffle-active'))
+      renderQueuePage()
     }
 
     //handle repeat button
@@ -1034,7 +1080,6 @@ const playSongs = {
     }
   },
   start: function() {  //wrap all function into one 
-    if (this.songs) {
       this.loadCurrentSong()
       this.handleTimeTotal()
       this.isRepeatPlaylist ? this.handleRepeat.repeatPlaylist() : this.isRepeatSong ? this.handleRepeat.repeatSong() : this.handleRepeat.noRepeat()
@@ -1045,7 +1090,6 @@ const playSongs = {
       this.handleBtn()
       handleActiveBtns(this.isShuffle, shuffleBtn, $('.shuffle-active'))
       handleActiveBtns(this.isRepeatPlaylist || _this.isRepeatSong, repeatBtn, $('.repeat-active'))
-    }
   }
 }
 
@@ -1265,6 +1309,7 @@ const handlePlaylists = {
                   audio.play()
                 }
               }
+              renderQueuePage()
             }
 
             song.onmouseover = function() {
@@ -1293,6 +1338,7 @@ const handlePlaylists = {
                 playSongs.currentIndex = playSongs.songs.indexOf(thisSong)
                 playSongs.start()
                 audio.play()
+                renderQueuePage()
               }
             }
           })
