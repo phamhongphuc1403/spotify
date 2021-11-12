@@ -217,13 +217,10 @@
     background-color: #121212;
     /* margin-top: 100px; */
     padding: 100px 32px 0;
-    z-index: 3;
+    z-index: 5;
     overflow: overlay;
     box-sizing: border-box;
 }
-/* #queue .song-info {
-    max-width: calc(500px - 200px);
-} */
 #queue-text:first-child {
     margin-bottom: 16px;
     line-height: 28px;

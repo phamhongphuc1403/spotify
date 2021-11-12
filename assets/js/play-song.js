@@ -723,7 +723,11 @@ const playSongs = {
           $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/play-now-playlist.PNG'
         }
       }
-
+      if (queuePage.style.display == 'block') {
+        Array.from(queuePage.getElementsByClassName('song')).forEach(song => song.querySelector('.play-this-song').src = './assets/images/main-view/play-this-song.PNG')
+        const playingSong = Array.from(queuePage.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0]
+        playingSong.querySelector('.play-this-song').src = './assets/images/main-view/pause-this-song.PNG'
+      }
       //set 'time played' when song plays
 
       if (_this.isSeeking == false) {
@@ -926,7 +930,8 @@ const playSongs = {
         audio.autoplay = false                                        
           playBtn.src = `./assets/images/now-playing/play.PNG`          
         }
-        renderQueuePage()                                                               
+        handleQueuePage.renderQueuePage()           
+        handleQueuePage.handleQueuePageBtns()                                                  
       }      
       
       //change repeat button to default
@@ -949,7 +954,8 @@ const playSongs = {
           playSongs.isPlaying = true;
           playSongs.loadCurrentSong() 
         }           
-        renderQueuePage()
+        handleQueuePage.renderQueuePage()
+        handleQueuePage.handleQueuePageBtns()
       }
 
       // add repeat playlist button
@@ -976,7 +982,8 @@ const playSongs = {
         _this.currentIndex = 0
         _this.loadCurrentSong()
         audio.autoplay = true
-        renderQueuePage()
+        handleQueuePage.renderQueuePage()
+        handleQueuePage.handleQueuePageBtns()
       }
     }
 
@@ -991,7 +998,8 @@ const playSongs = {
       } else {      //replay the song if the current song is playing more than 2.5 seconds
         _this.loadCurrentSong()
       }
-      renderQueuePage()
+      handleQueuePage.renderQueuePage()
+      handleQueuePage.handleQueuePageBtns()
     }
 
     //handle next button
@@ -1000,14 +1008,16 @@ const playSongs = {
       if (_this.currentIndex >= _this.songs.length) _this.currentIndex = 0    //if it's the the last song in the playlist, play the first song
       _this.loadCurrentSong()
       audio.autoplay = true
-      renderQueuePage()
+      handleQueuePage.renderQueuePage()
+      handleQueuePage.handleQueuePageBtns()
     }
 
     //handle shuffle button
     shuffleBtn.onclick = function() {
       _this.isShuffle ? _this.handleShuffle.noShuffle() : _this.handleShuffle.shuffle()
       handleActiveBtns(_this.isShuffle, shuffleBtn, $('.shuffle-active'))
-      renderQueuePage()
+      handleQueuePage.renderQueuePage()
+      handleQueuePage.handleQueuePageBtns()
     }
 
     //handle repeat button
@@ -1052,6 +1062,15 @@ const playSongs = {
         playingSong.querySelector('.song-info__name').style.color = '#1db753'
         playingSong.querySelector('.play-this-song').src = './assets/images/main-view/pause-this-song.PNG'
       }
+
+      if (queuePage.style.display == 'block') {
+        Array.from(queuePage.getElementsByClassName('song')).forEach(song => {
+          song.querySelector('.song-info__name').style.color = 'white'
+        })
+        const playingSong = Array.from(queuePage.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0]
+        playingSong.querySelector('.song-info__name').style.color = '#1db753'
+        playingSong.querySelector('.play-this-song').src = './assets/images/main-view/pause-this-song.PNG'
+      }
       _this.isPlaying = true;
       playBtn.src = `./assets/images/now-playing/pause.png`
       $('title').innerText = `${_this.songs[_this.currentIndex].name} · ${_this.songs[_this.currentIndex].artist}`
@@ -1071,6 +1090,11 @@ const playSongs = {
         $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/play-now-playlist.PNG'
         Array.from(onOpenPlaylist.getElementsByClassName('song')).forEach(song => {
           song.querySelector('.song-info__name').style.color = 'white'
+          song.querySelector('.play-this-song').src = './assets/images/main-view/play-this-song.PNG'
+        })
+      }
+      if (queuePage.style.display == 'block') {
+        Array.from(queuePage.getElementsByClassName('song')).forEach(song => {
           song.querySelector('.play-this-song').src = './assets/images/main-view/play-this-song.PNG'
         })
       }
@@ -1309,7 +1333,8 @@ const handlePlaylists = {
                   audio.play()
                 }
               }
-              renderQueuePage()
+              handleQueuePage.renderQueuePage()
+              handleQueuePage.handleQueuePageBtns()
             }
 
             song.onmouseover = function() {
@@ -1338,7 +1363,8 @@ const handlePlaylists = {
                 playSongs.currentIndex = playSongs.songs.indexOf(thisSong)
                 playSongs.start()
                 audio.play()
-                renderQueuePage()
+                handleQueuePage.renderQueuePage()
+                handleQueuePage.handleQueuePageBtns()
               }
             }
           })
@@ -1514,69 +1540,136 @@ function openMenu() {
   }
 }
 
-function openQueuePage() {
-  $('.list').onclick = function() {
-    if (window.getComputedStyle(queuePage).display == 'none') {
-      queuePage.style.display = 'block'
-      $('.list').src= './assets/images/now-playing/list-active.PNG'
-      handleActiveBtns(true, $('.list'), $('.list-active'))
-    } else {
-      queuePage.style.display = 'none'
-      $('.list').src= './assets/images/now-playing/list.PNG'
-      handleActiveBtns(false, $('.list'), $('.list-active'))
+
+
+const handleQueuePage = {
+  openQueuePage: function() {
+    $('.list').onclick = function(e) {
+      e.stopPropagation()
+      if (window.getComputedStyle(queuePage).display == 'none') {
+        queuePage.style.display = 'block'
+        $('.list').src= './assets/images/now-playing/list-active.PNG'
+        handleActiveBtns(true, $('.list'), $('.list-active'))
+      } else {
+        queuePage.style.display = 'none'
+        $('.list').src= './assets/images/now-playing/list.PNG'
+        handleActiveBtns(false, $('.list'), $('.list-active'))
+      }
+      Array.from(queuePage.getElementsByClassName('song-info')).forEach(songInfo => songInfo.style.maxWidth = queuePage.querySelector('.title').offsetWidth - 100 + 'px')
+      handleNavigation.farFromHome()
+      if (document.getElementById('nowPlaying'))  {
+        document.getElementById('root__now-playing').remove()
+      }
     }
-    Array.from(queuePage.getElementsByClassName('song-info')).forEach(songInfo => songInfo.style.maxWidth = queuePage.querySelector('.title').offsetWidth - 100 + 'px')
-  }
-}
-
-function renderQueuePage() {
-  const playingSong = playSongs.songs[playSongs.currentIndex]
-  $('#queue__now-playing-song').innerHTML = `
-    <ul class="song">
-      <li class='number'>1<img class="play-this-song" src='./assets/images/main-view/play-this-song.PNG'></li>
-      <li class='title'>
-        <img class='song-img' src=${playingSong.img}>
-        <div class="song-info">
-            <div class="song-info__name">${playingSong.name}</div>
-            <div class="song-info__artist">${playingSong.artist}</div>
-        </div>
-      </li>
-      <li class='album'>${playingSong.album}</li>
-      <li class='more'>
-        <img class="more__favorite" src="./assets/images/now-playing/favorite.png">
-        <span class="more__time">4:45</span>
-        <img class="more__icon" src='./assets/images/main-view/see-more.PNG'>
-      </li>
-    </ul>
-  `
-
-  $('#queue__now-playing-song').querySelector('.number').style.color = '#1db753'
-  $('#queue__now-playing-song').querySelector('.song-info__name').style.color = '#1db753'
-
-  
-  const nextUpSongs = playSongs.songs.slice(playSongs.currentIndex + 1)
-  
-  $('#queue__next-up-songs').innerHTML = nextUpSongs.map((song, index) => `
-    <ul class="song">
-      <li class='number'>${index + 2}<img class="play-this-song" src='./assets/images/main-view/play-this-song.PNG'></li>
-      <li class='title'>
-          <img class='song-img' src=${song.img}>
+  },
+  renderQueuePage: function() {
+    const playingSong = playSongs.songs[playSongs.currentIndex]
+    $('#queue__now-playing-song').innerHTML = `
+      <ul class="song" id="${playingSong.id}">
+      <li class='number'><img class="play-this-song" src='./assets/images/main-view/play-this-song.PNG'><span>1</span></li>
+        <li class='title'>
+          <img class='song-img' src=${playingSong.img}>
           <div class="song-info">
-              <div class="song-info__name">${song.name}</div>
-              <div class="song-info__artist">${song.artist}</div>
+              <div class="song-info__name">${playingSong.name}</div>
+              <div class="song-info__artist">${playingSong.artist}</div>
           </div>
-      </li>
-      <li class='album'>${song.album}</li>
-      <li class='more'>
+        </li>
+        <li class='album'>${playingSong.album}</li>
+        <li class='more'>
           <img class="more__favorite" src="./assets/images/now-playing/favorite.png">
           <span class="more__time">4:45</span>
           <img class="more__icon" src='./assets/images/main-view/see-more.PNG'>
-      </li>
-    </ul>
-  `).join('')
+        </li>
+      </ul>
+    `
+ 
+    $('#queue__now-playing-song').querySelector('.number').style.color = '#1db753'
+    $('#queue__now-playing-song').querySelector('.song-info__name').style.color = '#1db753'
+  
+    
+    const nextUpSongs = playSongs.songs.slice(playSongs.currentIndex + 1)
+    
+    $('#queue__next-up-songs').innerHTML = nextUpSongs.map((song, index) => `
+      <ul class="song" id="${song.id}">
+        <li class='number'><img class="play-this-song" src='./assets/images/main-view/play-this-song.PNG'><span>${index + 2}</span></li>
+        <li class='title'>
+            <img class='song-img' src=${song.img}>
+            <div class="song-info">
+                <div class="song-info__name">${song.name}</div>
+                <div class="song-info__artist">${song.artist}</div>
+            </div>
+        </li>
+        <li class='album'>${song.album}</li>
+        <li class='more'>
+            <img class="more__favorite" src="./assets/images/now-playing/favorite.png">
+            <span class="more__time">4:45</span>
+            <img class="more__icon" src='./assets/images/main-view/see-more.PNG'>
+        </li>
+      </ul>
+    `).join('')
+  },
+  handleQueuePageBtns: function() {
+    // $('#on-open-playlist__return-home').onclick = function() {
+    //   handleNavigation.homeComing()
+    // }
+    Array.from(queuePage.querySelectorAll('.song')).forEach(song => {
+
+      function playThisSong() {
+        const thisSong = allSongs.filter(findSong => findSong.id == song.getAttribute('id'))[0]
+        if (song.querySelector('.play-this-song').src.includes('assets/images/main-view/pause-this-song.PNG')) {
+          audio.pause()
+        } else {
+          if (playSongs.id == playSongs.id && playSongs.currentIndex == playSongs.songs.indexOf(thisSong)) {
+            audio.play()
+          } else {
+            playSongs.currentIndex = playSongs.songs.indexOf(thisSong)
+            playSongs.start()
+            audio.play()
+          }
+        }
+        handleQueuePage.renderQueuePage()
+        handleQueuePage.handleQueuePageBtns()
+      }
+
+      song.onmouseover = function() {
+        if (window.outerWidth > 651) {
+          song.style.backgroundColor = 'rgb(255,255,255,0.1)'
+          song.querySelector('.play-this-song').style.display = 'block'
+          song.querySelector('.number span').style.display = 'none'
+        }
+
+        song.querySelector('.play-this-song').onclick = function() {
+          playThisSong()
+        }
+      }
+      song.onmouseout = function() {
+        if (window.outerWidth > 651) {
+          song.style.backgroundColor = 'rgb(255,255,255,0.0)'
+          song.querySelector('.play-this-song').style.display = 'none'
+          song.querySelector('.number span').style.display = 'block'
+        }
+      }
+      song.onclick = function() {
+        if (window.outerWidth < 1000) {
+          const thisSong = allSongs.filter(findSong => findSong.id == song.getAttribute('id'))[0]
+          playSongs.currentIndex = playSongs.songs.indexOf(thisSong)
+          playSongs.start()
+          audio.play()
+          handleQueuePage.renderQueuePage()
+          handleQueuePage.handleQueuePageBtns()
+        }
+      }
+    })
+   
+  },
+  start: function() {
+    this.openQueuePage()
+    this.renderQueuePage()
+    this.handleQueuePageBtns()
+  }
 }
-openQueuePage()
-renderQueuePage()
+handleQueuePage.start()
+
 
 
 function handleCurrentPlaylistHover() {
@@ -1598,13 +1691,14 @@ function handleCurrentPlaylistHover() {
 function nowPlayingOnClick() {
   nowPlaying.onclick = function() {
       if(!document.getElementById('nowPlaying') && window.outerWidth <= 999) {
-        isAtHome = false
-          const head = document.querySelector('head')
-          const link = document.createElement('link')
-          link.setAttribute('rel',"stylesheet")
-          link.setAttribute('href',"./assets/css/now-playing.css")
-          link.setAttribute('id',"nowPlaying")
-          head.appendChild(link)
+        // isAtHome = false
+        handleNavigation.farFromHome()
+        const head = document.querySelector('head')
+        const link = document.createElement('link')
+        link.setAttribute('rel',"stylesheet")
+        link.setAttribute('href',"./assets/css/now-playing.css")
+        link.setAttribute('id',"nowPlaying")
+        head.appendChild(link)
       }
   }
 
@@ -1637,6 +1731,9 @@ const handleNavigation = {
           playlist.onmouseenter = function() { playlist.style.color = 'white'}
           playlist.onmouseleave = function() { playlist.style.color = '#b3b3b3'}
         })
+      }
+      if (queuePage.style.display == 'block') {
+        queuePage.style.display = 'none'
       }
       isAtHome = true;
       homeBtn.querySelector('img').src = './assets/images/left-sidebar/home-active.PNG'
