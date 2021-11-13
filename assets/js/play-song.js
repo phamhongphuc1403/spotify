@@ -570,11 +570,16 @@ const allSongs = [
     tag: ['favorite', 'rock']
   },
 ]
-
+function shuffleSongs() {
+  allSongs.forEach(song => song.order = Math.floor(Math.random() * (allSongs.length - 1)) + 1)
+  allSongs.sort((a, b) => a.order - b.order)
+  allSongs.forEach((song,index) => song.id = index + 1)
+}
+shuffleSongs()
 const allPlaylists = [ 
   {
     id: 1, 
-    name: ["All Time Low"], 
+    name: "All Time Low", 
     description: '',
     owner: "Phuc",
     img: "./assets/songs/playlists/own-playlists/all-time-low.jpg",
@@ -640,15 +645,6 @@ const allPlaylists = [
   }
 ]
 
-function shuffleSongsInPlaylists() {
-  allPlaylists.forEach(playlist => {
-    playlist.songs.forEach(song => song.order = Math.floor(Math.random() * (playlist.songs.length - 1)) + 1)
-    playlist.songs.sort((a, b) => a.order - b.order)
-  })
-  allPlaylists[1].songs.forEach((song,index) => song.id = index + 1)
-  console.log(allPlaylists[1].songs)
-}
-shuffleSongsInPlaylists()
 
 
 const playSongs = { 
@@ -889,12 +885,10 @@ const playSongs = {
         obj.order =  Math.floor(Math.random() * (playSongs.songs.length - 1)) + 1
       })
       playSongs.songs[playSongs.currentIndex].order = 0
-      playSongs.currentIndex = 0
 
       //sort songs by order
-      playSongs.songs.sort((a,b) => a.order === b.order ? 0 : a.order < b.order ? -1 : 1)
-      
-
+      playSongs.songs.sort((a,b) => a.order - b.order)
+      playSongs.currentIndex = 0
       //add active shuffle button
       shuffleBtn.src = './assets/images/now-playing/shuffle-active.PNG'
     },
@@ -1107,7 +1101,8 @@ const playSongs = {
       this.loadCurrentSong()
       this.handleTimeTotal()
       this.isRepeatPlaylist ? this.handleRepeat.repeatPlaylist() : this.isRepeatSong ? this.handleRepeat.repeatSong() : this.handleRepeat.noRepeat()
-      this.isShuffle ? this.handleShuffle.shuffle() : this.handleShuffle.noShuffle()
+      // this.isShuffle ? this.handleShuffle.shuffle() : this.handleShuffle.noShuffle()
+      if (this.isShuffle) this.handleShuffle.shuffle()
       this.audioPlaying()
       this.handlePlaybackSliderBar()
       this.handleVolumeSliderBar()
@@ -1198,9 +1193,9 @@ const handlePlaylists = {
             playSongs.currentIndex = 0;
           }
 
-          // auto play the playlist
-          audio.autoplay = true
           playSongs.start()
+          handleQueuePage.renderQueuePage()
+          audio.play()
         }
 
         $('#root__now-playing__header__playlist').innerHTML = `${thisPlaylistInDB[0].name}`
@@ -1379,7 +1374,6 @@ const handlePlaylists = {
           this.renderPlaylistPage()
           this.stylePlaylistPage()
           this.handlePlaylistPageButtons()
-
           onOpenPlaylist.onscroll = function() {
             rootTop.style.backgroundColor = `rgba(${thisPlaylistInDB[0].headerColor}, ${0.5 + - (225 - Math.ceil(onOpenPlaylist.scrollTop)) / 100})`
             handlePlaylistHeaderOnscroll()
@@ -1455,7 +1449,6 @@ const handleResponsive = {
               title.style.width = `${currentPlaylistWidth - 164}px` 
           } else {
               title.style.width = `${currentPlaylistWidth - 70}px`
-
           }
           
       }
@@ -1548,6 +1541,17 @@ const handleQueuePage = {
       e.stopPropagation()
       if (window.getComputedStyle(queuePage).display == 'none') {
         queuePage.style.display = 'block'
+       
+        // $('#root__top__add-play-btn__play-btn').style.opacity = 0
+        // $('#root__top__add-play-btn__playlist-name').style.opacity = 0
+        // $('#root__top__add-play-btn__play-btn').style.display = 'none'
+        // $('#root__top__add-play-btn__playlist-name').style.display = 'none'
+        // setTimeout(() => {
+        //   $('#root__top__add-play-btn__play-btn').style.display = ''
+        //   $('#root__top__add-play-btn__playlist-name').style.display = ''
+        // }, 10);
+        rootTop.style.backgroundColor = 'transparent'
+
         $('.list').src= './assets/images/now-playing/list-active.PNG'
         handleActiveBtns(true, $('.list'), $('.list-active'))
       } else {
@@ -1588,6 +1592,7 @@ const handleQueuePage = {
   
     
     const nextUpSongs = playSongs.songs.slice(playSongs.currentIndex + 1)
+    console.log(nextUpSongs)
     
     $('#queue__next-up-songs').innerHTML = nextUpSongs.map((song, index) => `
       <ul class="song" id="${song.id}">
@@ -1666,6 +1671,9 @@ const handleQueuePage = {
     this.openQueuePage()
     this.renderQueuePage()
     this.handleQueuePageBtns()
+    queuePage.onscroll = function() {
+      rootTop.style.backgroundColor = `rgba(7, 7, 7, ${0.5 + - (90 - Math.ceil(queuePage.scrollTop)) / 10})`
+    }
   }
 }
 handleQueuePage.start()
@@ -1734,6 +1742,8 @@ const handleNavigation = {
       }
       if (queuePage.style.display == 'block') {
         queuePage.style.display = 'none'
+        $('.list').src= './assets/images/now-playing/list.PNG'
+        handleActiveBtns(false, $('.list'), $('.list-active'))
       }
       isAtHome = true;
       homeBtn.querySelector('img').src = './assets/images/left-sidebar/home-active.PNG'
