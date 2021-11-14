@@ -250,10 +250,10 @@
     font-weight: 400;
 }
 
-/* #queue .song-info__name:first-child {
-    color:#1db954;
-} */
-
+.playing-gif {
+    display: none;
+    width: 14px;
+}
 
 @media (max-width: 1279px) {
     #on-open-playlist__header__img {

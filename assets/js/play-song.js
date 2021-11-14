@@ -28,625 +28,6 @@ let isAtHome = true;
 const trace = [mainView]
 let currentPage = 0;
 
-
-const allSongs = [
-  { 
-    id: 1, 
-    name: "Hold On", 
-    artist: ["Justin Bieber"], 
-    img: "./assets/songs/albums/justice__justin-bieber.jpg",
-    path: "./assets/songs/songs/hold-on__justin-bieber.mp3",
-    album: "Justice",
-    backgroundColor: '#095250',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 2, 
-    name: "Weightless", 
-    artist: ["All Time Low"],
-    img: "./assets/songs/albums/nothing-personal__all-time-low.jpg",
-    path: "./assets/songs/songs/weightless__all-time-low.mp3",
-    album: "Nothing Personal",
-    backgroundColor: '#70684e',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 3, 
-    name: "Break Your Little Heart", 
-    artist: ["All Time Low"],
-    img: "./assets/songs/albums/nothing-personal__all-time-low.jpg",
-    path: "./assets/songs/songs/break-your-little-heart__all-time-low.mp3",
-    album: "Nothing Personal",
-    backgroundColor: '#70684e',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 4,
-    name: "Damned If I Do Ya (Damned If I Don't)", 
-    artist: ["All Time Low"], 
-    img: "./assets/songs/albums/nothing-personal__all-time-low.jpg",
-    path: "./assets/songs/songs/damn-if-i-do-ya__all-time-low.mp3",
-    album: "Nothing Personal",
-    backgroundColor: '#70684e',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 5, 
-    name: "Stella", 
-    artist: ["All Time Low"],
-    img: "./assets/songs/albums/nothing-personal__all-time-low.jpg",
-    path: "./assets/songs/songs/stella__all-time-low.mp3",
-    album: "Nothing Personal",
-    backgroundColor: '#70684e',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 6, 
-    name: "Runaways", 
-    artist: ["All Time Low"],
-    img: "./assets/songs/albums/future-hearts__all-time-low.jpg",
-    path: "./assets/songs/songs/runaways__all-time-low.mp3",
-    album: "Future Hearts",
-    backgroundColor: '#466668',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 7, 
-    name: "Australia", 
-    artist: ["Jonas Brothers"],
-    img: "./assets/songs/albums/jonas-brothers__jonas-brothers.jpg",
-    path: "./assets/songs/songs/australia__jonas-brothers.mp3",
-    album: ["Jonas Brothers"],
-    backgroundColor: '#585657',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 8, 
-    name: "Hesitate", 
-    artist: ["Jonas Brothers"],
-    img: "./assets/songs/albums/happiness-begins__jonas-brothers.jpg",
-    path: "./assets/songs/songs/hesitate__jonas-brothers.mp3",
-    album: "Happiness Begins",
-    backgroundColor: '#5c6e6e',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 9, 
-    name: "Rollercoaster", 
-    artist: ["Jonas Brothers"],
-    img: "./assets/songs/albums/happiness-begins__jonas-brothers.jpg",
-    path: "./assets/songs/songs/rollercoaster__jonas-brothers.mp3",
-    album: "Happiness Begins",
-    backgroundColor: '#5c6e6e',
-    tag: ['favorite', ]
-  },
-  { id: 10, 
-    name: "Die Young",
-    artist: ["Ke$ha"], 
-    img: "./assets/songs/albums/warrior__kehsa.jpg",
-    path: "./assets/songs/songs/die-young__kesha.mp3",
-    album: "Warrior",
-    backgroundColor: '#5c6e6e',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 11, 
-    name: "Best Song Ever", 
-    artist: ["One Direction"],
-    img: "./assets/songs/albums/midnight-memories__one-direction.jpg",
-    path: "./assets/songs/songs/best-song-ever__one-direction.mp3",
-    album: "Midnight Memories",
-    backgroundColor: '#6a4240',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 12, 
-    name: "Daylight", 
-    artist: ["Maroon 5"],
-    img: "./assets/songs/albums/overexposed__maroon-5.jpg",
-    path: "./assets/songs/songs/daylight__maroon-5.mp3",
-    album: "Overexposed",
-    backgroundColor: '#743b53',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 13, 
-    name: "Summer", 
-    artist: ["Calvin Harris"],
-    img: "./assets/songs/albums/motion__calvin-harris.jpg",
-    path: "./assets/songs/songs/summer__calvin-harris.mp3",
-    album: "Motion",
-    backgroundColor: '#545658',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 14, 
-    name: "More Than A Feeling", 
-    artist: ["Boston"],
-    img: "./assets/songs/albums/boston__boston.jpg",
-    path: "./assets/songs/songs/more-than-a-feeling__boston.mp3",
-    album: "Boston",
-    backgroundColor: '#812824',
-    tag: ['favorite', 'rock']
-  },
-  { 
-    id: 15, 
-    name: "Good Times", 
-    artist: ["All Time Low"],
-    img: "./assets/songs/albums/last-young-renegade__all-time-low.jpg",
-    path: "./assets/songs/songs/good-times__all-time-low.mp3",
-    album: "Last Young Renegade",
-    backgroundColor: '#29373c',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 16, 
-    name: "Missing You", 
-    artist: ["All Time Low"],
-    img: "./assets/songs/albums/future-hearts__all-time-low.jpg",
-    path: "./assets/songs/songs/missing-you__all-time-low.mp3",
-    album: "Future Hearts",
-    backgroundColor: '#466668',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 17, 
-    name: "Kids In The Dark", 
-    artist: ["All Time Low"],
-    img: "./assets/songs/albums/future-hearts__all-time-low.jpg",
-    path: "./assets/songs/songs/kids-in-the-dark__all-time-low.mp3",
-    album: "Future Hearts",
-    backgroundColor: '#466668',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 18, 
-    name: "Dear Maria Count Me In", 
-    artist: ["All Time Low"],
-    img: "./assets/songs/albums/so-wrong-its-right__all-time-low.jpg",
-    path: "./assets/songs/songs/dear-maria-count-me-in__all-time-low.mp3",
-    album: "So Wrong, It's Right",
-    backgroundColor: '#665303',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 19, 
-    name: "Time Bomb", 
-    artist: ["All Time Low"],
-    img: "./assets/songs/albums/dirty-work__all-time-low.jpg",
-    path: "./assets/songs/songs/time-bomb__all-time-low.mp3",
-    album: "Dirty Work",
-    backgroundColor: '#02446c',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 20, 
-    name: "Life of the party", 
-    artist: ["All Time Low"],
-    img: "./assets/songs/albums/last-young-renegade__all-time-low.jpg",
-    path: "./assets/songs/songs/life-of-the-party__all-time-low.mp3",
-    album: "Last Young Renegade",
-    backgroundColor: '#29373c',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 21, 
-    name: "Something's Gotta Give", 
-    artist: ["All Time Low"],
-    img: "./assets/songs/albums/future-hearts__all-time-low.jpg",
-    path: "./assets/songs/songs/somethings-gotta-give__all-time-low.mp3",
-    album: "Future Hearts",
-    backgroundColor: '#466668',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 22, 
-    name: "Once In A Lifetime", 
-    artist: ["All Time Low"],
-    img: "./assets/songs/singles/once-in-a-lifetime__all-time-low.jpg",
-    path: "./assets/songs/songs/once-in-a-lifetime__all-time-low.mp3",
-    album: "Once In A Life Time",
-    backgroundColor: '#623023',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 23, 
-    name: "Monsters (feat. blackbear)", 
-    artist: ["All Time Low", "blackbear"],
-    img: "./assets/songs/albums/wake-up-sun-shine__all-time-low.jpg",
-    path: "./assets/songs/songs/monsters__all-time-low.mp3",
-    album: "Wake Up, Sunshine",
-    backgroundColor: '#64593c',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 24, 
-    name: "Used To Love (with Dean Lewis)", 
-    artist: ["Martin Garrix", "Dean Lewis"],
-    img: "./assets/songs/singles/used-to-love__martin-garrix.jpg",
-    path: "./assets/songs/songs/used-to-love__martin-garrix.mp3",
-    album: "Used To Love (with Dean Lewis)",
-    backgroundColor: '#203e51',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 25, 
-    name: "Drown (feat. Cliton Kane)", 
-    artist: ["Martin Garrix", "Cliton Kane"],
-    img: "./assets/songs/singles/drown__martin-garrix.jpg",
-    path: "./assets/songs/songs/drown__martin-garrix.mp3",
-    album: "Drown (feat. Cliton Kane",
-    backgroundColor: '#484747',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 26, 
-    name: "No Sleep (feat. Bonn)", 
-    artist: ["Martin Garrix", "Bonn"],
-    img: "./assets/songs/singles/no-sleep__martin-garrix.jpg",
-    path: "./assets/songs/songs/no-sleep__martin-garrix.mp3",
-    album: "No Sleep (feat. Bonn)",
-    backgroundColor: '#523825',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 27, 
-    name: "High On Life (feat. Bonn)", 
-    artist:[ "Martin Garrix", "Bonn"],
-    img: "./assets/songs/singles/high-on-life__martin-garrix.jpg",
-    path: "./assets/songs/songs/high-on-life__martin-garrix.mp3",
-    album: "High On Life (feat. Bonn)",
-    backgroundColor: '#3b3e3e',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 28, 
-    name: "Summer Days (feat. Macklemore & Patrick Stump of Fall Out Boy)", 
-    artist: ["Martin Garrix", "Macklemore", "Fall Out Boy"],
-    img: "./assets/songs/singles/summer-days__martin-garrix.jpg",
-    path: "./assets/songs/songs/summer-days__martin-garrix.mp3",
-    album: "Summer Days (feat. Macklemore & Patrick Stump of Fall Out Boy)",
-    backgroundColor: '#2e5a62',
-    tag: ['favorite', ]
-  },  
-  { 
-    id: 29, 
-    name: "These Are The Times (feat. JRM)", 
-    artist: ["Martin Garrix", "JRM"],
-    img: "./assets/songs/singles/these-are-the-times__martin-garrix.jpg",
-    path: "./assets/songs/songs/these-are-the-times__martin-garrix.mp3",
-    album: "These Are The Times (feat. JRM)",
-    backgroundColor: '#545454',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 30, 
-    name: "Burn Out (feat. Dewain Whitmore)", 
-    artist: ["Martin Garrix", "Dewain Whitmore"],
-    img: "./assets/songs/singles/burn-out__martin-garrix.jpg",
-    path: "./assets/songs/songs/burn-out__martin-garrix.mp3",
-    album: "Burn Out (feat. Dewain Whitmore)",
-    backgroundColor: '#1d162b',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 31, 
-    name: "Higher Ground (feat. John Martin)", 
-    artist: ["Martin Garrix", "John Martin"],
-    img: "./assets/songs/singles/higher-ground__martin-garrix.jpg",
-    path: "./assets/songs/songs/higher-ground__martin-garrix.mp3",
-    album: "Higher Ground (feat. John Martin)",
-    backgroundColor: '#4e4e4e',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 32, 
-    name: "Forbidden Voices", 
-    artist: ["Martin Garrix"],
-    img: "./assets/songs/singles/forbidden-voices__martin-garrix.jpg",
-    path: "./assets/songs/songs/forbidden-voices__martin-garrix.mp3",
-    album: "Forbidden Voices",
-    backgroundColor: '#2f2f2f',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 33, 
-    name: "Waiting For Tomorrow (feat. Mike Shinoda)", 
-    artist: ["Martin Garrix", "Mike Shinoda"],
-    img: "./assets/songs/albums/bylaw-ep__martin-garrix.jpg",
-    path: "./assets/songs/songs/waiting-for-tomorrow__martin-garrix.mp3",
-    album: "BYLAW EP",
-    backgroundColor: '#3c1f29',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 34, 
-    name: "Sucker", 
-    artist: ["Jonas Brothers"],
-    img: "./assets/songs/albums/happiness-begins__jonas-brothers.jpg",
-    path: "./assets/songs/songs/sucker__jonas-brothers.mp3",
-    album: "Happiness Begins",
-    backgroundColor: '#5c6e6e',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 35, 
-    name: "Only Human", 
-    artist: ["Jonas Brothers"],
-    img: "./assets/songs/albums/happiness-begins__jonas-brothers.jpg",
-    path: "./assets/songs/songs/only-human__jonas-brothers.mp3",
-    album: "Happiness Begins",
-    backgroundColor: '#5c6e6e',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 36, 
-    name: "By Your Side", 
-    artist: ["Jonas Blue", "RAYE"],
-    img: "./assets/songs/albums/blue__jonas-blue.jpg",
-    path: "./assets/songs/songs/by-your-side__jonas-blue.mp3",
-    album: "Blue",
-    backgroundColor: '#435864',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 37, 
-    name: "Mama", 
-    artist: ["Jonas Blue", "William Singe"],
-    img: "./assets/songs/albums/blue__jonas-blue.jpg",
-    path: "./assets/songs/songs/mama__jonas-blue.mp3",
-    album: "Blue",
-    backgroundColor: '#435864',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 38, 
-    name: "Polaroid", 
-    artist: ["Jonas Blue", "Liam Payne", "Lennon Stella"],
-    img: "./assets/songs/albums/blue__jonas-blue.jpg",
-    path: "./assets/songs/songs/polaroid__jonas-blue.mp3",
-    album: "Blue",
-    backgroundColor: '#435864',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 39, 
-    name: "Rise", 
-    artist: ["Jonas Blue", "Jack & Jack"],
-    img: "./assets/songs/albums/blue__jonas-blue.jpg",
-    path: "./assets/songs/songs/rise__jonas-blue.mp3",
-    album: "Blue",
-    backgroundColor: '#435864',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 40, 
-    name: "Younger", 
-    artist: ["Jonas Blue", "HRVY"],
-    img: "./assets/songs/singles/younger__jonas-blue.jpg",
-    path: "./assets/songs/songs/younger__jonas-blue.mp3",
-    album: "Younger",
-    backgroundColor: '#85171d',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 41, 
-    name: "Perfect Stranger", 
-    artist: ["Jonas Blue", "JP Cooper"],
-    img: "./assets/songs/albums/blue__jonas-blue.jpg",
-    path: "./assets/songs/songs/perfect-stranger__jonas-blue.mp3",
-    album: "Blue",
-    backgroundColor: '#435864',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 42, 
-    name: "Walk Thru Fire", 
-    artist: ["Vicetone", "Meron Ryan"],
-    img: "./assets/songs/singles/walk-thru-fire__vicetone.jpg",
-    path: "./assets/songs/songs/walk-thru-fire__vicetone__meron-ryan.mp3",
-    album: "Walk Thru Fire",
-    backgroundColor: '#8d0b16',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 43, 
-    name: "Waiting", 
-    artist: ["Vicetone", "Daisy Guttridge"],
-    img: "./assets/songs/singles/waiting__vicetone.jpg",
-    path: "./assets/songs/songs/waiting__vicetone__daisy-guttridge.mp3",
-    album: "Waiting",
-    backgroundColor: '#9d131d',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 44, 
-    name: "Something Strange", 
-    artist: ["Vicetone", "Daisy Guttridge"],
-    img: "./assets/songs/singles/something-strange__vicetone.jpg",
-    path: "./assets/songs/songs/something-strange__vicetone__haley-reinhart.mp3",
-    album: "Something Strange",
-    backgroundColor: '#1e4062',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 45, 
-    name: "Somebody I'm Not", 
-    artist: ["Martin Jensen", "Bjrnskov"],
-    img: "./assets/songs/singles/somebody-im-not__martin-jensen.jpg",
-    path: "./assets/songs/songs/somebody-im-not__martin-jensen__bjrnskov.mp3",
-    album: "Somebody I'm Not",
-    backgroundColor: '#083347',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 46, 
-    name: "Peace Of Mind", 
-    artist: ["Boston"],
-    img: "./assets/songs/albums/boston__boston.jpg",
-    path: "./assets/songs/songs/peace-of-mind__boston.mp3",
-    album: "Boston",
-    backgroundColor: '#812824',
-    tag: ['favorite', 'rock']
-  },
-  { 
-    id: 47, 
-    name: "We Built This City", 
-    artist: ["Starship"],
-    img: "./assets/songs/albums/knee-deep-in-the-hoopla__starship.jpg",
-    path: "./assets/songs/songs/we-built-this-city__starship.mp3",
-    album: "Knee Deep In The Hoopla",
-    backgroundColor: '#525147',
-    tag: ['favorite', 'rock']
-  },
-  { 
-    id: 48, 
-    name: "Burning Heart - From &quotRocky IV&quot Soundtrack", 
-    artist: ["Survivor"],
-    img: "./assets/songs/albums/rocky-iv__survivor.jpg",
-    path: "./assets/songs/songs/burning-heart__survivor.mp3",
-    album: "Rocky IV",
-    backgroundColor: '#72322e',
-    tag: ['favorite', 'rock']
-  },
-  { 
-    id: 49, 
-    name: "Sweet Child O' Mine", 
-    artist: ["Gun N' Roses"],
-    img: "./assets/songs/albums/appetite-for-destruction__gun-n-roses.jpg",
-    path: "./assets/songs/songs/sweet-child-o-mine__guns-n-roses.mp3",
-    album: "Appetite For Destruction",
-    backgroundColor: '#63212c',
-    tag: ['favorite', 'rock']
-  },
-  { 
-    id: 50, 
-    name: "Carry On Wayward Son", 
-    artist: ["Kansas"],
-    img: "./assets/songs/albums/leftoverture__kansas.jpg",
-    path: "./assets/songs/songs/carry-on-wayward-son__kansas.mp3",
-    album: "Leftoverture",
-    backgroundColor: '#645951',
-    tag: ['favorite', 'rock']
-  },
-  { 
-    id: 51, 
-    name: "Who's In Your Head", 
-    artist: ["Jonas Brothers"],
-    img: "./assets/songs/albums/setlist-the-remember-this-tour__jonas-brothers.jpg",
-    path: "./assets/songs/songs/whos-in-your-head__jonas-brothers.mp3",
-    album: "Setlist: The Remember This Tour",
-    backgroundColor: '#4a6b21',
-    tag: ['favorite', ]
-  },
-  { 
-    id: 52, 
-    name: "Seven Nation Army", 
-    artist: ["The White Stripes"],
-    img: "./assets/songs/albums/elephant__the-white-stripes.jpg",
-    path: "./assets/songs/songs/seven-nation-army__the-white-stripes.mp3",
-    album: "Elephant",
-    backgroundColor: '#bc3204',
-    tag: ['favorite', 'rock']
-  },
-  { 
-    id: 53, 
-    name: "Rain", 
-    artist: ["The Cult"],
-    img: "./assets/songs/albums/love__the-cult.jpg",
-    path: "./assets/songs/songs/rain__the-cult.mp3",
-    album: "Love",
-    backgroundColor: '#071923',
-    tag: ['favorite', 'rock']
-  },
-  { 
-    id: 54, 
-    name: "House Of The Rising Sun", 
-    artist: ["The Animals"],
-    img: "./assets/songs/albums/the-animals__the-animals.jpg",
-    path: "./assets/songs/songs/house-of-the-rising-sun__the-animals.mp3",
-    album: "The Animals",
-    backgroundColor: '#516062',
-    tag: ['favorite', 'rock']
-  },
-]
-function shuffleSongs() {
-  allSongs.forEach(song => song.order = Math.floor(Math.random() * (allSongs.length - 1)) + 1)
-  allSongs.sort((a, b) => a.order - b.order)
-  allSongs.forEach((song,index) => song.id = index + 1)
-}
-shuffleSongs()
-const allPlaylists = [ 
-  {
-    id: 1, 
-    name: "All Time Low", 
-    description: '',
-    owner: "Phuc",
-    img: "./assets/songs/playlists/own-playlists/all-time-low.jpg",
-    songs: allSongs.filter(song => song.artist.includes('All Time Low')),
-    backgroundColor: '142, 128, 86',
-    headerColor: '64, 58, 38',
-    tag: ['own playlist', ]
-  },
-  {
-    id: 2, 
-    name: "Liked Songs", 
-    description: '',
-    owner: "Phuc",
-    img: "./assets/songs/playlists/own-playlists/liked-songs.jpg",
-    songs: allSongs,
-    backgroundColor: '74, 53, 144',
-    headerColor: '32, 22, 64',
-    tag: ['own playlist', ]
-  },
-  {
-    id: 3, 
-    name: "I Built This Playlist On Rock And Roll", 
-    description: 'Most of these songs are come from Lost Santos Rock Radio',
-    owner: "Phuc",
-    img: "./assets/songs/playlists/own-playlists/i-built-this-playlist-on-rock-and-roll.jpg",
-    songs: allSongs.filter(song => song.tag.includes('rock')),
-    backgroundColor: '42, 102, 80',
-    headerColor: '16, 42, 32',
-    tag: ['own playlist', ]
-  },
-  {
-    id: 4, 
-    name: ["Jonas Brothers"], 
-    description: '',
-    owner: "Phuc",
-    img: "./assets/songs/playlists/own-playlists/jonas-brothers.jpg",
-    songs: allSongs.filter(song => song.artist.includes('Jonas Brothers')),
-    backgroundColor: '180, 200, 200',
-    headerColor: '80, 90, 90',
-    tag: ['own playlist', ]
-  },
-  {
-    id: 5, 
-    name: "Martin Garrix", 
-    description: '',
-    owner: "Phuc",
-    img: "./assets/songs/playlists/own-playlists/martin-garrix.jpg",
-    songs: allSongs.filter(song => song.artist.includes('Martin Garrix')),
-    backgroundColor: '13, 54, 75',
-    headerColor: '3, 22, 32',
-    tag: ['own playlist', ]
-  },
-  {
-    id: 6, 
-    name: "Jonas Blue", 
-    description: '',
-    owner: "Phuc",
-    img: "./assets/songs/playlists/own-playlists/jonas-blue.jpg",
-    songs: allSongs.filter(song => song.artist.includes('Jonas Blue')),
-    backgroundColor: '3, 24, 60',
-    headerColor: '0, 10, 26',
-    tag: ['own playlist', ]
-  }
-]
-
-
-
 const playSongs = { 
   songs: [...allPlaylists[1].songs],
   id: allPlaylists[1].id,
@@ -700,17 +81,16 @@ const playSongs = {
       currentSecond < 10 ? timePlayed.innerHTML = `${currentMinute}:0${currentSecond}`: timePlayed.innerHTML = `${currentMinute}:${currentSecond}`
   },
 
-    //handle when song plays
+    //handle when song is playing
     audioPlaying: function(color = '#b3b3b3') {
     const _this = this
   
     audio.ontimeupdate = function() {
-      if ($('#on-open-playlist__body__btns__play')) {
+      if (onOpenPlaylist.style.display == 'block') {
         if ($('#on-open-playlist__body__btns__play').className == _this.id && _this.isPlaying) {
           $('#on-open-playlist__body__btns__play').src='./assets/images/main-view/pause-playlist.PNG'
           $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/pause-playlist.PNG' 
 
-          Array.from(onOpenPlaylist.getElementsByClassName('song')).forEach(song => song.querySelector('.play-this-song').src = './assets/images/main-view/play-this-song.PNG')
           const playingSong = Array.from(onOpenPlaylist.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0]
           playingSong.querySelector('.song-info__name').style.color = '#1db753'
           playingSong.querySelector('.play-this-song').src = './assets/images/main-view/pause-this-song.PNG'
@@ -723,6 +103,8 @@ const playSongs = {
         Array.from(queuePage.getElementsByClassName('song')).forEach(song => song.querySelector('.play-this-song').src = './assets/images/main-view/play-this-song.PNG')
         const playingSong = Array.from(queuePage.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0]
         playingSong.querySelector('.play-this-song').src = './assets/images/main-view/pause-this-song.PNG'
+        // playingSong.querySelector('.playing-gif').style.display = 'block'
+        // playingSong.querySelector('span').style.display = 'none'
       }
       //set 'time played' when song plays
 
@@ -1064,6 +446,8 @@ const playSongs = {
         const playingSong = Array.from(queuePage.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0]
         playingSong.querySelector('.song-info__name').style.color = '#1db753'
         playingSong.querySelector('.play-this-song').src = './assets/images/main-view/pause-this-song.PNG'
+        playingSong.querySelector('.playing-gif').style.display = 'block'
+        playingSong.querySelector('span').style.display = 'none'
       }
       _this.isPlaying = true;
       playBtn.src = `./assets/images/now-playing/pause.png`
@@ -1090,6 +474,8 @@ const playSongs = {
       if (queuePage.style.display == 'block') {
         Array.from(queuePage.getElementsByClassName('song')).forEach(song => {
           song.querySelector('.play-this-song').src = './assets/images/main-view/play-this-song.PNG'
+          song.querySelector('.playing-gif').style.display = 'none'
+          song.querySelector('span').style.display = 'block'
         })
       }
       _this.isPlaying = false;
@@ -1173,97 +559,92 @@ const handlePlaylists = {
 
   
   //play playlist when click "play now" button
-  handlePlayOrOpenPlaylist: function() {
-    const _this = this
-    const playlistArray = Array.from(document.getElementsByClassName('is-playlist'))
-    
-    for (let eachPlaylist of playlistArray) {
-      const thisPlaylistInDB = _this.playlists.filter(playlist => playlist.id == eachPlaylist.getAttribute('id'))   //find playlist in the database that match the id
-     
-      function playPlaylist() {
-        if (playSongs.id == thisPlaylistInDB[0].id) {
-          if (playSongs.isPlaying) {audio.pause()} else {audio.play()}
+  handlePlayOrOpenPlaylist: {
+    playPlaylist: function(thisPlaylistInDB) {
+      if (playSongs.id == thisPlaylistInDB.id) {
+        if (playSongs.isPlaying) {audio.pause()} else {audio.play()}
+      } else {
+        playSongs.songs = [...thisPlaylistInDB.songs] //choose the first (and only) object of 'playlist' array that contain a playlist
+        playSongs.id = thisPlaylistInDB.id
+
+        if (playSongs.isShuffle) {
+          playSongs.currentIndex = Math.floor(Math.random() * (playSongs.songs.length - 1)) + 1
         } else {
-          playSongs.songs = [...thisPlaylistInDB[0].songs] //choose the first (and only) object of 'playlist' array that contain a playlist
-          playSongs.id = thisPlaylistInDB[0].id
-
-          if (playSongs.isShuffle) {
-            playSongs.currentIndex = Math.floor(Math.random() * (playSongs.songs.length - 1)) + 1
-          } else {
-            playSongs.currentIndex = 0;
-          }
-
-          playSongs.start()
-          handleQueuePage.renderQueuePage()
-          audio.play()
+          playSongs.currentIndex = 0;
         }
-
-        $('#root__now-playing__header__playlist').innerHTML = `${thisPlaylistInDB[0].name}`
+        playSongs.start()
+        handleQueuePage.renderQueuePage()
+        audio.play()
       }
-      
-      const openPlaylist = {
-        
-        renderPlaylistPage: function() {
-          const renderSongs = thisPlaylistInDB[0].songs.map((song, index) => `
-            <ul class="song" id="${song.id}">
-              <li class='number'><img class="play-this-song" src='./assets/images/main-view/play-this-song.PNG'><span>${index + 1}</span></li>
-              <li class='title'>
-                <img class='song-img' src='${song.img}'>
-                <div class="song-info">
-                    <div class="song-info__name">${song.name}</div>
-                    <div class="song-info__artist">${song.artist.join(', ')}</div>
+      $('#root__now-playing__header__playlist').innerHTML = `${thisPlaylistInDB.name}`
+    },
+
+    openPlaylist: {
+      _this: this,
+      renderPlaylistPage: function(thisPlaylistInDB) {
+        const renderSongs = thisPlaylistInDB.songs.map((song, index) => `
+          <ul class="song" id="${song.id}">
+            <li class='number'><img class="play-this-song" src='./assets/images/main-view/play-this-song.PNG'><span>${index + 1}</span><img class="playing-gif" src='./assets/images/main-view/icon-playing.gif'></li>
+            <li class='title'>
+              <img class='song-img' src='${song.img}'>
+              <div class="song-info">
+                  <div class="song-info__name">${song.name}</div>
+                  <div class="song-info__artist">${song.artist.join(', ')}</div>
+              </div>
+            </li>
+            <li class='album'>${song.album}</li>
+            <li class='date'>Sep 8, 2021</li>
+            <li class='more'>
+              <img class="more__favorite" src="./assets/images/now-playing/favorite.png">
+              <span class="more__time">4:45</span>
+              <img class="more__icon" src='./assets/images/main-view/see-more.PNG'>
+            </li>
+          </ul>`).join('')
+         
+        onOpenPlaylist.innerHTML = `
+          <img src='./assets/images/main-view/back.png' id="on-open-playlist__return-home">
+          <div id="on-open-playlist__header">
+            <img id="on-open-playlist__header__img" src=${thisPlaylistInDB.img}>
+            <div id="on-open-playlist__header__title">
+              <div id="on-open-playlist__header__title__type">playlist</div>
+              <div id="on-open-playlist__header__title__name">${thisPlaylistInDB.name}</div>
+              <div id="on-open-playlist__header__title__description">${thisPlaylistInDB.description}</div>
+              <div id="on-open-playlist__header__title__playlist-info">
+                <img id="on-open-playlist__header__title__playlist-info__img" src='./assets/images/user/user-avatar.jpg'>
+                <span id="on-open-playlist__header__title__playlist-info__owner">${thisPlaylistInDB.owner} <span>• ${thisPlaylistInDB.songs.length} songs</span></span>
                 </div>
-              </li>
-              <li class='album'>${song.album}</li>
-              <li class='date'>Sep 8, 2021</li>
-              <li class='more'>
-                <img class="more__favorite" src="./assets/images/now-playing/favorite.png">
-                <span class="more__time">4:45</span>
-                <img class="more__icon" src='./assets/images/main-view/see-more.PNG'>
-              </li>
-            </ul>`).join('')
-           
-          onOpenPlaylist.innerHTML = `
-            <img src='./assets/images/main-view/back.png' id="on-open-playlist__return-home">
-            <div id="on-open-playlist__header">
-              <img id="on-open-playlist__header__img" src=${thisPlaylistInDB[0].img}>
-              <div id="on-open-playlist__header__title">
-                <div id="on-open-playlist__header__title__type">playlist</div>
-                <div id="on-open-playlist__header__title__name">${thisPlaylistInDB[0].name}</div>
-                <div id="on-open-playlist__header__title__description">${thisPlaylistInDB[0].description}</div>
-                <div id="on-open-playlist__header__title__playlist-info">
-                  <img id="on-open-playlist__header__title__playlist-info__img" src='./assets/images/user/user-avatar.jpg'>
-                  <span id="on-open-playlist__header__title__playlist-info__owner">${thisPlaylistInDB[0].owner} <span>• ${thisPlaylistInDB[0].songs.length} songs</span></span>
-                  </div>
+            </div>
+          </div>
+          <div id="on-open-playlist__body">
+            <div id="on-open-playlist__body__btns">
+              <img id="on-open-playlist__body__btns__play" class="${thisPlaylistInDB.id}" src="./assets/images/main-view/play-now-playlist.PNG">
+              <img id="on-open-playlist__body__btns__see-more" src="./assets/images/main-view/see-more.PNG">
+            </div>
+            <div id="on-open-playlist__body__table">
+              <div id="position-fixed-header">
+                <ul id="on-open-playlist__body__table__header">
+                  <li class='number'>#</li>
+                  <li class='title'>title</li>
+                  <li class='album'>album</li>
+                  <li class='date'>date added</li>
+                  <li class='more' id="more"><img src='./assets/images/main-view/duration.png'></li>
+                </ul>
+              </div>
+              <div id="on-open-playlist__body__table__body">  
+                  ${renderSongs}
               </div>
             </div>
-            <div id="on-open-playlist__body">
-              <div id="on-open-playlist__body__btns">
-                <img id="on-open-playlist__body__btns__play" class="${thisPlaylistInDB[0].id}" src="./assets/images/main-view/play-now-playlist.PNG">
-                <img id="on-open-playlist__body__btns__see-more" src="./assets/images/main-view/see-more.PNG">
-              </div>
-              <div id="on-open-playlist__body__table">
-                <div id="position-fixed-header">
-                  <ul id="on-open-playlist__body__table__header">
-                    <li class='number'>#</li>
-                    <li class='title'>title</li>
-                    <li class='album'>album</li>
-                    <li class='date'>date added</li>
-                    <li class='more' id="more"><img src='./assets/images/main-view/duration.png'></li>
-                  </ul>
-                </div>
-                <div id="on-open-playlist__body__table__body">  
-                    ${renderSongs}
-                </div>
-              </div>
-            </div>`
-          $('#root__top__add-play-btn__playlist-name').innerText = thisPlaylistInDB[0].name
-        },
-        
-        stylePlaylistPage: function() {
+          </div>`
+        $('#root__top__add-play-btn__playlist-name').innerText = thisPlaylistInDB.name
+      },
+      
+      stylePlaylistPage: {
+        styleMainView: function(thisPlaylistInDB) {
           onOpenPlaylist.style.display = 'block'
+          onOpenPlaylist.style.backgroundImage = `linear-gradient(rgb(${thisPlaylistInDB.backgroundColor}), #181818 600px)`
+        },
+        styleTitle: function() {
           $('#on-open-playlist__header__title__name').style.whiteSpace = 'nowrap'
-          onOpenPlaylist.style.backgroundImage = `linear-gradient(rgb(${thisPlaylistInDB[0].backgroundColor}), #181818 600px)`
           let titleFontSize = window.getComputedStyle($('#on-open-playlist__header__title__name')).fontSize
           let headerContentWidth = $('#on-open-playlist').offsetWidth - 310
           
@@ -1280,123 +661,144 @@ const handlePlaylists = {
           } else {
             $('#on-open-playlist__header__title__name').style.fontSize = '5vw'
           }
-          handleResponsive.handlePlaylistPage.handlePageSize(onOpenPlaylist)
-          onOpenPlaylist.scrollTop = 0;
-          mainView.scrollTop = 0
-          
+        },
+        styleLeftSidebarPlaylist: function(playlistArray, eachPlaylist) {
           Array.from($('#root__left-sidebar__my-playlists').getElementsByClassName('is-playlist'))
-            .filter(otherPlaylist => otherPlaylist.id != eachPlaylist.id)
-            .forEach(otherPlaylist => {
-              otherPlaylist.style.color = '#b3b3b3'
-              otherPlaylist.onmouseenter = function() { otherPlaylist.style.color = 'white'}
-              otherPlaylist.onmouseleave = function() { otherPlaylist.style.color = '#b3b3b3'}
-            })
+          .filter(otherPlaylist => otherPlaylist.id != eachPlaylist.id)
+          .forEach(otherPlaylist => {
+            otherPlaylist.style.color = '#b3b3b3'
+            otherPlaylist.onmouseenter = function() { otherPlaylist.style.color = 'white'}
+            otherPlaylist.onmouseleave = function() { otherPlaylist.style.color = '#b3b3b3'}
+          })
 
           const currentPlaylist = playlistArray.filter(playlist => playlist.id == eachPlaylist.id && playlist.className.includes('my-playlist'))[0]
           currentPlaylist.style.color = 'white'
           currentPlaylist.onmouseenter = function() { currentPlaylist.style.color = 'white'}
           currentPlaylist.onmouseleave = function() { currentPlaylist.style.color = 'white'}
         },
+        
+        startStyle: function(playlistArray, eachPlaylist, thisPlaylistInDB) {
+          handleResponsive.handlePlaylistPage.handlePageSize(onOpenPlaylist)
+          onOpenPlaylist.scrollTop = 0;
+          mainView.scrollTop = 0
+          this.styleMainView(thisPlaylistInDB)
+          this.styleTitle()
+          this.styleLeftSidebarPlaylist(playlistArray, eachPlaylist)
+        }
+      },
 
-        handlePlaylistPageButtons: function() {
+      handlePlaylistPageButtons: {
+        handleOnclick: function(thisPlaylistInDB) {
           $('#root__top__add-play-btn__play-btn').onclick = function() {
             if ($('#root__top__add-play-btn__play-btn').style.opacity == 1) {
-              playPlaylist()
+              handlePlaylists.handlePlayOrOpenPlaylist.playPlaylist(thisPlaylistInDB)
             }
           }
           $('#on-open-playlist__body__btns__play').onclick = function() {
-            playPlaylist()
-          }
+            handlePlaylists.handlePlayOrOpenPlaylist.playPlaylist(thisPlaylistInDB)
+          }         
           $('#on-open-playlist__return-home').onclick = function() {
             handleNavigation.homeComing()
           }
+        },
+        
+        playThisSong: function(song, thisPlaylistInDB) {
+          const thisSong = allSongs.filter(findSong => findSong.id == song.getAttribute('id'))[0]
+          if (song.querySelector('.play-this-song').src.includes('assets/images/main-view/pause-this-song.PNG')) {
+            audio.pause()
+          } else {
+            if (playSongs.id == thisPlaylistInDB.id && playSongs.currentIndex == playSongs.songs.indexOf(thisSong)) {
+              audio.play()
+            } else {
+              playSongs.songs = [...thisPlaylistInDB.songs]
+              playSongs.id = thisPlaylistInDB.id
+              playSongs.currentIndex = playSongs.songs.indexOf(thisSong)
+              playSongs.start()
+              audio.play()
+            }
+          }
+          handleQueuePage.renderQueuePage()
+          handleQueuePage.handleQueuePageBtns()
+        },
 
-          Array.from(document.querySelectorAll('.song')).forEach(song => {
+        handleSongHover: function(song, thisPlaylistInDB) {
+          song.addEventListener('mouseover', function() {
+            if (window.outerWidth > 651) {
+              song.style.backgroundColor = 'rgb(255,255,255,0.1)'
+              song.querySelector('.play-this-song').style.display = 'block'
+              song.querySelector('.number span').style.display = 'none'
+            }
+          })
 
-            function playThisSong() {
+          song.addEventListener('mouseout', function() {
+            if (window.outerWidth > 651) {
+              song.style.backgroundColor = 'rgb(255,255,255,0.0)'
+              song.querySelector('.play-this-song').style.display = 'none'
+              song.querySelector('.number span').style.display = 'block'
+            }
+          })
+          
+          song.onclick = function() {
+            if (window.outerWidth < 1000) {
               const thisSong = allSongs.filter(findSong => findSong.id == song.getAttribute('id'))[0]
-              if (song.querySelector('.play-this-song').src.includes('assets/images/main-view/pause-this-song.PNG')) {
-                audio.pause()
-              } else {
-                if (playSongs.id == thisPlaylistInDB[0].id && playSongs.currentIndex == playSongs.songs.indexOf(thisSong)) {
-                  audio.play()
-                } else {
-                  playSongs.songs = [...thisPlaylistInDB[0].songs]
-                  playSongs.id = thisPlaylistInDB[0].id
-                  playSongs.currentIndex = playSongs.songs.indexOf(thisSong)
-                  playSongs.start()
-                  audio.play()
-                }
-              }
+              playSongs.songs = [...thisPlaylistInDB.songs]
+              playSongs.id = thisPlaylistInDB.id
+              playSongs.currentIndex = playSongs.songs.indexOf(thisSong)
+              playSongs.start()
+              audio.play()
               handleQueuePage.renderQueuePage()
               handleQueuePage.handleQueuePageBtns()
             }
-
-            song.onmouseover = function() {
-              if (window.outerWidth > 651) {
-                song.style.backgroundColor = 'rgb(255,255,255,0.1)'
-                song.querySelector('.play-this-song').style.display = 'block'
-                song.querySelector('.number span').style.display = 'none'
-              }
-
-              song.querySelector('.play-this-song').onclick = function() {
-                playThisSong()
-              }
-            }
-            song.onmouseout = function() {
-              if (window.outerWidth > 651) {
-                song.style.backgroundColor = 'rgb(255,255,255,0.0)'
-                song.querySelector('.play-this-song').style.display = 'none'
-                song.querySelector('.number span').style.display = 'block'
-              }
-            }
-            song.onclick = function() {
-              if (window.outerWidth < 1000) {
-                const thisSong = allSongs.filter(findSong => findSong.id == song.getAttribute('id'))[0]
-                playSongs.songs = [...thisPlaylistInDB[0].songs]
-                playSongs.id = thisPlaylistInDB[0].id
-                playSongs.currentIndex = playSongs.songs.indexOf(thisSong)
-                playSongs.start()
-                audio.play()
-                handleQueuePage.renderQueuePage()
-                handleQueuePage.handleQueuePageBtns()
-              }
-            }
-          })
-         
+          }
         },
 
-        
-        start: function() {
-          handleNavigation.farFromHome()
-          currentPage += 1;
-          trace.push(onOpenPlaylist)
-          this.renderPlaylistPage()
-          this.stylePlaylistPage()
-          this.handlePlaylistPageButtons()
-          onOpenPlaylist.onscroll = function() {
-            rootTop.style.backgroundColor = `rgba(${thisPlaylistInDB[0].headerColor}, ${0.5 + - (225 - Math.ceil(onOpenPlaylist.scrollTop)) / 100})`
-            handlePlaylistHeaderOnscroll()
-          }
+        startHandle: function(thisPlaylistInDB) {
+          const _this = this
+          this.handleOnclick(thisPlaylistInDB)
+          Array.from(document.querySelectorAll('.song')).forEach(song => {
+            this.handleSongHover(song, thisPlaylistInDB)
+            song.querySelector('.play-this-song').onclick = function() {
+              _this.playThisSong(song, thisPlaylistInDB)
+            }
+          })
         }
-      }
+      },
 
-
-      eachPlaylist.onclick = function(e) {       
-        if (Array.from(document.getElementsByClassName('play-now')).includes(e.target) || Array.from(document.getElementsByClassName('playing')).includes(e.target)) {
-          e.stopPropagation()
-          playPlaylist()
-        } else {
-          openPlaylist.start()
+      
+      startOpen: function(playlistArray, eachPlaylist, thisPlaylistInDB) {
+        handleNavigation.farFromHome()
+        currentPage += 1;
+        trace.push(onOpenPlaylist)
+        onOpenPlaylist.onscroll = function() {
+          rootTop.style.backgroundColor = `rgba(${thisPlaylistInDB.headerColor}, ${0.5 + - (225 - Math.ceil(onOpenPlaylist.scrollTop)) / 100})`
+          handlePlaylistHeaderOnscroll()
         }
+
+        this.renderPlaylistPage(thisPlaylistInDB)
+        this.stylePlaylistPage.startStyle(playlistArray, eachPlaylist, thisPlaylistInDB)
+        this.handlePlaylistPageButtons.startHandle(thisPlaylistInDB)
       }
     }
   },
   start: function() {
     this.renderOwnPlaylists()
     this.renderCurrentPlaylists()
-    this.handlePlayOrOpenPlaylist()
     this.handleMainViewBackground.start()
+
+    const playlistArray = Array.from(document.getElementsByClassName('is-playlist'))
+    for (let eachPlaylist of playlistArray) {
+      const _this = this
+      const thisPlaylistInDB = handlePlaylists.playlists.filter(playlist => playlist.id == eachPlaylist.getAttribute('id'))[0]   //find playlist in the database that match the id
+        
+      eachPlaylist.onclick = function(e) {       
+        if (Array.from(document.getElementsByClassName('play-now')).includes(e.target) || Array.from(document.getElementsByClassName('playing')).includes(e.target)) {
+          e.stopPropagation()
+          _this.handlePlayOrOpenPlaylist.playPlaylist(thisPlaylistInDB)
+        } else {
+          _this.handlePlayOrOpenPlaylist.openPlaylist.startOpen(playlistArray, eachPlaylist, thisPlaylistInDB)
+        }
+      }
+    }
   }
 }
 handlePlaylists.start()
@@ -1570,7 +972,7 @@ const handleQueuePage = {
     const playingSong = playSongs.songs[playSongs.currentIndex]
     $('#queue__now-playing-song').innerHTML = `
       <ul class="song" id="${playingSong.id}">
-      <li class='number'><img class="play-this-song" src='./assets/images/main-view/play-this-song.PNG'><span>1</span></li>
+      <li class='number'><img class="play-this-song" src='./assets/images/main-view/play-this-song.PNG'><span>1</span><img class="playing-gif" src='./assets/images/main-view/icon-playing.gif'></li>
         <li class='title'>
           <img class='song-img' src=${playingSong.img}>
           <div class="song-info">
@@ -1592,7 +994,6 @@ const handleQueuePage = {
   
     
     const nextUpSongs = playSongs.songs.slice(playSongs.currentIndex + 1)
-    console.log(nextUpSongs)
     
     $('#queue__next-up-songs').innerHTML = nextUpSongs.map((song, index) => `
       <ul class="song" id="${song.id}">
