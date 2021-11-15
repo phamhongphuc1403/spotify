@@ -244,7 +244,7 @@ const allSongs = [
     artist: ["Martin Garrix", "Cliton Kane"],
     img: "./assets/songs/singles/drown__martin-garrix.jpg",
     path: "./assets/songs/songs/drown__martin-garrix.mp3",
-    album: "Drown (feat. Cliton Kane",
+    album: "Drown (feat. Cliton Kane)",
     backgroundColor: '#484747',
     tag: ['favorite', ]
   },
