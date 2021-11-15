@@ -162,6 +162,9 @@ html * {
 
 #root__top__move-action {
     margin-left: 32px;
+    min-width: 80px;
+    max-height: 40px;
+    overflow: hidden;
 }
 #root__top__move-action * {
     width: 32px;

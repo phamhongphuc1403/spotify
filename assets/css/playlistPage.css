@@ -11,6 +11,11 @@
     background-attachment: local;
     /* border: 5px solid yellow; */
 }
+#root__top__add-play-btn__playlist-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 #on-open-playlist__return-home {
     display: none;
 }
