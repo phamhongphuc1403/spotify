@@ -1019,7 +1019,7 @@ html * {
     #root__now-playing__song__overlay {
         display: none;
     }
-    .list, .remote, .fullscreen {
+    .remote, .fullscreen {
         display: none;
     }
 }
@@ -1031,6 +1031,7 @@ html * {
         overflow-y: hidden;
         overflow-x: hidden;
         grid-template-columns: 0 auto 0;
+        grid-template-rows: auto 0px; 
     }
 
     #root__top-container {
@@ -1046,7 +1047,6 @@ html * {
     #root__main-view__currently-playing {
         margin-top: 20px;
     }
-
 
     #root__main-view__responsive-nav {
         display: flex;

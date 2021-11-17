@@ -658,22 +658,23 @@ const app = {
             onOpenPlaylist.style.backgroundImage = `linear-gradient(rgb(${thisPlaylistInDB.backgroundColor}), #181818 600px)`
           },
           styleTitle: function() {
-            $('#on-open-playlist__header__title__name').style.whiteSpace = 'nowrap'
-            let titleFontSize = window.getComputedStyle($('#on-open-playlist__header__title__name')).fontSize
+            const title = $('#on-open-playlist__header__title__name')
+            title.style.whiteSpace = 'nowrap'
+            let titleFontSize = window.getComputedStyle(title).fontSize
             let headerContentWidth = $('#on-open-playlist').offsetWidth - 310
             
             function fitToDiv(size) {
-              $('#on-open-playlist__header__title__name').style.fontSize = parseFloat(size) - 1 + 'px'
+              title.style.fontSize = parseFloat(size) - 1 + 'px'
               titleFontSize = parseFloat(size) - 1
               
-              if ($('#on-open-playlist__header__title__name').offsetWidth > headerContentWidth) {
+              if (title.offsetWidth > headerContentWidth) {
                 fitToDiv(titleFontSize)
               }
             } 
-            if (window.outerWidth > 768) {
+            if (window.outerWidth >= 768) {
               fitToDiv(titleFontSize)
             } else {
-              $('#on-open-playlist__header__title__name').style.fontSize = '5vw'
+              title.style.fontSize = '5vw'
             }
           },
           styleLeftSidebarPlaylist: function(playlistArray, eachPlaylist) {
@@ -681,36 +682,33 @@ const app = {
             .filter(otherPlaylist => otherPlaylist.id != eachPlaylist.id)
             .forEach(otherPlaylist => {
               otherPlaylist.style.color = '#b3b3b3'
-              otherPlaylist.onmouseenter = function() { otherPlaylist.style.color = 'white'}
-              otherPlaylist.onmouseleave = function() { otherPlaylist.style.color = '#b3b3b3'}
+              otherPlaylist.onmouseenter = function() {otherPlaylist.style.color = 'white'}
+              otherPlaylist.onmouseleave = function() {otherPlaylist.style.color = '#b3b3b3'}
             })
   
             const currentPlaylist = playlistArray.filter(playlist => playlist.id == eachPlaylist.id && playlist.className.includes('my-playlist'))[0]
             currentPlaylist.style.color = 'white'
-            currentPlaylist.onmouseenter = function() { currentPlaylist.style.color = 'white'}
-            currentPlaylist.onmouseleave = function() { currentPlaylist.style.color = 'white'}
+            currentPlaylist.onmouseenter = function() {currentPlaylist.style.color = 'white'}
+            currentPlaylist.onmouseleave = function() {currentPlaylist.style.color = 'white'}
           },
 
           handleResponsive: {
             currentFontSizeArr: [],
             handleTextWidth: function() {
               if(onOpenPlaylist.style.display == 'block') {
+                const title = $('#on-open-playlist__header__title__name')
                 if (window.outerWidth > 768) {
-                  $('#on-open-playlist__header__title__name').style.whiteSpace = 'normal'
-                  let currentFontSize = parseFloat(window.getComputedStyle($('#on-open-playlist__header__title__name')).fontSize)
-                  if (!this.currentFontSizeArr.includes(currentFontSize)) this.currentFontSizeArr.unshift(currentFontSize)
-                  if ($('#on-open-playlist__header__title__name').offsetWidth >= $('#on-open-playlist__header__title').offsetWidth - 15) {
-                    $('#on-open-playlist__header__title__name').style.fontSize = currentFontSize - 15 + 'px'
-                    currentFontSize = parseFloat(window.getComputedStyle($('#on-open-playlist__header__title__name')).fontSize)
-                    this.currentFontSizeArr.unshift(currentFontSize)
+                  let currentFontSize = parseFloat(window.getComputedStyle(title).fontSize)
+                  while (title.offsetWidth > $('#on-open-playlist__header__title').offsetWidth - 15) {
+                    title.style.fontSize = currentFontSize - 1 + 'px'
+                    currentFontSize = parseFloat(window.getComputedStyle(title).fontSize)
                   }
-                  if ($('#on-open-playlist__header__title__name').offsetWidth < $('#on-open-playlist__header__title').offsetWidth - 170) {
-                    this.currentFontSizeArr.shift()
-                    $('#on-open-playlist__header__title__name').style.fontSize = this.currentFontSizeArr[0] + 'px'
-                    currentFontSize = parseFloat(window.getComputedStyle($('#on-open-playlist__header__title__name')).fontSize)
+                  while (title.offsetWidth < $('#on-open-playlist__header__title').offsetWidth - 15) {
+                    title.style.fontSize = currentFontSize + 1 + 'px'
+                    currentFontSize = parseFloat(window.getComputedStyle(title).fontSize)
                   }
                 } else {
-                  $('#on-open-playlist__header__title__name').style.fontSize = '5vw'
+                  title.style.fontSize = '5vw'
                 }
         
                 $('.song-info').maxWidth = $('.title').clientWidth - 56 + 'px'
@@ -720,20 +718,8 @@ const app = {
               handleHeaderTitleWidth: function() {
                 $('#root__top__add-play-btn__playlist-name').style.maxWidth = rootTop.offsetWidth - 355 + 'px'
               },
-              handleNavigationButton: function() {
-                // $('#root__top__move-action').offsetWidth < 80 ? $('.root__top__move-action__next').style.display = 'none' : $('.root__top__move-action__next').style.display = 'block'
-                // if ($('#root__top__move-action').offsetWidth < 80) {
-                //   $('.root__top__move-action__next').style.display = 'none'
-                //   console.log(window.getComputedStyle($('.root__top__move-action__next')).display)
-                // } 
-                // if ($('.root__top__move-action__next').style.display == 'none') {
-                //   $('.root__top__move-action__next').style.display = 'block'
-                //   console.log(window.getComputedStyle($('.root__top__move-action__next')).display)
-                // }
-              },
               handle: function() {
                 this.handleHeaderTitleWidth()
-                this.handleNavigationButton()
               }
             },
             
@@ -777,7 +763,6 @@ const app = {
           },
             
           startStyle: function(playlistArray, eachPlaylist, thisPlaylistInDB) {
-            // app.handleResponsive.handlePlaylistPage.handlePageSize(onOpenPlaylist)
             onOpenPlaylist.scrollTop = 0;
             mainView.scrollTop = 0
             this.styleMainView(thisPlaylistInDB)
@@ -856,11 +841,9 @@ const app = {
           startHandle: function(thisPlaylistInDB) {
             const _this = this
             this.handleOnclick(thisPlaylistInDB)
-            Array.from(document.querySelectorAll('.song')).forEach(song => {
+            Array.from(onOpenPlaylist.querySelectorAll('.song')).forEach(song => {
               this.handleSongHover(song, thisPlaylistInDB)
-              song.querySelector('.play-this-song').onclick = function() {
-                _this.playThisSong(song, thisPlaylistInDB)
-              }
+              song.querySelector('.play-this-song').onclick = function() {_this.playThisSong(song, thisPlaylistInDB)}
             })
           }
         },
@@ -905,39 +888,6 @@ const app = {
     }
   },
   handleQueuePage: {
-    openQueuePage: function() {
-      $('.list').onclick = function(e) {
-        e.stopPropagation()
-        if (window.getComputedStyle(queuePage).display == 'none') {
-          queuePage.style.display = 'block'
-         
-          // $('#root__top__add-play-btn__play-btn').style.opacity = 0
-          // $('#root__top__add-play-btn__playlist-name').style.opacity = 0
-          // $('#root__top__add-play-btn__play-btn').style.display = 'none'
-          // $('#root__top__add-play-btn__playlist-name').style.display = 'none'
-          // setTimeout(() => {
-          //   $('#root__top__add-play-btn__play-btn').style.display = ''
-          //   $('#root__top__add-play-btn__playlist-name').style.display = ''
-          // }, 10);
-          rootTop.style.backgroundColor = 'transparent'
-  
-          $('.list').src= './assets/images/now-playing/list-active.PNG'
-          app.handleNowPlaying.handleActiveBtns(true, $('.list'), $('.list-active'))
-        } else {
-          queuePage.style.display = 'none'
-          $('.list').src= './assets/images/now-playing/list.PNG'
-          app.handleNowPlaying.handleActiveBtns(false, $('.list'), $('.list-active'))
-        }
-        Array.from(queuePage.getElementsByClassName('song-info')).forEach(songInfo => songInfo.style.maxWidth = queuePage.querySelector('.title').offsetWidth - 100 + 'px')
-        app.handleNavigation.farFromHome()
-        app.currentPage += 1;
-        app.trace.push(queuePage)
-        if (document.getElementById('nowPlaying'))  {
-          document.getElementById('root__now-playing').remove()
-        }
-        app.handleMainView.styleMainView.handleResponsive.handlePageSize(queuePage)
-      }
-    },
     renderQueuePage: function() {
       const playingSong = app.playSongs.songs[app.playSongs.currentIndex]
       $('#queue__now-playing-song').innerHTML = `
@@ -984,66 +934,78 @@ const app = {
         </ul>
       `).join('')
     },
-    handleQueuePageBtns: function() {
-      // $('#on-open-playlist__return-home').onclick = function() {
-      //   app.handleNavigation.homeComing()
-      // }
-      Array.from(queuePage.querySelectorAll('.song')).forEach(song => {
-  
-        function playThisSong() {
-          const thisSong = allSongs.filter(findSong => findSong.id == song.getAttribute('id'))[0]
-          if (song.querySelector('.play-this-song').src.includes('assets/images/main-view/pause-this-song.PNG')) {
-            audio.pause()
-          } else {
-            if (app.playSongs.id == app.playSongs.id && app.playSongs.currentIndex == app.playSongs.songs.indexOf(thisSong)) {
-              audio.play()
-            } else {
-              app.playSongs.currentIndex = app.playSongs.songs.indexOf(thisSong)
-              app.playSongs.start()
-              audio.play()
-            }
-          }
-          app.handleQueuePage.renderQueuePage()
-          app.handleQueuePage.handleQueuePageBtns()
-        }
-  
-        song.onmouseover = function() {
-          if (window.outerWidth > 651) {
-            song.style.backgroundColor = 'rgb(255,255,255,0.1)'
-            song.querySelector('.play-this-song').style.display = 'block'
-            song.querySelector('.number span').style.display = 'none'
-          }
-  
-          song.querySelector('.play-this-song').onclick = function() {
-            playThisSong()
-          }
-        }
-        song.onmouseout = function() {
-          if (window.outerWidth > 651) {
-            song.style.backgroundColor = 'rgb(255,255,255,0.0)'
-            song.querySelector('.play-this-song').style.display = 'none'
-            song.querySelector('.number span').style.display = 'block'
-          }
-        }
-        song.onclick = function() {
-          if (window.outerWidth < 1000) {
-            const thisSong = allSongs.filter(findSong => findSong.id == song.getAttribute('id'))[0]
-            app.playSongs.currentIndex = app.playSongs.songs.indexOf(thisSong)
-            app.playSongs.start()
-            audio.play()
-            app.handleQueuePage.renderQueuePage()
-            app.handleQueuePage.handleQueuePageBtns()
-          }
-        }
-      })
-     
-    },
-    start: function() {
-      this.openQueuePage()
-      this.renderQueuePage()
-      this.handleQueuePageBtns()
+    styleQueuePage: function() {
+      rootTop.style.backgroundColor = 'transparent'
+      $('.list').src= './assets/images/now-playing/list-active.PNG'
+      app.handleNowPlaying.handleActiveBtns(true, $('.list'), $('.list-active'))
+      Array.from(queuePage.getElementsByClassName('song-info')).forEach(songInfo => songInfo.style.maxWidth = queuePage.querySelector('.title').offsetWidth - 100 + 'px')
+      if (document.getElementById('nowPlaying')) {
+        document.getElementById('root__now-playing').style.zIndex = '0'
+        document.getElementById('root__left-sidebar').style.zIndex = '0'
+      }
       queuePage.onscroll = function() {
         rootTop.style.backgroundColor = `rgba(7, 7, 7, ${0.5 + - (90 - Math.ceil(queuePage.scrollTop)) / 10})`
+      }
+    },
+    handleResponsive: function() {
+      if (queuePage.style.display == 'block') {
+        if (window.outerWidth > 999) {
+          app.handleMainView.styleMainView.handleResponsive.handlePageSize(queuePage)
+        } else {
+          queuePage.style.cssText = `
+          display: block;
+          padding: 10px;
+          position: absolute;
+          width: 100%;
+          z-index: 10;
+          top: 0;
+          left: 0;
+          height: 100%;`
+          document.getElementById('root__now-playing').style.zIndex = '0'
+          document.getElementById('root__left-sidebar').style.zIndex = '0'
+        }
+      }
+    },
+    handleQueuePageBtns: function() {
+      const _this = this
+      $('#queue__header__close').onclick = function() {
+        _this.closeQueuePage()
+          document.getElementById('root__now-playing').style.zIndex = '3'
+          document.getElementById('root__left-sidebar').style.zIndex = '3'
+      }
+      
+      const thisPlaylistInDB = app.handlePlaylists.playlists.filter(playlist => playlist.id == app.playSongs.id)[0]   //find playlist in the database that match the playing playlist
+      Array.from(queuePage.querySelectorAll('.song')).forEach(song => {
+        app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.handlePlaylistPageButtons.handleSongHover(song, thisPlaylistInDB)
+        song.querySelector('.play-this-song').onclick = function() {app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.handlePlaylistPageButtons.playThisSong(song, thisPlaylistInDB)}
+      })
+      
+    },
+    openQueuePage: function() { 
+      queuePage.style.display = 'block'
+      queuePage.scrollTop = 0;
+      app.handleNavigation.farFromHome()
+      app.currentPage += 1;
+      app.trace.push(queuePage)
+      this.styleQueuePage()
+      this.handleResponsive()
+      this.renderQueuePage()
+      this.handleQueuePageBtns()
+    },
+    closeQueuePage: function() {
+      queuePage.style.display = 'none'
+      $('.list').src= './assets/images/now-playing/list.PNG'
+      app.handleNowPlaying.handleActiveBtns(false, $('.list'), $('.list-active'))
+
+      mainView.scrollTop = 0;
+      onOpenPlaylist.scrollTop = 0;
+      rootTop.style.backgroundColor = 'transparent'
+    }, 
+    start: function() {
+      const _this = this
+      $('.list').onclick = function(e) {
+        e.stopPropagation()
+        window.getComputedStyle(queuePage).display == 'none' ? _this.openQueuePage() : _this.closeQueuePage()
       }
     }
   },
@@ -1051,7 +1013,6 @@ const app = {
     openNowPlayingPage: function() {
       nowPlaying.onclick = function() {
         if(!document.getElementById('nowPlaying') && window.outerWidth <= 999) {
-          // isAtHome = false
           app.handleNavigation.farFromHome()
           const head = document.querySelector('head')
           const link = document.createElement('link')
@@ -1061,10 +1022,10 @@ const app = {
           head.appendChild(link)
         }
       }
-    
       $('#root__now-playing__header__minimize').onclick = function(e) {
-          e.stopPropagation()
-          document.getElementById('nowPlaying').remove()
+        e.stopPropagation()
+        document.getElementById('nowPlaying').remove()
+        app.handleNavigation.homeComing()
       }
       if (window.outerWidth > 999 && document.getElementById('nowPlaying')) {
           document.getElementById('nowPlaying').remove()
@@ -1162,7 +1123,7 @@ const app = {
           this.handleResponsiveBar()
           this.handlePlaylist.handle()
           this.handlePageSize(onOpenPlaylist)
-          this.handlePageSize(queuePage)
+          if (window.outerWidth > 999) this.handlePageSize(queuePage)
         }
       },
 
@@ -1212,7 +1173,7 @@ const app = {
   },
   handleNavigation: {
     homeComing: function() {
-      if (!isAtHome) {
+      if (!app.isAtHome) {
         if (onOpenPlaylist.style.display == 'block') {
           onOpenPlaylist.style.display = 'none';
           $('#root__top__add-play-btn__play-btn').style.opacity = 0
@@ -1231,12 +1192,8 @@ const app = {
             playlist.onmouseleave = function() { playlist.style.color = '#b3b3b3'}
           })
         }
-        if (queuePage.style.display == 'block') {
-          queuePage.style.display = 'none'
-          $('.list').src= './assets/images/now-playing/list.PNG'
-          app.handleNowPlaying.handleActiveBtns(false, $('.list'), $('.list-active'))
-        }
-        isAtHome = true;
+        if (queuePage.style.display == 'block') {app.handleQueuePage.closeQueuePage()}
+        app.isAtHome = true;
         homeBtn.querySelector('img').src = './assets/images/left-sidebar/home-active.PNG'
         homeBtn.classList.add('current')
         app.trace.push(mainView)
@@ -1244,14 +1201,14 @@ const app = {
       }
     },
     farFromHome: function() {
-      isAtHome = false;
+      app.isAtHome = false;
       homeBtn.querySelector('img').src = './assets/images/left-sidebar/home.PNG'
       homeBtn.classList.remove('current')
     },
     handleBtns: function() {
       const _this = this
-      $('#root__left-sidebar__logo').onclick = function() { _this.homeComing()}
-      homeBtn.onclick = function() { _this.homeComing()}
+      $('#root__left-sidebar__logo').onclick = function() {_this.homeComing()}
+      homeBtn.onclick = function() {_this.homeComing()}
     }
   },
   resize: function() {
@@ -1259,6 +1216,7 @@ const app = {
     window.onresize = function() {
       _this.playSongs.changeNowPlayingColor()
       _this.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.stylePlaylistPage.handleResponsive.handle()
+      _this.handleQueuePage.handleResponsive()
       _this.handleMainView.styleMainView.handleResponsive.handle()
       _this.handleNowPlaying.openNowPlayingPage()
       _this.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.stylePlaylistPage.handlePlaylistHeaderOnscroll()

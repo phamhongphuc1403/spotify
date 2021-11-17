@@ -2,7 +2,6 @@
         position: absolute;
         top: 0;
         left: 0;
-        /* border: 4px solid yellow; */
         height: 100%;
         width: 100%;
         z-index: 4;
@@ -11,6 +10,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        overflow-x: hidden;
     }
     #root__now-playing * {
         box-sizing: border-box;
@@ -20,7 +20,6 @@
         align-items: center;
         justify-content: space-between;
         width: 100%;
-        /* BORDER: 1PX SOLID RED; */
     }
     #root__now-playing__header__playlist {
         font-size: 20px;
@@ -30,7 +29,6 @@
         display: block;
         width: 100%;
         height: auto;
-        /* BORDER: 1PX SOLID RED; */
     }
     
     #root__now-playing__song__img {
@@ -45,12 +43,10 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        /* BORDER: 1PX SOLID orange; */
     }
     #root__now-playing__song__info {
         margin: 0;
         max-width: 100%;
-        /* BORDER: 1PX SOLID orange; */
         display: block;
         
     }
@@ -73,7 +69,6 @@
         display: flex;
         flex-direction: column-reverse;
         justify-content: space-between;
-        /* border: 1px solid blue; */
         width: 100%;
         height: 130px;
         padding: 0;
@@ -114,15 +109,9 @@
     
     #root__now-playing__player-control__playback-bar {
         display: block;
-        /* border: 1px solid green; */
         position: relative;
         width: 100%;
         display: flex;
-
-        /* position: absolute;
-        top: 0px;
-        height: 4px;
-        mar */
     }
     #root__now-playing__player-control__playback-bar__range-slider {
         background: #535353;
@@ -149,11 +138,9 @@
     #root__now-playing__player-control__playback-bar__minutes-played, 
     #root__now-playing__speed-control__playback-bar__minutes-total {
         font-size: 20px;
-        /* border: 1px solid red; */
         position: absolute;
         width: auto;
         order: 2;
-        /* color: white; */
         top: 15px;
     }
     
@@ -161,10 +148,7 @@
         right: 0;
     }
     #root__now-playing__media-control {
-        /* position: absolute; */
         display: flex;
-        /* top: 0px; */
-        /* border: 1px solid white; */
         width: 100%;
         justify-content: space-between;
         flex-direction: row-reverse;
@@ -193,7 +177,6 @@
             display: block;
             width: 100%;
             height: auto;
-            /* BORDER: 1PX SOLID RED; */
         }
         #root__now-playing__player-control {
           
@@ -239,10 +222,3 @@
         }
     
     }
-    /* @media (max-width: 499px) {
-        #root__now-playing__song__img {
-            width: 90%;
-            margin: 20px auto;
-    
-        } */
-    /* } */
