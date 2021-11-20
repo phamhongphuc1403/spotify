@@ -470,7 +470,7 @@ const allSongs = [
   },
   { 
     id: 48, 
-    name: "Burning Heart - From &quotRocky IV&quot Soundtrack", 
+    name: 'Burning Heart - From "Rocky IV" Soundtrack', 
     artist: ["Survivor"],
     img: "./assets/songs/albums/rocky-iv__survivor.jpg",
     path: "./assets/songs/songs/burning-heart__survivor.mp3",

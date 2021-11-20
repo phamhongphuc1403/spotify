@@ -87,28 +87,8 @@ const app = {
       const _this = this
     
       audio.ontimeupdate = function() {
-        if (onOpenPlaylist.style.display == 'block') {
-          if ($('#on-open-playlist__body__btns__play').className == _this.id && _this.isPlaying) {
-            $('#on-open-playlist__body__btns__play').src='./assets/images/main-view/pause-playlist.PNG'
-            $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/pause-playlist.PNG' 
-  
-            // const playingSong = Array.from(onOpenPlaylist.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0]
-            // playingSong.querySelector('.song-info__name').style.color = '#1db753'
-            // playingSong.querySelector('.play-this-song').src = './assets/images/main-view/pause-this-song.PNG'
-          } else {
-            $('#on-open-playlist__body__btns__play').src='./assets/images/main-view/play-now-playlist.PNG'
-            $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/play-now-playlist.PNG'
-          }
-        }
-        if (queuePage.style.display == 'block') {
-          Array.from(queuePage.getElementsByClassName('song')).forEach(song => song.querySelector('.play-this-song').src = './assets/images/main-view/play-this-song.PNG')
-          const playingSong = Array.from(queuePage.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0]
-          playingSong.querySelector('.play-this-song').src = './assets/images/main-view/pause-this-song.PNG'
-          // playingSong.querySelector('.playing-gif').style.display = 'block'
-          // playingSong.querySelector('span').style.display = 'none'
-        }
+
         //set 'time played' when song plays
-  
         if (_this.isSeeking == false) {
           _this.handleTimePlayed()
      
@@ -299,8 +279,7 @@ const app = {
             
           if (app.playSongs.currentIndex < playlistLength) {  //if the next song is not the last in the playlist, auto play the song
             app.playSongs.handleNextSong()
-            app.handleQueuePage.renderQueuePage()           
-            app.handleQueuePage.handleQueuePageBtns()
+            app.handleQueuePage.reRenderQueuePage()
           } else {    //if the next song is the last, stop the playlist 
             app.playSongs.currentIndex +=3                                        
             app.playSongs.isPlaying = false;                                      
@@ -329,8 +308,7 @@ const app = {
             app.playSongs.isPlaying = true;
             app.playSongs.loadCurrentSong() 
           }           
-          app.handleQueuePage.renderQueuePage()
-          app.handleQueuePage.handleQueuePageBtns()
+          app.handleQueuePage.reRenderQueuePage()
         }
   
         // add repeat playlist button
@@ -357,8 +335,7 @@ const app = {
           _this.currentIndex = 0
           _this.loadCurrentSong()
           audio.autoplay = true
-          app.handleQueuePage.renderQueuePage()
-          app.handleQueuePage.handleQueuePageBtns()
+          app.handleQueuePage.reRenderQueuePage()
         }
       }
   
@@ -373,8 +350,7 @@ const app = {
         } else {      //replay the song if the current song is playing more than 2.5 seconds
           _this.loadCurrentSong()
         }
-        app.handleQueuePage.renderQueuePage()
-        app.handleQueuePage.handleQueuePageBtns()
+        app.handleQueuePage.reRenderQueuePage()
       }
   
       //handle next button
@@ -383,16 +359,14 @@ const app = {
         if (_this.currentIndex >= _this.songs.length) _this.currentIndex = 0    //if it's the the last song in the playlist, play the first song
         _this.loadCurrentSong()
         audio.autoplay = true
-        app.handleQueuePage.renderQueuePage()
-        app.handleQueuePage.handleQueuePageBtns()
+        app.handleQueuePage.reRenderQueuePage()
       }
   
       //handle shuffle button
       shuffleBtn.onclick = function() {
         _this.isShuffle ? _this.handleShuffle.noShuffle() : _this.handleShuffle.shuffle()
         app.handleNowPlaying.handleActiveBtns(_this.isShuffle, shuffleBtn, $('.shuffle-active'))
-        app.handleQueuePage.renderQueuePage()
-        app.handleQueuePage.handleQueuePageBtns()
+        app.handleQueuePage.reRenderQueuePage()
       }
   
       //handle repeat button
@@ -429,29 +403,8 @@ const app = {
           pauseBtn.style.zIndex = 2;
           pauseBtnShadow.style.opacity = 1;
         }
-  
-  
-        if ($('#on-open-playlist__body__btns__play')) if($('#on-open-playlist__body__btns__play').className == _this.id) {
-          $('#on-open-playlist__body__btns__play').src = './assets/images/main-view/pause-playlist.PNG'
-          $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/pause-playlist.PNG'
-          // Array.from(onOpenPlaylist.getElementsByClassName('song')).forEach(song => {
-          //   song.querySelector('.song-info__name').style.color = 'white'
-          // })
-          // const playingSong = Array.from(onOpenPlaylist.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0]
-          // playingSong.querySelector('.song-info__name').style.color = '#1db753'
-          // playingSong.querySelector('.play-this-song').src = './assets/images/main-view/pause-this-song.PNG'
-          app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.handlePlaylistPageButtons.handleSongHover.handle()
-        }
-        if (queuePage.style.display == 'block') {
-          Array.from(queuePage.getElementsByClassName('song')).forEach(song => {
-            song.querySelector('.song-info__name').style.color = 'white'
-          })
-          const playingSong = Array.from(queuePage.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0]
-          playingSong.querySelector('.song-info__name').style.color = '#1db753'
-          playingSong.querySelector('.play-this-song').src = './assets/images/main-view/pause-this-song.PNG'
-          playingSong.querySelector('.playing-gif').style.display = 'block'
-          playingSong.querySelector('span').style.display = 'none'
-        }
+        app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.stylePlaylistPage.styleSongs.handle()
+        app.handleQueuePage.styleQueuePage.styleSong()
       }
   
   
@@ -468,22 +421,8 @@ const app = {
           pauseBtn.style.zIndex = -1;
           pauseBtnShadow.style.opacity = 0; 
         }
-        if ($('#on-open-playlist__body__btns__play')) if($('#on-open-playlist__body__btns__play').className == _this.id) {
-          $('#on-open-playlist__body__btns__play').src = './assets/images/main-view/play-now-playlist.PNG'
-          $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/play-now-playlist.PNG'
-          // Array.from(onOpenPlaylist.getElementsByClassName('song')).forEach(song => {
-          //   song.querySelector('.song-info__name').style.color = 'white'
-          //   song.querySelector('.play-this-song').src = './assets/images/main-view/play-this-song.PNG'
-          // })
-          app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.handlePlaylistPageButtons.handleSongHover.handle()
-        }  
-        if (queuePage.style.display == 'block') {
-          Array.from(queuePage.getElementsByClassName('song')).forEach(song => {
-            song.querySelector('.play-this-song').src = './assets/images/main-view/play-this-song.PNG'
-            // song.querySelector('.playing-gif').style.display = 'none'
-            song.querySelector('span').style.display = 'block'
-          })
-        }
+        app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.stylePlaylistPage.styleSongs.handle()
+        app.handleQueuePage.styleQueuePage.styleSong()
       }
     },
     start: function() {  //wrap all function into one 
@@ -592,7 +531,7 @@ const app = {
             app.playSongs.currentIndex = 0;
           }
           app.playSongs.start()
-          app.handleQueuePage.renderQueuePage()
+          app.handleQueuePage.reRenderQueuePage()
           audio.play()
         }
         $('#root__now-playing__header__playlist').innerHTML = `${thisPlaylistInDB.name}`
@@ -657,7 +596,7 @@ const app = {
         },
         
         stylePlaylistPage: {
-          styleMainView: function(thisPlaylistInDB) {
+          styleGeneral: function(thisPlaylistInDB) {
             onOpenPlaylist.style.display = 'block'
             onOpenPlaylist.style.backgroundImage = `linear-gradient(rgb(${thisPlaylistInDB.backgroundColor}), #181818 600px)`
           },
@@ -697,7 +636,6 @@ const app = {
           },
 
           handleResponsive: {
-            currentFontSizeArr: [],
             handleTextWidth: function() {
               if(onOpenPlaylist.style.display == 'block') {
                 const title = $('#on-open-playlist__header__title__name')
@@ -765,208 +703,129 @@ const app = {
               }
             }
           },
-            
+          
+          styleSongs: {
+            handleNotPlayingSong: function(page) {
+              Array.from(page.getElementsByClassName('song')).forEach(song => {
+                song.onmouseover = function() {
+                  if (window.outerWidth > 999) {
+                    song.style.backgroundColor = 'rgb(255,255,255,0.1)'
+                    song.querySelector('.play-this-song').style.display = 'block'
+                    song.querySelector('.number span').style.display = 'none'
+                  }
+                }
+                song.onmouseout = function() {
+                  if (window.outerWidth > 999) {
+                    song.style.backgroundColor = 'rgb(255,255,255,0.0)'
+                    song.querySelector('.play-this-song').style.display = 'none'
+                    song.querySelector('.number span').style.display = 'block'
+                  }
+                }
+
+                song.querySelector('.number span').style.display = 'block'
+                song.querySelector('.song-info__name').style.color = 'white'
+                song.querySelector('.playing-gif').style.display = 'none'
+                song.querySelector('.play-this-song').src = './assets/images/main-view/play-this-song.PNG'
+              })
+            },
+            handlePlayingSong: function(page) {
+              const playingSong = Array.from(page.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0]
+              
+              playingSong.onmouseover = function() {
+                if (window.outerWidth > 999) {
+                  playingSong.style.backgroundColor = 'rgb(255,255,255,0.1)'
+                  playingSong.querySelector('.play-this-song').style.display = 'block'
+                  playingSong.querySelector('.playing-gif').style.display = 'none'
+                }
+              }
+              playingSong.onmouseout = function() {
+                if (window.outerWidth > 999) {
+                  playingSong.style.backgroundColor = 'rgb(255,255,255,0.0)'
+                  playingSong.querySelector('.play-this-song').style.display = 'none'
+                  playingSong.querySelector('.playing-gif').style.display = 'block'
+                }
+              }
+
+              playingSong.querySelector('.playing-gif').style.display = 'block'
+              playingSong.querySelector('.song-info__name').style.color = '#1db753'
+              playingSong.querySelector('.play-this-song').src = './assets/images/main-view/pause-this-song.PNG'
+              playingSong.querySelector('.number span').style.display = 'none'
+            },
+            handle: function() {
+              if (onOpenPlaylist.style.display == 'block') {
+                this.handleNotPlayingSong(onOpenPlaylist)
+                if ($('#on-open-playlist__body__btns__play').className == app.playSongs.id) {
+                  if (app.playSongs.isPlaying) {
+                    $('#on-open-playlist__body__btns__play').src = './assets/images/main-view/pause-playlist.PNG'
+                    $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/pause-playlist.PNG'
+                    this.handlePlayingSong(onOpenPlaylist)
+                  } else {
+                    this.handleNotPlayingSong(onOpenPlaylist)
+                    $('#on-open-playlist__body__btns__play').src = './assets/images/main-view/play-now-playlist.PNG'
+                    $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/play-now-playlist.PNG'
+                  }
+                }
+              }
+            }
+          },
+
           startStyle: function(playlistArray, eachPlaylist, thisPlaylistInDB) {
             onOpenPlaylist.scrollTop = 0;
             mainView.scrollTop = 0
-            this.styleMainView(thisPlaylistInDB)
+            this.styleGeneral(thisPlaylistInDB)
             this.styleTitle()
             this.styleLeftSidebarPlaylist(playlistArray, eachPlaylist)
             this.handleResponsive.handle()
             this.handlePlaylistHeaderOnscroll()
+            this.styleSongs.handle()
           }
         },
   
         handlePlaylistPageButtons: {
           handleOnclick: function(thisPlaylistInDB) {
             $('#root__top__add-play-btn__play-btn').onclick = function() {
-              if ($('#root__top__add-play-btn__play-btn').style.opacity == 1) {
-                app.handlePlaylists.handlePlayOrOpenPlaylist.playPlaylist(thisPlaylistInDB)
-              }
+              if ($('#root__top__add-play-btn__play-btn').style.opacity == 1) {app.handlePlaylists.handlePlayOrOpenPlaylist.playPlaylist(thisPlaylistInDB)}
             }
-            $('#on-open-playlist__body__btns__play').onclick = function() {
-              app.handlePlaylists.handlePlayOrOpenPlaylist.playPlaylist(thisPlaylistInDB)
-            }         
-            $('#on-open-playlist__return-home').onclick = function() {
-              app.handleNavigation.homeComing()
-            }
+            $('#on-open-playlist__body__btns__play').onclick = function() {app.handlePlaylists.handlePlayOrOpenPlaylist.playPlaylist(thisPlaylistInDB)}         
+            $('#on-open-playlist__return-home').onclick = function() {app.handleNavigation.homeComing()}
           },
           
           playThisSong: function(song, thisPlaylistInDB) {
+            app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.stylePlaylistPage.styleSongs.handle()
+            app.handleQueuePage.styleQueuePage.styleSong()
             const thisSong = allSongs.filter(findSong => findSong.id == song.getAttribute('id'))[0]
-            if (song.querySelector('.play-this-song').src.includes('assets/images/main-view/pause-this-song.PNG')) {
-              audio.pause()
-            } else {
-              if (app.playSongs.id == thisPlaylistInDB.id && app.playSongs.currentIndex == app.playSongs.songs.indexOf(thisSong)) {
-                audio.play()
+            if (window.outerWidth >= 1000) {
+              if (song.querySelector('.play-this-song').src.includes('assets/images/main-view/pause-this-song.PNG')) {
+                audio.pause()
               } else {
-                app.playSongs.songs = [...thisPlaylistInDB.songs]
-                app.playSongs.id = thisPlaylistInDB.id
-                app.playSongs.currentIndex = app.playSongs.songs.indexOf(thisSong)
-                app.playSongs.start()
-                audio.play()
-              }
-            }
-            app.handleQueuePage.renderQueuePage()
-            app.handleQueuePage.handleQueuePageBtns()
-          },
-          handleSongHover : {
-            handleNotPlayingSong: function() {
-              Array.from(onOpenPlaylist.getElementsByClassName('song')).forEach(song => {
-                song.querySelector('.song-info__name').style.color = 'white'
-                song.querySelector('.playing-gif').style.display = 'none'
-                song.querySelector('.number span').style.display = 'block'
-                song.querySelector('.play-this-song').src = './assets/images/main-view/play-this-song.PNG'
-                song.onmouseover = function() {
-                  // if (window.outerWidth > 651) {
-                    song.style.backgroundColor = 'rgb(255,255,255,0.1)'
-                    song.querySelector('.play-this-song').style.display = 'block'
-                    song.querySelector('.number span').style.display = 'none'
-                  // }
-                }
-
-                song.onmouseout = function() {
-                  // if (window.outerWidth > 651) {
-                    song.style.backgroundColor = 'rgb(255,255,255,0.0)'
-                    song.querySelector('.play-this-song').style.display = 'none'
-                    song.querySelector('.number span').style.display = 'block'
-                  // }
-                }
-              })
-            },
-            handlePlayingSong: function() {
-              const playingSong = Array.from(onOpenPlaylist.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0]
-              playingSong.querySelector('.song-info__name').style.color = '#1db753'
-              playingSong.querySelector('.play-this-song').src = './assets/images/main-view/pause-this-song.PNG'
-              playingSong.querySelector('.playing-gif').style.display = 'block'
-              playingSong.querySelector('.number span').style.display = 'none'
-              
-              
-              playingSong.onmouseover = function() {
-                // if (window.outerWidth > 651) {
-                  playingSong.style.backgroundColor = 'rgb(255,255,255,0.1)'
-                  playingSong.querySelector('.play-this-song').style.display = 'block'
-                  // playingSong.querySelector('.number span').style.display = 'none'
-                  playingSong.querySelector('.playing-gif').style.display = 'none'
-                // }
-              }
-
-              playingSong.onmouseout = function() {
-                // if (window.outerWidth > 651) {
-                  playingSong.style.backgroundColor = 'rgb(255,255,255,0.0)'
-                  playingSong.querySelector('.play-this-song').style.display = 'none'
-                  // playingSong.querySelector('.number span').style.display = 'block'
-                  playingSong.querySelector('.playing-gif').style.display = 'block'
-                // }
-              }
-            },
-            handle: function() {
-              this.handleNotPlayingSong()
-              if ($('#on-open-playlist__body__btns__play').className == app.playSongs.id) {
-                if (app.playSongs.isPlaying) {
-                  this.handlePlayingSong()
+                if (app.playSongs.id == thisPlaylistInDB.id && app.playSongs.currentIndex == app.playSongs.songs.indexOf(thisSong)) {
+                  audio.play()
                 } else {
-                  this.handleNotPlayingSong()
+                  app.playSongs.songs = [...thisPlaylistInDB.songs]
+                  app.playSongs.id = thisPlaylistInDB.id
+                  app.playSongs.currentIndex = app.playSongs.songs.indexOf(thisSong)
+                  app.playSongs.start()
+                  audio.play()
                 }
               }
-              console.log(app.playSongs.isPlaying)
+            } else {
+              app.playSongs.songs = [...thisPlaylistInDB.songs]
+              app.playSongs.id = thisPlaylistInDB.id
+              app.playSongs.currentIndex = app.playSongs.songs.indexOf(thisSong)
+              app.playSongs.start()
+              audio.play()
             }
-          },
-          // // handleSongHover: function(song, thisPlaylistInDB) {
-          // handleSongHover: function(boolean = app.playSongs.isPlaying) {
-          //   function handlePlayingSong() {
-              
-          //     // if($('#on-open-playlist__body__btns__play')) 
-          //       if($('#on-open-playlist__body__btns__play').className == app.playSongs.id) {
-          //         Array.from(onOpenPlaylist.getElementsByClassName('song')).forEach(song => {
-          //           song.addEventListener('mouseover', function() {
-          //             // if (window.outerWidth > 651) {
-          //               song.style.backgroundColor = 'rgb(255,255,255,0.1)'
-          //               song.querySelector('.play-this-song').style.display = 'block'
-          //               song.querySelector('.number span').style.display = 'none'
-          //             // }
-          //           })
-  
-          //           song.addEventListener('mouseout', function() {
-          //             // if (window.outerWidth > 651) {
-          //               song.style.backgroundColor = 'rgb(255,255,255,0.0)'
-          //               song.querySelector('.play-this-song').style.display = 'none'
-          //             // }
-          //           })
-          //         })
-                  
-          //         if(boolean) {
-          //           Array.from(onOpenPlaylist.getElementsByClassName('song')).forEach(song => {
-          //             song.querySelector('.song-info__name').style.color = 'white'
-          //             song.querySelector('.playing-gif').style.display = 'none'
-          //             song.querySelector('.number span').style.display = 'block'
 
-          //             song.addEventListener('mouseout', function() {
-          //               song.querySelector('.number span').style.display = 'block'
-          //             }) 
-          //           })
-          //           const playingSong = Array.from(onOpenPlaylist.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0]
-          //           playingSong.querySelector('.song-info__name').style.color = '#1db753'
-          //           playingSong.querySelector('.play-this-song').src = './assets/images/main-view/pause-this-song.PNG'
-          //           playingSong.querySelector('.playing-gif').style.display = 'block'
-          //           playingSong.querySelector('.number span').style.display = 'none'
-                    
-                    
-          //           playingSong.addEventListener('mouseover', function() {
-          //             playingSong.querySelector('.playing-gif').style.display = 'none'
-          //           })
-          //           playingSong.addEventListener('mouseout', function() {
-          //             playingSong.querySelector('.playing-gif').style.display = 'block'
-          //             song.querySelector('.number span').style.display = 'none'
-          //           })
-          //         } else {
-          //           Array.from(onOpenPlaylist.getElementsByClassName('song')).forEach(song => {
-          //             song.querySelector('.song-info__name').style.color = 'white'
-          //             song.querySelector('.playing-gif').style.display = 'none'
-          //             song.querySelector('.number span').style.display = 'block'
-          //           })
-          //           console.log(123)
-          //         }
-          //       }
-          //   }
-          //   handlePlayingSong()
-          //   // song.addEventListener('mouseover', function() {
-          //   //   if (window.outerWidth > 651) {
-          //   //     song.style.backgroundColor = 'rgb(255,255,255,0.1)'
-          //   //     song.querySelector('.play-this-song').style.display = 'block'
-          //   //     song.querySelector('.number span').style.display = 'none'
-          //   //   }
-          //   // })
-  
-          //   // song.addEventListener('mouseout', function() {
-          //   //   if (window.outerWidth > 651) {
-          //   //     song.style.backgroundColor = 'rgb(255,255,255,0.0)'
-          //   //     song.querySelector('.play-this-song').style.display = 'none'
-          //   //     song.querySelector('.number span').style.display = 'block'
-          //   //   }
-          //   // })
-            
-          //   // song.onclick = function() {
-          //   //   if (window.outerWidth < 1000) {
-          //   //     const thisSong = allSongs.filter(findSong => findSong.id == song.getAttribute('id'))[0]
-          //   //     app.playSongs.songs = [...thisPlaylistInDB.songs]
-          //   //     app.playSongs.id = thisPlaylistInDB.id
-          //   //     app.playSongs.currentIndex = app.playSongs.songs.indexOf(thisSong)
-          //   //     app.playSongs.start()
-          //   //     audio.play()
-          //   //     app.handleQueuePage.renderQueuePage()
-          //   //     app.handleQueuePage.handleQueuePageBtns()
-          //   //   }
-          //   // }
-          // },
+            app.handleQueuePage.reRenderQueuePage()
+          },
+
   
           startHandle: function(thisPlaylistInDB) {
             const _this = this
             this.handleOnclick(thisPlaylistInDB)
-            this.handleSongHover.handle()
             Array.from(onOpenPlaylist.querySelectorAll('.song')).forEach(song => {
-              // this.handleSongHover(song, thisPlaylistInDB)
               song.querySelector('.play-this-song').onclick = function() {_this.playThisSong(song, thisPlaylistInDB)}
+              song.onclick = function() {if (window.outerWidth < 1000) {_this.playThisSong(song, thisPlaylistInDB)}}
             })
           }
         },
@@ -1040,7 +899,7 @@ const app = {
       
       $('#queue__next-up-songs').innerHTML = nextUpSongs.map((song, index) => `
         <ul class="song" id="${song.id}">
-          <li class='number'><img class="play-this-song" src='./assets/images/main-view/play-this-song.PNG'><span>${index + 2}</span></li>
+          <li class='number'><img class="play-this-song" src='./assets/images/main-view/play-this-song.PNG'><span>${index + 2}</span><img class="playing-gif" src='./assets/images/main-view/icon-playing.gif'></li>
           <li class='title'>
               <img class='song-img' src=${song.img}>
               <div class="song-info">
@@ -1057,36 +916,49 @@ const app = {
         </ul>
       `).join('')
     },
-    styleQueuePage: function() {
-      rootTop.style.backgroundColor = 'transparent'
-      $('.list').src= './assets/images/now-playing/list-active.PNG'
-      app.handleNowPlaying.handleActiveBtns(true, $('.list'), $('.list-active'))
-      Array.from(queuePage.getElementsByClassName('song-info')).forEach(songInfo => songInfo.style.maxWidth = queuePage.querySelector('.title').offsetWidth - 100 + 'px')
-      if (document.getElementById('nowPlaying')) {
-        document.getElementById('root__now-playing').style.zIndex = '0'
-        document.getElementById('root__left-sidebar').style.zIndex = '0'
-      }
-      queuePage.onscroll = function() {
-        rootTop.style.backgroundColor = `rgba(7, 7, 7, ${0.5 + - (90 - Math.ceil(queuePage.scrollTop)) / 10})`
-      }
-    },
-    handleResponsive: function() {
-      if (queuePage.style.display == 'block') {
-        if (window.outerWidth > 999) {
-          app.handleMainView.styleMainView.handleResponsive.handlePageSize(queuePage)
-        } else {
-          queuePage.style.cssText = `
-          display: block;
-          padding: 10px;
-          position: absolute;
-          width: 100%;
-          z-index: 10;
-          top: 0;
-          left: 0;
-          height: 100%;`
-          document.getElementById('root__now-playing').style.zIndex = '0'
-          document.getElementById('root__left-sidebar').style.zIndex = '0'
+    styleQueuePage:  {
+      styleGeneral: function() {
+        // rootTop.style.backgroundColor = 'transparent'
+        Array.from(queuePage.getElementsByClassName('song-info')).forEach(songInfo => songInfo.style.maxWidth = queuePage.querySelector('.title').offsetWidth - 100 + 'px')
+        queuePage.onscroll = function() {
+          rootTop.style.backgroundColor = `rgba(7, 7, 7, ${0.5 + - (90 - Math.ceil(queuePage.scrollTop)) / 10})`
         }
+      },
+      handleResponsive: function() {
+        if (queuePage.style.display == 'block') {
+          if (window.outerWidth > 999) {
+            app.handleMainView.styleMainView.handleResponsive.handlePageSize(queuePage)
+          } else {
+            queuePage.style.cssText = `
+            display: block;
+            padding: 10px;
+            position: absolute;
+            width: 100%;
+            z-index: 10;
+            top: 0;
+            left: 0;
+            height: 100%;`
+            document.getElementById('root__now-playing').style.zIndex = '0'
+            document.getElementById('root__left-sidebar').style.zIndex = '0'
+          }
+        }
+      },
+      styleSong: function() {
+        if (queuePage.style.display == 'block') {
+          app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.stylePlaylistPage.styleSongs.handleNotPlayingSong(queuePage)
+          if (app.playSongs.isPlaying) {
+            app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.stylePlaylistPage.styleSongs.handlePlayingSong(queuePage)
+          } else {
+            app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.stylePlaylistPage.styleSongs.handleNotPlayingSong(queuePage)
+          }
+
+          Array.from(queuePage.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0].querySelector('.song-info__name').style.color = '#1db753'
+        }
+      },
+      start: function() {
+        this.styleGeneral()
+        this.handleResponsive()
+        this.styleSong()
       }
     },
     handleQueuePageBtns: function() {
@@ -1099,10 +971,14 @@ const app = {
       
       const thisPlaylistInDB = app.handlePlaylists.playlists.filter(playlist => playlist.id == app.playSongs.id)[0]   //find playlist in the database that match the playing playlist
       Array.from(queuePage.querySelectorAll('.song')).forEach(song => {
-        // app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.handlePlaylistPageButtons.handleSongHover(song, thisPlaylistInDB)
         song.querySelector('.play-this-song').onclick = function() {app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.handlePlaylistPageButtons.playThisSong(song, thisPlaylistInDB)}
+        song.onclick = function() {if (window.outerWidth < 1000) {app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.handlePlaylistPageButtons.playThisSong(song, thisPlaylistInDB)}}
       })
-      
+    },
+    reRenderQueuePage: function() {
+      this.renderQueuePage()
+      this.styleQueuePage.start()
+      this.handleQueuePageBtns()
     },
     openQueuePage: function() { 
       queuePage.style.display = 'block'
@@ -1110,10 +986,9 @@ const app = {
       app.handleNavigation.farFromHome()
       app.currentPage += 1;
       app.trace.push(queuePage)
-      this.styleQueuePage()
-      this.handleResponsive()
-      this.renderQueuePage()
-      this.handleQueuePageBtns()
+      $('.list').src= './assets/images/now-playing/list-active.PNG'
+      app.handleNowPlaying.handleActiveBtns(true, $('.list'), $('.list-active'))
+      this.reRenderQueuePage()
     },
     closeQueuePage: function() {
       queuePage.style.display = 'none'
@@ -1339,7 +1214,7 @@ const app = {
     window.onresize = function() {
       _this.playSongs.changeNowPlayingColor()
       _this.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.stylePlaylistPage.handleResponsive.handle()
-      _this.handleQueuePage.handleResponsive()
+      _this.handleQueuePage.styleQueuePage.handleResponsive()
       _this.handleMainView.styleMainView.handleResponsive.handle()
       _this.handleNowPlaying.openNowPlayingPage()
       _this.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.stylePlaylistPage.handlePlaylistHeaderOnscroll()
