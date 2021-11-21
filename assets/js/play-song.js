@@ -30,8 +30,8 @@ const app = {
   trace: [mainView],
   currentPage: 0,
   playSongs: { 
-    songs: [...allPlaylists[1].songs],
-    id: allPlaylists[1].id,
+    songs: [...allPlaylists[0].songs],
+    id: allPlaylists[0].id,
     currentIndex: 0,
     isPlaying: false,
     isShuffle: false,
@@ -403,6 +403,7 @@ const app = {
           pauseBtn.style.zIndex = 2;
           pauseBtnShadow.style.opacity = 1;
         }
+        app.handlePlaylists.handleOwnPlaylist.handlePlayingPlaylist.handle()
         app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.stylePlaylistPage.styleSongs.handle()
         app.handleQueuePage.styleQueuePage.styleSong()
       }
@@ -421,6 +422,7 @@ const app = {
           pauseBtn.style.zIndex = -1;
           pauseBtnShadow.style.opacity = 0; 
         }
+        app.handlePlaylists.handleOwnPlaylist.handlePlayingPlaylist.handle()
         app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.stylePlaylistPage.styleSongs.handle()
         app.handleQueuePage.styleQueuePage.styleSong()
       }
@@ -480,17 +482,48 @@ const app = {
         this.handleCurrentPlaylistHover()
       }
     },
-  
-    //render current playlists to main-view
-    renderOwnPlaylists: function() {
-      const ownPlaylists = this.playlists
-        .filter(playlist => playlist.owner == 'Phuc')
-        .map(playlist => `
-          <li class="my-playlist is-playlist" id="${playlist.id}">${playlist.name}</li>
-        `).join('')
-       
-      $('#root__left-sidebar__my-playlists').innerHTML = ownPlaylists
-      
+    
+    handleOwnPlaylist: {
+      renderOwnPlaylists: function() {
+        const ownPlaylists = app.handlePlaylists.playlists.filter(playlist => !playlist.tag.includes('liked songs'))
+          .filter(playlist => playlist.owner == 'Phuc')
+          .map(playlist => `
+            <li class="my-playlist is-playlist" id="${playlist.id}"><span>${playlist.name}</span><img class="playing-playlist" src="./assets/images/now-playing/volume-big.PNG"></li>
+          `).join('')
+         
+        $('#root__left-sidebar__my-playlists').innerHTML = ownPlaylists
+      },
+      handlePlayingPlaylist: {
+        handleNotPlayingPlaylist: function() {
+          Array.from($('#root__left-sidebar').getElementsByClassName('is-playlist'))
+            .forEach(playlist => playlist.querySelector('.playing-playlist').style.display = 'none')
+        },
+        handlePlayingPlaylist: function() {
+          const playingPlaylistButton = Array.from($('#root__left-sidebar').getElementsByClassName('is-playlist')).filter(playlist => playlist.id == app.playSongs.id)[0].querySelector('.playing-playlist')
+          playingPlaylistButton.style.display = 'block'
+
+          playingPlaylistButton.onmouseover = function() {playingPlaylistButton.src = './assets/images/left-sidebar/pause.png'}
+          playingPlaylistButton.onmouseleave = function() {playingPlaylistButton.src = './assets/images/now-playing/volume-big.PNG'}
+          playingPlaylistButton.onclick = function(e) {
+            e.stopPropagation()
+            audio.pause()
+          }
+        },
+        handle: function() {
+          if (window.getComputedStyle($('#root__left-sidebar__my-playlists')).display == 'block') { 
+            this.handleNotPlayingPlaylist()
+            if (app.playSongs.isPlaying) {
+              this.handlePlayingPlaylist()
+            } else {
+              this.handleNotPlayingPlaylist()
+            }
+          }
+        }
+      },
+      handle: function() {
+        this.renderOwnPlaylists()
+        this.handlePlayingPlaylist.handle()
+      }
     },
   
     handleMainViewBackground: {
@@ -499,7 +532,7 @@ const app = {
         currentPlaylists.forEach((playlist, index) => {
           
           playlist.onmouseenter = function() {
-            mainView.style.backgroundImage = `linear-gradient(rgba(${app.handlePlaylists.playlists[index].backgroundColor}, 0.35) 0%, #121212 15%)`
+            mainView.style.backgroundImage = `linear-gradient(rgba(${app.handlePlaylists.playlists[index].backgroundColor}, 0.35), #121212 400px)`
             rootTop.style.backgroundColor = `rgba(${app.handlePlaylists.playlists[index].backgroundColor}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`;
             app.handlePlaylists.headerColorArr.unshift(app.handlePlaylists.playlists[index].headerColor);
           }
@@ -705,8 +738,15 @@ const app = {
           },
           
           styleSongs: {
+            isPlayThisSongOnclick: false,
             handleNotPlayingSong: function(page) {
               Array.from(page.getElementsByClassName('song')).forEach(song => {
+                song.querySelector('.number span').style.display = 'block'
+                song.querySelector('.song-info__name').style.color = 'white'
+                song.querySelector('.playing-gif').style.display = 'none'
+                song.querySelector('.play-this-song').style.display = 'none'
+                song.querySelector('.play-this-song').src = './assets/images/main-view/play-this-song.PNG'
+
                 song.onmouseover = function() {
                   if (window.outerWidth > 999) {
                     song.style.backgroundColor = 'rgb(255,255,255,0.1)'
@@ -721,16 +761,24 @@ const app = {
                     song.querySelector('.number span').style.display = 'block'
                   }
                 }
-
-                song.querySelector('.number span').style.display = 'block'
-                song.querySelector('.song-info__name').style.color = 'white'
-                song.querySelector('.playing-gif').style.display = 'none'
-                song.querySelector('.play-this-song').src = './assets/images/main-view/play-this-song.PNG'
               })
             },
-            handlePlayingSong: function(page) {
+            resumePlayingSong: function(page) {
               const playingSong = Array.from(page.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0]
-              
+              playingSong.querySelector('.song-info__name').style.color = '#1db753'
+              playingSong.querySelector('.play-this-song').src = './assets/images/main-view/pause-this-song.PNG'      
+              playingSong.querySelector('.number span').style.display = 'none'
+
+              if (this.isPlayThisSongOnclick && window.outerWidth > 999) {
+                playingSong.querySelector('.playing-gif').style.display = 'none'
+                playingSong.querySelector('.play-this-song').style.display = 'block'
+                app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.stylePlaylistPage.styleSongs.isPlayThisSongOnclick = false
+                app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.stylePlaylistPage.styleSongs.isResume = false
+              } else {
+                playingSong.querySelector('.playing-gif').style.display = 'block'
+                playingSong.querySelector('.play-this-song').style.display = 'none'
+              }
+
               playingSong.onmouseover = function() {
                 if (window.outerWidth > 999) {
                   playingSong.style.backgroundColor = 'rgb(255,255,255,0.1)'
@@ -745,11 +793,17 @@ const app = {
                   playingSong.querySelector('.playing-gif').style.display = 'block'
                 }
               }
-
-              playingSong.querySelector('.playing-gif').style.display = 'block'
-              playingSong.querySelector('.song-info__name').style.color = '#1db753'
-              playingSong.querySelector('.play-this-song').src = './assets/images/main-view/pause-this-song.PNG'
-              playingSong.querySelector('.number span').style.display = 'none'
+            },
+            pausePlayingSong: function(page) {
+              const playingSong = Array.from(page.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0]
+              if (this.isPlayThisSongOnclick) {
+                playingSong.querySelector('.number span').style.display = 'none'
+                playingSong.querySelector('.play-this-song').style.display = 'block'
+                app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.stylePlaylistPage.styleSongs.isPlayThisSongOnclick = false
+              } else {
+                playingSong.querySelector('.number span').style.display = 'block'
+                playingSong.querySelector('.play-this-song').style.display = 'none'
+              }
             },
             handle: function() {
               if (onOpenPlaylist.style.display == 'block') {
@@ -758,9 +812,11 @@ const app = {
                   if (app.playSongs.isPlaying) {
                     $('#on-open-playlist__body__btns__play').src = './assets/images/main-view/pause-playlist.PNG'
                     $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/pause-playlist.PNG'
-                    this.handlePlayingSong(onOpenPlaylist)
+                    this.resumePlayingSong(onOpenPlaylist)
                   } else {
                     this.handleNotPlayingSong(onOpenPlaylist)
+                    this.pausePlayingSong(onOpenPlaylist)
+
                     $('#on-open-playlist__body__btns__play').src = './assets/images/main-view/play-now-playlist.PNG'
                     $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/play-now-playlist.PNG'
                   }
@@ -791,14 +847,14 @@ const app = {
           },
           
           playThisSong: function(song, thisPlaylistInDB) {
-            app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.stylePlaylistPage.styleSongs.handle()
-            app.handleQueuePage.styleQueuePage.styleSong()
+            app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.stylePlaylistPage.styleSongs.isPlayThisSongOnclick = true
             const thisSong = allSongs.filter(findSong => findSong.id == song.getAttribute('id'))[0]
             if (window.outerWidth >= 1000) {
               if (song.querySelector('.play-this-song').src.includes('assets/images/main-view/pause-this-song.PNG')) {
                 audio.pause()
               } else {
                 if (app.playSongs.id == thisPlaylistInDB.id && app.playSongs.currentIndex == app.playSongs.songs.indexOf(thisSong)) {
+                  app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.stylePlaylistPage.styleSongs.isResume = true
                   audio.play()
                 } else {
                   app.playSongs.songs = [...thisPlaylistInDB.songs]
@@ -849,7 +905,7 @@ const app = {
       }
     },
     start: function() {
-      this.renderOwnPlaylists()
+      this.handleOwnPlaylist.handle()
       this.handleCurrentPlaylist.handle()
       this.handleMainViewBackground.start()
   
@@ -947,11 +1003,11 @@ const app = {
         if (queuePage.style.display == 'block') {
           app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.stylePlaylistPage.styleSongs.handleNotPlayingSong(queuePage)
           if (app.playSongs.isPlaying) {
-            app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.stylePlaylistPage.styleSongs.handlePlayingSong(queuePage)
+            app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.stylePlaylistPage.styleSongs.resumePlayingSong(queuePage)
           } else {
             app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.stylePlaylistPage.styleSongs.handleNotPlayingSong(queuePage)
+            app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.stylePlaylistPage.styleSongs.pausePlayingSong(queuePage)
           }
-
           Array.from(queuePage.getElementsByClassName('song')).filter(song => song.id == _this.songs[_this.currentIndex].id)[0].querySelector('.song-info__name').style.color = '#1db753'
         }
       },

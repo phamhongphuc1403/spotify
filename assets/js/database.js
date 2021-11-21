@@ -551,17 +551,6 @@ shuffleSongs()
 const allPlaylists = [ 
   {
     id: 1, 
-    name: "All Time Low", 
-    description: '',
-    owner: "Phuc",
-    img: "./assets/songs/playlists/own-playlists/all-time-low.jpg",
-    songs: allSongs.filter(song => song.artist.includes('All Time Low')),
-    backgroundColor: '142, 128, 86',
-    headerColor: '64, 58, 38',
-    tag: ['own playlist', ]
-  },
-  {
-    id: 2, 
     name: "Liked Songs", 
     description: '',
     owner: "Phuc",
@@ -569,6 +558,17 @@ const allPlaylists = [
     songs: allSongs,
     backgroundColor: '74, 53, 144',
     headerColor: '32, 22, 64',
+    tag: ['own playlist', 'liked songs']
+  },
+  {
+    id: 2, 
+    name: "All Time Low", 
+    description: '',
+    owner: "Phuc",
+    img: "./assets/songs/playlists/own-playlists/all-time-low.jpg",
+    songs: allSongs.filter(song => song.artist.includes('All Time Low')),
+    backgroundColor: '142, 128, 86',
+    headerColor: '64, 58, 38',
     tag: ['own playlist', ]
   },
   {
@@ -584,7 +584,7 @@ const allPlaylists = [
   },
   {
     id: 4, 
-    name: ["Jonas Brothers"], 
+    name: "Jonas Brothers", 
     description: '',
     owner: "Phuc",
     img: "./assets/songs/playlists/own-playlists/jonas-brothers.jpg",
