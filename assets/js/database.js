@@ -543,7 +543,7 @@ const allSongs = [
 function shuffleSongs() {
   allSongs.forEach(song => song.order = Math.floor(Math.random() * (allSongs.length - 1)) + 1)
   allSongs.sort((a, b) => a.order - b.order)
-  allSongs.forEach((song,index) => song.id = index + 1)
+  allSongs.forEach((song,index) => song.order = index + 1)
 }
 shuffleSongs()
 
