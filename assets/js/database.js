@@ -539,14 +539,7 @@ const allSongs = [
     tag: ['favorite', 'rock']
   },
 ]
-
-function shuffleSongs() {
-  allSongs.forEach(song => song.order = Math.floor(Math.random() * (allSongs.length - 1)) + 1)
-  allSongs.sort((a, b) => a.order - b.order)
-  allSongs.forEach((song,index) => song.order = index + 1)
-}
-shuffleSongs()
-
+shuffleArray(allSongs)
 
 const allPlaylists = [ 
   {
@@ -616,3 +609,11 @@ const allPlaylists = [
     tag: ['own playlist', ]
   }
 ]
+shuffleArray(allPlaylists)
+
+
+function shuffleArray(Array) {
+  Array.forEach(value => value.order = Math.floor(Math.random() * (Array.length - 1)) + 1)
+  Array.sort((a, b) => a.order - b.order)
+  Array.forEach((value, index) => value.order = index + 1)
+}

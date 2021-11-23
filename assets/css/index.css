@@ -500,36 +500,39 @@ html * {
 }
 .root__main-view__recently-playing > .introduction {
     margin-bottom: 20px;
-
+    display: flex;
+    align-items: flex-end;
 }
-
-.root__main-view__recently-playing > .introduction > .title {
+.root__main-view__recently-playing > .introduction > div {
+    flex-grow: 1;
+}
+.root__main-view__recently-playing > .introduction > div > .title {
     font-size: 24px;
     font-weight: 700;
     line-height: 46px;
     color: white;
-    text-decoration: none !important;
+    text-decoration: none;
 }
 
-.root__main-view__recently-playing > .introduction > .description  {
+.root__main-view__recently-playing > .introduction > div > .description  {
     font-size: 14px;
     font-weight: 600;
     color: #afafaf;
     display: block;
 }
 
-.root__main-view__recently-playing > .introduction > .description > a {
+.root__main-view__recently-playing > .introduction > .see-all {
     text-decoration: none;
     font-size: 12px;
     color: #afafaf;
-    display: block;
-    float: right;
     text-transform: uppercase;
+    margin-left: 8px;
+    line-height: 26px;
 }
 
-.root__main-view__recently-playing > .introduction > .title:hover, .root__main-view__recently-playing > .introduction > .description > a:hover {
-    text-decoration: underline;
-}
+/* .root__main-view__recently-playing > .introduction .title:hover, .root__main-view__recently-playing > .introduction > .see-all:hover {
+    text-decoration: underline; 
+} */
 
 .playlists {
     display: grid;
@@ -1284,8 +1287,8 @@ html * {
     .root__right-sidebar__user__user-content > .user-music, .root__right-sidebar__user__user-content > .user-name-and-activity > .user-activity {
         font-size: 10px
     }
-    .root__main-view__recently-playing > .introduction > .description, 
-    .root__main-view__recently-playing > .introduction > .description > a {
+    .root__main-view__recently-playing > .introduction .description, 
+    .root__main-view__recently-playing > .introduction > .see-all {
         font-size: 12px;
     }
     #root__main-view__currently-playing__playlists > .current-playlist > .current-playlist__content > span, #root__top-container {
@@ -1303,7 +1306,7 @@ html * {
     .playlists > .playlist > .playlist__description > .playlist__description__artist {
         font-size: 10px;
     }
-    .root__main-view__recently-playing > .introduction > .title,  #root__main-view__currently-playing .greeting {
+    .root__main-view__recently-playing > .introduction .title,  #root__main-view__currently-playing .greeting {
         font-size: 18px
     }
     #root__main-view__currently-playing__playlists > .current-playlist > .current-playlist__content > .play-now, 
@@ -1350,7 +1353,7 @@ html * {
     .root__main-view__recently-playing > .introduction {
         height: 50px;
     }
-    .root__main-view__recently-playing > .introduction > .title {
+    .root__main-view__recently-playing > .introduction .title {
         font-size: 16px;
         line-height: 16px;
     }

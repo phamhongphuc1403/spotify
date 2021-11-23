@@ -432,7 +432,6 @@ const app = {
   },
   handlePlaylists: {
     playlists: [...allPlaylists],
-    headerColorArr: [allPlaylists[0].headerColor],
 
     handleCurrentPlaylist: {
       renderCurrentPlaylists: function() {
@@ -538,17 +537,20 @@ const app = {
   
     handleMainViewBackground: {
       renderBackground: function() {  
+        mainView.style.backgroundImage = `linear-gradient(rgba(${app.handlePlaylists.playlists[0].backgroundColor}, 0.35), #121212 400px)`
+        this.handleHeaderOpacity(app.handlePlaylists.playlists[0].headerColor)
+        
         const currentPlaylists = Array.from(document.getElementsByClassName('current-playlist'));
         currentPlaylists.forEach((playlist, index) => {
           playlist.onmouseenter = function() {
             mainView.style.backgroundImage = `linear-gradient(rgba(${app.handlePlaylists.playlists[index].backgroundColor}, 0.35), #121212 400px)`
-            rootTop.style.backgroundColor = `rgba(${app.handlePlaylists.playlists[index].backgroundColor}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`;
-            app.handlePlaylists.headerColorArr.unshift(app.handlePlaylists.playlists[index].headerColor);
+            rootTop.style.backgroundColor = `rgba(${app.handlePlaylists.playlists[index].headerColor}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`;
+            app.handlePlaylists.handleMainViewBackground.handleHeaderOpacity(app.handlePlaylists.playlists[index].headerColor)
           }
         })
       },
-      handleHeaderOpacity: function() {
-        rootTop.style.backgroundColor = `rgba(${app.handlePlaylists.headerColorArr[0]}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})` 
+      handleHeaderOpacity: function(color) {
+        mainView.addEventListener('scroll', function() {rootTop.style.backgroundColor = `rgba(${color}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`})
       },
       start: function() {
         this.renderBackground();
@@ -556,15 +558,13 @@ const app = {
       }
     },
     
-  
-    
     //play playlist when click "play now" button
     handlePlayOrOpenPlaylist: {
       playPlaylist: function(thisPlaylistInDB) {
         if (app.playSongs.id == thisPlaylistInDB.id) {
           app.playSongs.isPlaying ? audio.pause() : audio.play()
         } else {
-          app.playSongs.songs = [...thisPlaylistInDB.songs] //choose the first (and only) object of 'playlist' array that contain a playlist
+          app.playSongs.songs = [...thisPlaylistInDB.songs] 
           app.playSongs.id = thisPlaylistInDB.id
   
           app.playSongs.isShuffle ? app.playSongs.currentIndex = Math.floor(Math.random() * (app.playSongs.songs.length - 1)) + 1 : app.playSongs.currentIndex = 0;
@@ -835,7 +835,6 @@ const app = {
                 audio.pause()
               } else {
                 if (app.playSongs.id == thisPlaylistInDB.id && app.playSongs.currentIndex == app.playSongs.songs.indexOf(thisSong)) {
-                  app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.stylePlaylistPage.styleSongs.isResume = true
                   audio.play()
                 } else {
                   app.playSongs.songs = [...thisPlaylistInDB.songs]
@@ -870,9 +869,10 @@ const app = {
         
         startOpen: function(thisPlaylistInDB) {
           const _this = this;
+          if (queuePage.style.display == 'block') {app.handleQueuePage.closeQueuePage()}
           app.handleNavigation.farFromHome()
-          app.currentPage += 1;
-          app.trace.push(onOpenPlaylist.innerHTML)
+          // app.currentPage += 1;
+          // app.trace.push(onOpenPlaylist.innerHTML)
           onOpenPlaylist.onscroll = function() {
             rootTop.style.backgroundColor = `rgba(${thisPlaylistInDB.headerColor}, ${0.5 + - (225 - Math.ceil(onOpenPlaylist.scrollTop)) / 100})`
             _this.stylePlaylistPage.handlePlaylistHeaderOnscroll()
@@ -882,8 +882,23 @@ const app = {
           this.stylePlaylistPage.startStyle(thisPlaylistInDB)
           this.handlePlaylistPageButtons.startHandle(thisPlaylistInDB)
           app.handleMainView.styleMainView.handleResponsive.handlePageSize(onOpenPlaylist)
+          onOpenPlaylist.scrollTop = 0
         }
-      }
+      },
+      closePlaylist: function() {
+        onOpenPlaylist.style.display = 'none'
+        $('#root__top__add-play-btn__play-btn').style.opacity = 0
+        $('#root__top__add-play-btn__playlist-name').style.opacity = 0
+        $('#root__top__add-play-btn__play-btn').style.display = 'none'
+        $('#root__top__add-play-btn__playlist-name').style.display = 'none'
+        setTimeout(() => {
+          $('#root__top__add-play-btn__play-btn').style.display = ''
+          $('#root__top__add-play-btn__playlist-name').style.display = ''
+        }, 10)
+        app.handlePlaylists.handleOwnPlaylist.styleLeftSidebarPlaylist()
+        // mainView.scrollTop = 0
+        rootTop.style.backgroundColor = 'transparent'
+      },
     },
     start: function() {
       this.handleOwnPlaylist.handle()
@@ -1018,9 +1033,10 @@ const app = {
     },
     openQueuePage: function() { 
       queuePage.style.display = 'block'
-      queuePage.scrollTop = 0;
+      queuePage.scrollTop = 0
+      rootTop.style.backgroundColor = 'transparent'
       app.handleNavigation.farFromHome()
-      app.currentPage += 1;
+      app.currentPage += 1
       app.trace.push(queuePage)
       $('.list').src= './assets/images/now-playing/list-active.PNG'
       app.handleNowPlaying.handleActiveBtns(true, $('.list'), $('.list-active'))
@@ -1031,8 +1047,8 @@ const app = {
       $('.list').src= './assets/images/now-playing/list.PNG'
       app.handleNowPlaying.handleActiveBtns(false, $('.list'), $('.list-active'))
 
-      mainView.scrollTop = 0;
-      onOpenPlaylist.scrollTop = 0;
+      mainView.scrollTop = 0
+      onOpenPlaylist.scrollTop = 0
       rootTop.style.backgroundColor = 'transparent'
     }, 
     start: function() {
@@ -1143,15 +1159,13 @@ const app = {
       },
 
       mainViewOnScroll: function() {
-        mainView.onscroll = function() {
-          app.handlePlaylists.handleMainViewBackground.handleHeaderOpacity()
-        
+        mainView.addEventListener('scroll', function() {
           if (friendsBar.classList.contains('slideToLeft')) {
             friendsBar.classList.remove('slideToLeft')
             friendsBar.classList.add('reverseSlideToLeft')
             setTimeout(function() {friendsBar.classList.remove('reverseSlideToLeft')}, 300)      
-          }           
-        }
+          } 
+        })
       },
       handle: function() {
         this.handleResponsive.handle()
@@ -1187,24 +1201,7 @@ const app = {
   handleNavigation: {
     homeComing: function() {
       if (!app.isAtHome) {
-        if (onOpenPlaylist.style.display == 'block') {
-          onOpenPlaylist.style.display = 'none';
-          $('#root__top__add-play-btn__play-btn').style.opacity = 0
-          $('#root__top__add-play-btn__playlist-name').style.opacity = 0
-          $('#root__top__add-play-btn__play-btn').style.display = 'none'
-          $('#root__top__add-play-btn__playlist-name').style.display = 'none'
-          setTimeout(() => {
-            $('#root__top__add-play-btn__play-btn').style.display = ''
-            $('#root__top__add-play-btn__playlist-name').style.display = ''
-          }, 10);
-          mainView.scrollTop = 0
-          rootTop.style.backgroundColor = 'transparent'
-          Array.from($('#root__left-sidebar__my-playlists').getElementsByClassName('is-a-playlist')).forEach(playlist => {
-            playlist.style.color = '#b3b3b3'
-            playlist.onmouseenter = function() { playlist.style.color = 'white'}
-            playlist.onmouseleave = function() { playlist.style.color = '#b3b3b3'}
-          })
-        }
+        if (onOpenPlaylist.style.display == 'block') {app.handlePlaylists.handlePlayOrOpenPlaylist.closePlaylist()}
         if (queuePage.style.display == 'block') {app.handleQueuePage.closeQueuePage()}
         app.isAtHome = true;
         homeBtn.querySelector('img').src = './assets/images/left-sidebar/home-active.PNG'
