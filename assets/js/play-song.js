@@ -377,22 +377,7 @@ const app = {
         playBtn.src = `./assets/images/now-playing/pause.png`
         $('title').innerText = `${_this.songs[_this.currentIndex].name} · ${_this.songs[_this.currentIndex].artist}`
 
-
-        //hide all playing btn in playlist box...
-        for (let pauseBtns of document.getElementsByClassName('playing')) {
-          pauseBtns.style.opacity = 0
-          pauseBtns.style.zIndex = -1
-        }
-        for (let pauseBtnShadows of document.getElementsByClassName('playing-shadow')) {pauseBtnShadows.style.opacity = 0}
-  
-        //except the one is playing
-        const pauseBtn = document.getElementsByClassName('playing')[_this.id - 1]
-        const pauseBtnShadow = document.getElementsByClassName('playing-shadow')[_this.id - 1]
-        if (pauseBtn) {
-          pauseBtn.style.opacity = 1;
-          pauseBtn.style.zIndex = 2;
-          pauseBtnShadow.style.opacity = 1;
-        }
+        app.handlePlaylists.handleCurrentPlaylist.handleCurrentPlaylistsButton.handle()
         app.handlePlaylists.handleOwnPlaylist.stylePlayingPlaylist.handle()
         app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.stylePlaylistPage.styleSongs.handle()
         app.handleQueuePage.styleQueuePage.styleSong()
@@ -404,14 +389,7 @@ const app = {
         playBtn.src = `./assets/images/now-playing/play.PNG`
         $('title').innerText = `Spotify - Made by Phuc1403`
 
-
-        const pauseBtn = document.getElementsByClassName('playing')[_this.id - 1]
-        const pauseBtnShadow = document.getElementsByClassName('playing-shadow')[_this.id - 1]
-        if (pauseBtn) {
-          pauseBtn.style.opacity = 0;
-          pauseBtn.style.zIndex = -1;
-          pauseBtnShadow.style.opacity = 0; 
-        }
+        app.handlePlaylists.handleCurrentPlaylist.handleCurrentPlaylistsButton.handle()
         app.handlePlaylists.handleOwnPlaylist.stylePlayingPlaylist.handle()
         app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.stylePlaylistPage.styleSongs.handle()
         app.handleQueuePage.styleQueuePage.styleSong()
@@ -436,7 +414,7 @@ const app = {
     handleCurrentPlaylist: {
       renderCurrentPlaylists: function() {
         const currentPlaylistContent = app.handlePlaylists.playlists
-          .filter(playlist => playlist.id <=6 )
+          .filter(playlist => playlist.order <=6 )
           .map(playlist => `
             <li class="current-playlist is-a-playlist" playlist-id="${playlist.id}">
                 <img src="${playlist.img}">
@@ -451,7 +429,7 @@ const app = {
           .join('')
         currentPlaylists.innerHTML = currentPlaylistContent
       },
-      handleCurrentPlaylistHover: function() {
+      handleCurrentPlaylistsHover: function() {
         const currentPlaylists = Array.from(document.getElementsByClassName('current-playlist'));
         currentPlaylists.forEach(playlist => {
             playlist.onmouseover = function() {
@@ -466,9 +444,41 @@ const app = {
             }
         })
       },
+      handleCurrentPlaylistsButton: {
+        handleNotPlayingPlaylists: function() {
+          const currentPlaylists = Array.from(document.getElementsByClassName('current-playlist'));
+          currentPlaylists.forEach(playlist => {
+            playlist.querySelector('.playing').style.opacity = 0;
+            playlist.querySelector('.playing').style.zIndex = -1;
+            playlist.querySelector('.playing-shadow').style.opacity = 0; 
+          })
+        },
+        handlePlayingPlaylist: function() {
+          const currentPlaylists = Array.from(document.getElementsByClassName('current-playlist'));
+          currentPlaylists.forEach(playlist => {
+            if (playlist.getAttribute('playlist-id') == app.playSongs.id) {
+              playlist.querySelector('.playing').style.opacity = 1;
+              playlist.querySelector('.playing').style.zIndex = 2;
+              playlist.querySelector('.playing-shadow').style.opacity = 1; 
+            }
+          })
+        },
+        handle: function() {
+          if (currentPlaylists.style.display != 'none') {
+            
+            this.handleNotPlayingPlaylists()
+            if (app.playSongs.isPlaying) {
+              this.handlePlayingPlaylist()
+            } else {
+              this.handleNotPlayingPlaylists()
+            }
+          }
+        }
+      },
       handle: function() {
         this.renderCurrentPlaylists()
-        this.handleCurrentPlaylistHover()
+        this.handleCurrentPlaylistsHover()
+        this.handleCurrentPlaylistsButton.handle()
       }
     },
     
@@ -664,7 +674,7 @@ const app = {
                     title.style.fontSize = currentFontSize - 1 + 'px'
                     currentFontSize = parseFloat(window.getComputedStyle(title).fontSize)
                   }
-                  while (title.offsetWidth < $('#on-open-playlist__header__title').offsetWidth - 15) {
+                  while (title.offsetWidth < $('#on-open-playlist__header__title').offsetWidth - 15 && window.getComputedStyle(title).fontSize <= 96) {
                     title.style.fontSize = currentFontSize + 1 + 'px'
                     currentFontSize = parseFloat(window.getComputedStyle(title).fontSize)
                   }
@@ -687,9 +697,10 @@ const app = {
           },
 
           handlePlaylistHeaderOnscroll: function() {
+            console.log((rootTop.offsetTop - onOpenPlaylist.scrollTop))
             const tableHeader = $('#position-fixed-header')
             if (onOpenPlaylist.style.display == 'block') {
-              if ((rootTop.offsetTop - onOpenPlaylist.scrollTop) <= -380 && window.outerWidth > 999) {
+              if ((rootTop.offsetTop - onOpenPlaylist.scrollTop) <= -375 && window.outerWidth > 999) {
                 tableHeader.style.cssText = `
                   position: fixed; 
                   top: 60px;
@@ -802,7 +813,7 @@ const app = {
                     $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/play-now-playlist.PNG'
                   }
                 }
-                const playingSong = Array.from(onOpenPlaylist.getElementsByClassName('song')).filter(song => song.getAttribute('song-id') == app.playSongs.songs[app.playSongs.currentIndex].id)[0]
+                // const playingSong = Array.from(onOpenPlaylist.getElementsByClassName('song')).filter(song => song.getAttribute('song-id') == app.playSongs.songs[app.playSongs.currentIndex].id)[0]
               }
             }
           },

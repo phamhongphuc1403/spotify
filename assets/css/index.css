@@ -93,22 +93,19 @@ html, body {
     font-style: normal; 
 }
 html {
-    background-color: #181818;
+    background-color: #4c4d50;
     font-family: Gotham;
     color:white;
     font-stretch: ultra-condensed;
     font-size: 14px;
     font-weight: 700;
     line-height: 16px;
-    
-    
-
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
     -khtml-user-select: none; /* Konqueror HTML */
     -moz-user-select: none; /* Old versions of Firefox */
     -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; 
+    user-select: none;
 }
 html * {
     box-sizing: border-box;
@@ -681,7 +678,7 @@ html * {
 #root__now-playing {
     background-color: #181818;
     grid-area: now-playing;
-    padding: 0 24px;
+    padding: 0 16px;
     display: flex;
     align-items: center;
     position: sticky;
