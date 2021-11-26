@@ -718,6 +718,26 @@ const allSongs = [
     backgroundColor: '#743b53',
     tag: ['favorite', ]
   },
+  { 
+    id: 73, 
+    name: "Fast Car", 
+    artist: ["Jonas Blue"],
+    img: "./data/albums/blue__jonas-blue.jpg",
+    path: "./data/songs/fast-car__jonas-blue__dakota.mp3",
+    album: "Blue",
+    backgroundColor: '#743b53',
+    tag: ['favorite', ]
+  },
+  { 
+    id: 74, 
+    name: "Cake By The Ocean", 
+    artist: ["DNCE"],
+    img: "./data/albums/dnce__dnce.jpg",
+    path: "./data/songs/cake-by-the-ocean__dnce.mp3",
+    album: "DNCE",
+    backgroundColor: '#743b53',
+    tag: ['favorite', ]
+  },
 ]
 shuffleArray(allSongs)
 
@@ -761,7 +781,7 @@ const allPlaylists = [
     description: '',
     owner: "Phuc",
     img: "./data/playlists/own-playlists/jonas-brothers.jpg",
-    songs: allSongs.filter(song => song.artist.includes('Jonas Brothers')),
+    songs: allSongs.filter(song => song.artist.includes('Jonas Brothers') || song.artist.includes('DNCE')),
     backgroundColor: '180, 200, 200',
     headerColor: '80, 90, 90',
     tag: ['own playlist', ]

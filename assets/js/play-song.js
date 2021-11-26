@@ -408,6 +408,7 @@ const app = {
         app.handleNowPlaying.handleActiveBtns(this.isRepeatPlaylist || this.isRepeatSong, repeatBtn, $('.repeat-active'))
     }
   },
+
   handlePlaylists: {
     playlists: [...allPlaylists],
 
@@ -429,20 +430,48 @@ const app = {
           .join('')
         currentPlaylists.innerHTML = currentPlaylistContent
       },
-      handleCurrentPlaylistsHover: function() {
-        const currentPlaylists = Array.from(document.getElementsByClassName('current-playlist'));
-        currentPlaylists.forEach(playlist => {
-            playlist.onmouseover = function() {
-                playlist.querySelector('.play-now-shadow').style.opacity= '1';
-                playlist.querySelector('.play-now').style.opacity = '1';
-                playlist.style.backgroundColor = 'rgba(255, 255, 255, .2)'
-            }
-            playlist.onmouseout = function() {
-                playlist.querySelector('.play-now-shadow').style.opacity= '0';
-                playlist.querySelector('.play-now').style.opacity = '0';
-                playlist.style.backgroundColor = 'rgba(255, 255, 255, .1)' 
-            }
-        })
+      handleCurrentPlaylistsHover: {
+        showPlayNowButton: function() {
+          const currentPlaylists = Array.from(document.getElementsByClassName('current-playlist'));
+          currentPlaylists.forEach(playlist => {
+              playlist.onmouseover = function() {
+                  playlist.querySelector('.play-now-shadow').style.opacity= '1';
+                  playlist.querySelector('.play-now').style.opacity = '1';
+                  playlist.style.backgroundColor = 'rgba(255, 255, 255, .2)'
+              }
+              playlist.onmouseout = function() {
+                  playlist.querySelector('.play-now-shadow').style.opacity= '0';
+                  playlist.querySelector('.play-now').style.opacity = '0';
+                  playlist.style.backgroundColor = 'rgba(255, 255, 255, .1)' 
+              }
+          })
+        },
+        handleMainViewBackground: {
+          renderBackground: function() {  
+            // mainView.style.backgroundImage = `linear-gradient(rgba(${app.handlePlaylists.playlists[0].backgroundColor}, 0.35), #121212 400px)`
+            this.handleHeaderOpacity(app.handlePlaylists.playlists[0].headerColor)
+            
+            const currentPlaylists = Array.from(document.getElementsByClassName('current-playlist'));
+            currentPlaylists.forEach((playlist, index) => {
+              playlist.onmouseenter = function() {
+                mainView.style.backgroundImage = `linear-gradient(rgba(${app.handlePlaylists.playlists[index].backgroundColor}, 0.35), #121212 400px)`
+                rootTop.style.backgroundColor = `rgba(${app.handlePlaylists.playlists[index].headerColor}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`;
+                app.handlePlaylists.handleCurrentPlaylist.handleCurrentPlaylistsHover.handleMainViewBackground.handleHeaderOpacity(app.handlePlaylists.playlists[index].headerColor)
+              }
+            })
+          },
+          handleHeaderOpacity: function(color) {
+            mainView.addEventListener('scroll', function() {rootTop.style.backgroundColor = `rgba(${color}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`})
+          },
+          start: function() {
+            this.renderBackground();
+            this.handleHeaderOpacity()
+          }
+        },
+        handle: function() {
+          this.showPlayNowButton()
+          this.handleMainViewBackground.start()
+        }
       },
       handleCurrentPlaylistsButton: {
         handleNotPlayingPlaylists: function() {
@@ -465,7 +494,6 @@ const app = {
         },
         handle: function() {
           if (currentPlaylists.style.display != 'none') {
-            
             this.handleNotPlayingPlaylists()
             if (app.playSongs.isPlaying) {
               this.handlePlayingPlaylist()
@@ -477,7 +505,7 @@ const app = {
       },
       handle: function() {
         this.renderCurrentPlaylists()
-        this.handleCurrentPlaylistsHover()
+        this.handleCurrentPlaylistsHover.handle()
         this.handleCurrentPlaylistsButton.handle()
       }
     },
@@ -545,29 +573,6 @@ const app = {
       }
     },
   
-    handleMainViewBackground: {
-      renderBackground: function() {  
-        mainView.style.backgroundImage = `linear-gradient(rgba(${app.handlePlaylists.playlists[0].backgroundColor}, 0.35), #121212 400px)`
-        this.handleHeaderOpacity(app.handlePlaylists.playlists[0].headerColor)
-        
-        const currentPlaylists = Array.from(document.getElementsByClassName('current-playlist'));
-        currentPlaylists.forEach((playlist, index) => {
-          playlist.onmouseenter = function() {
-            mainView.style.backgroundImage = `linear-gradient(rgba(${app.handlePlaylists.playlists[index].backgroundColor}, 0.35), #121212 400px)`
-            rootTop.style.backgroundColor = `rgba(${app.handlePlaylists.playlists[index].headerColor}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`;
-            app.handlePlaylists.handleMainViewBackground.handleHeaderOpacity(app.handlePlaylists.playlists[index].headerColor)
-          }
-        })
-      },
-      handleHeaderOpacity: function(color) {
-        mainView.addEventListener('scroll', function() {rootTop.style.backgroundColor = `rgba(${color}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`})
-      },
-      start: function() {
-        this.renderBackground();
-        this.handleHeaderOpacity()
-      }
-    },
-    
     //play playlist when click "play now" button
     handlePlayOrOpenPlaylist: {
       playPlaylist: function(thisPlaylistInDB) {
@@ -800,6 +805,9 @@ const app = {
             handle: function() {
               if (onOpenPlaylist.style.display == 'block') {
                 this.handleNotPlayingSong(onOpenPlaylist)
+                $('#on-open-playlist__body__btns__play').src = './assets/images/main-view/play-now-playlist.PNG'
+                $('#root__top__add-play-btn__play-btn').src = './assets/images/main-view/play-now-playlist.PNG'
+                
                 if ($('#on-open-playlist__body__btns__play').getAttribute('playlist-id') == app.playSongs.id) {
                   if (app.playSongs.isPlaying) {
                     $('#on-open-playlist__body__btns__play').src = './assets/images/main-view/pause-playlist.PNG'
@@ -914,7 +922,6 @@ const app = {
     start: function() {
       this.handleOwnPlaylist.handle()
       this.handleCurrentPlaylist.handle()
-      this.handleMainViewBackground.start()
   
       const playlistArray = Array.from(document.getElementsByClassName('is-a-playlist'))
       for (let eachPlaylist of playlistArray) {

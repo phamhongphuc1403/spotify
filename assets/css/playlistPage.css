@@ -199,7 +199,7 @@
     position: absolute;
     background-color: #121212;
     padding: 100px 32px 0;
-    z-index: 2;
+    z-index: 4;
     overflow-x: hidden;
     box-sizing: border-box;
 }
