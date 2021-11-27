@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Spotify - Made by Phuc1403</title>
     <link rel="stylesheet" href="./assets/css/index.css">
-    <link rel="stylesheet" href="./assets/css/playlistPage.css">
+    <link rel="stylesheet" href="./assets/css/playlistAndQueuePage.css">
 </head>
 <body>
     <div id="root">
@@ -68,17 +68,23 @@
                 <ul class="playlists">
                 </ul>
             </div>
-            <div class="root__main-view__playlist-section">
+            <div class="root__main-view__playlist-section" section-type="recently-played">
                 <div class="introduction">
                     <div>
-                        <a href ="" class="title">Based on your recent listening</a>
+                        <a href ="" class="title">Basasdasded on your recent listening</a>
                         <span class="description">Inspired on your recent activity.</span>
                     </div>
                     <a class="see-all" href="">See all</a>
                 </div>
                 <ul class="playlists">
                     <li class="playlist">
-                        <img class="playlist-img" src="./data/playlists/daily-mixes/marin garrix/daily-mix-1.jfif">
+                        <div class='playlist__playbtn'>
+                            <img class="playlist-img" src="./data/playlists/daily-mixes/marin garrix/daily-mix-1.jfif">
+                            <img src="./assets/images/main-view/play-now.PNG" class="play-now">
+                            <img src="./assets/images/main-view/pause.PNG" class="playing">
+                            <div class="play-now-shadow"></div>
+                            <div class="playing-shadow"></div>
+                        </div>
                         <div class="playlist__description">
                             <span class="playlist__description__title">Daily Mix 1</span>
                             <span class="playlist__description__artist">Martin Garrix</span>
@@ -114,7 +120,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="root__main-view__playlist-section">
+            <div class="root__main-view__playlist-section" section-type="your-playlists">
                 <div class="introduction">
                     <div>
                         <a href ="" class="title">Based on your recent listening</a>
@@ -345,6 +351,6 @@
     </div>  
     <audio id="audio" src="" preload="metadata"></audio>
     <script src="./assets/js/database.js"></script>
-    <script src="./assets/js/play-song.js"></script>
+    <script src="./assets/js/app.js"></script>
 </body>
 </html>

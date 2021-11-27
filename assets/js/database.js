@@ -897,7 +897,7 @@ const dailyMixesFactory = {
       artistGroup.forEach(artist => {
         songs.push(allSongs.filter(song => song.artist.includes(artist)))
       })
-      return songs.flat()
+      return songs.flat().sort((a, b) => a.order - b.order)
     },
     generateDescription: function(artistGroup) {
       filteredArtists = artistGroup.slice(0, 3)
@@ -910,7 +910,7 @@ const dailyMixesFactory = {
       }) + ' and more'
     },
     createDailyMixes: function() {
-      dailyMixesFactory.dailyMixesGenerator.chooseFeaturingArtist.FeaturingArtists.forEach((dailyMix, index) => {
+      dailyMixesFactory.dailyMixesGenerator.chooseFeaturingArtist.FeaturingArtists.forEach((dailyMix) => {
         const artistGroup = dailyMixesFactory.data.artistsGroups.filter(array => array.includes(dailyMix[1]))[0]
         function sortedArtists() {
           for (let i = artistGroup.length - 1; i > 0; i--) {
