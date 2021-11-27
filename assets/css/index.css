@@ -494,18 +494,18 @@ html * {
     border-radius: 50px;
     opacity: 0;
 }
-.root__main-view__recently-playing {
+.root__main-view__playlist-section {
     margin-bottom: 50px;
 }
-.root__main-view__recently-playing > .introduction {
+.root__main-view__playlist-section > .introduction {
     margin-bottom: 20px;
     display: flex;
     align-items: flex-end;
 }
-.root__main-view__recently-playing > .introduction > div {
+.root__main-view__playlist-section > .introduction > div {
     flex-grow: 1;
 }
-.root__main-view__recently-playing > .introduction > div > .title {
+.root__main-view__playlist-section > .introduction > div > .title {
     font-size: 24px;
     font-weight: 700;
     line-height: 46px;
@@ -513,14 +513,14 @@ html * {
     text-decoration: none;
 }
 
-.root__main-view__recently-playing > .introduction > div > .description  {
+.root__main-view__playlist-section > .introduction > div > .description  {
     font-size: 14px;
     font-weight: 600;
     color: #afafaf;
     display: block;
 }
 
-.root__main-view__recently-playing > .introduction > .see-all {
+.root__main-view__playlist-section > .introduction > .see-all {
     text-decoration: none;
     font-size: 12px;
     color: #afafaf;
@@ -529,7 +529,7 @@ html * {
     line-height: 26px;
 }
 
-/* .root__main-view__recently-playing > .introduction .title:hover, .root__main-view__recently-playing > .introduction > .see-all:hover {
+/* .root__main-view__playlist-section > .introduction .title:hover, .root__main-view__playlist-section > .introduction > .see-all:hover {
     text-decoration: underline; 
 } */
 
@@ -544,7 +544,7 @@ html * {
 
 .playlists > .playlist {
     padding: 16px;
-    height: auto;
+    /* height: auto; */
     background-color: #181818;
     cursor: pointer;
     transition: 0.3s ease;
@@ -558,7 +558,9 @@ html * {
     border-radius: 12px;
     margin-bottom: 16px;
 }
-
+.playlists > .playlist > .playlist__description {
+    max-height: 62px;
+}
 .playlists > .playlist > .playlist__description > .playlist__description__title {
     font-size: 16px;
     font-weight: 700;
@@ -570,8 +572,12 @@ html * {
     font-weight: 400;
     line-height: 16px;
     margin-top: 4px;
-    display: block;
+    display: -webkit-box;
     color: #afafaf;
+    overflow:hidden;
+    -webkit-line-clamp: 2;
+    text-overflow:ellipsis;
+    -webkit-box-orient: vertical;
 }
 
 
@@ -1286,15 +1292,15 @@ html * {
     .root__right-sidebar__user__user-content > .user-music, .root__right-sidebar__user__user-content > .user-name-and-activity > .user-activity {
         font-size: 10px
     }
-    .root__main-view__recently-playing > .introduction .description, 
-    .root__main-view__recently-playing > .introduction > .see-all {
+    .root__main-view__playlist-section > .introduction .description, 
+    .root__main-view__playlist-section > .introduction > .see-all {
         font-size: 12px;
     }
     #root__main-view__currently-playing__playlists > .current-playlist > .current-playlist__content > span, #root__top-container {
         font-size: 14px;
     }
      
-    .root__main-view__recently-playing {
+    .root__main-view__playlist-section {
         margin-bottom: 20px;
     }
 
@@ -1305,7 +1311,7 @@ html * {
     .playlists > .playlist > .playlist__description > .playlist__description__artist {
         font-size: 10px;
     }
-    .root__main-view__recently-playing > .introduction .title,  #root__main-view__currently-playing .greeting {
+    .root__main-view__playlist-section > .introduction .title,  #root__main-view__currently-playing .greeting {
         font-size: 18px
     }
     #root__main-view__currently-playing__playlists > .current-playlist > .current-playlist__content > .play-now, 
@@ -1349,10 +1355,10 @@ html * {
         font-size: 10px;
         list-style: none;
     }
-    .root__main-view__recently-playing > .introduction {
+    .root__main-view__playlist-section > .introduction {
         height: 50px;
     }
-    .root__main-view__recently-playing > .introduction .title {
+    .root__main-view__playlist-section > .introduction .title {
         font-size: 16px;
         line-height: 16px;
     }

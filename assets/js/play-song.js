@@ -30,8 +30,8 @@ const app = {
   trace: [mainView],
   currentPage: 0,
   playSongs: { 
-    songs: [...allPlaylists[0].songs],
-    id: allPlaylists[0].id,
+    songs: [...allPlaylists.filter(playlist => playlist.tag.includes('liked songs'))[0].songs],
+    id: allPlaylists.filter(playlist => playlist.tag.includes('liked songs'))[0].id,
     currentIndex: 0,
     isPlaying: false,
     isShuffle: false,
@@ -411,11 +411,11 @@ const app = {
 
   handlePlaylists: {
     playlists: [...allPlaylists],
-
     handleCurrentPlaylist: {
       renderCurrentPlaylists: function() {
-        const currentPlaylistContent = app.handlePlaylists.playlists
+        const currentPlaylistContent = app.handlePlaylists.playlists.filter(playlist => playlist.tag.includes('own playlist'))
           .filter(playlist => playlist.order <=6 )
+          // .splice(0,6)
           .map(playlist => `
             <li class="current-playlist is-a-playlist" playlist-id="${playlist.id}">
                 <img src="${playlist.img}">
@@ -448,7 +448,7 @@ const app = {
         },
         handleMainViewBackground: {
           renderBackground: function() {  
-            // mainView.style.backgroundImage = `linear-gradient(rgba(${app.handlePlaylists.playlists[0].backgroundColor}, 0.35), #121212 400px)`
+            mainView.style.backgroundImage = `linear-gradient(rgba(${app.handlePlaylists.playlists[0].backgroundColor}, 0.35), #121212 400px)`
             this.handleHeaderOpacity(app.handlePlaylists.playlists[0].headerColor)
             
             const currentPlaylists = Array.from(document.getElementsByClassName('current-playlist'));
@@ -512,8 +512,7 @@ const app = {
     
     handleOwnPlaylist: {
       renderOwnPlaylists: function() {
-        const ownPlaylists = app.handlePlaylists.playlists.filter(playlist => !playlist.tag.includes('liked songs'))
-          .filter(playlist => playlist.owner == 'Phuc')
+        const ownPlaylists = app.handlePlaylists.playlists.filter(playlist => !playlist.tag.includes('liked songs') && playlist.owner == 'Phuc')
           .map(playlist => `
             <li class="my-playlist is-a-playlist" playlist-id="${playlist.id}"><span>${playlist.name}</span><img class="playing-playlist" src="./assets/images/now-playing/volume-big.PNG"></li>
           `).join('')
@@ -536,20 +535,24 @@ const app = {
       },
       stylePlayingPlaylist: {
         styleNotPlayingPlaylist: function() {
-          Array.from($('#root__left-sidebar').getElementsByClassName('is-a-playlist'))
+          Array.from($('#root__left-sidebar').getElementsByClassName('my-playlist'))
             .forEach(playlist => playlist.querySelector('.playing-playlist').style.display = 'none')
         },
         stylePlayingPlaylist: function() {
-          const playingPlaylistButton = Array.from($('#root__left-sidebar').getElementsByClassName('is-a-playlist')).filter(playlist => playlist.getAttribute('playlist-id') == app.playSongs.id)[0].querySelector('.playing-playlist')
-          playingPlaylistButton.style.display = 'block'
+          const playingPlaylistButton = Array.from($('#root__left-sidebar').getElementsByClassName('my-playlist')).filter(playlist => playlist.getAttribute('playlist-id') == app.playSongs.id)[0]
+          if (playingPlaylistButton) { 
+            playingPlaylistButton.querySelector('.playing-playlist')
+            playingPlaylistButton.style.display = 'block'
 
-          playingPlaylistButton.onmouseover = function() {playingPlaylistButton.src = './assets/images/left-sidebar/pause.png'}
-          playingPlaylistButton.onmouseleave = function() {playingPlaylistButton.src = './assets/images/now-playing/volume-big.PNG'}
-          
-          playingPlaylistButton.onclick = function(e) {
-            e.stopPropagation()
-            audio.pause()
+            playingPlaylistButton.onmouseover = function() {playingPlaylistButton.src = './assets/images/left-sidebar/pause.png'}
+            playingPlaylistButton.onmouseleave = function() {playingPlaylistButton.src = './assets/images/now-playing/volume-big.PNG'}
+            
+            playingPlaylistButton.onclick = function(e) {
+              e.stopPropagation()
+              audio.pause()
+            }
           }
+          
         },
         handle: function() {
           if (window.getComputedStyle($('#root__left-sidebar__my-playlists')).display == 'block') { 
@@ -570,6 +573,34 @@ const app = {
         this.styleLeftSidebarPlaylist()
         this.stylePlayingPlaylist.handle()
         this.handleOnclick()
+      }
+    },
+    handleDailyMixes: {
+      renderDailyMixes: function() {
+        const dailyMixes = app.handlePlaylists.playlists.filter(playlist => playlist.tag.includes('daily mix'))
+        .map(playlist => `
+        <li class="playlist is-a-playlist" playlist-id ="${playlist.id}">
+          <img class="playlist-img" src="${playlist.img}">
+          <div class="playlist__description">
+              <div class="playlist__description__title">${playlist.name}</div>
+              <div class="playlist__description__artist">${playlist.description}</div>
+          </div>
+        </li>
+        `).join('')
+       Array.from(document.getElementsByClassName('root__main-view__playlist-section')).filter(section => section.getAttribute('section-type') == 'daily-mix')[0].innerHTML = `
+        <div class="introduction">
+          <div>
+              <a href ="" class="title">Made for you</a>
+              <span class="description"></span>
+          </div>
+          <a class="see-all" href="">See all</a>
+        </div>
+        <ul class="playlists">
+          ${dailyMixes}
+        </ul>`
+      },
+      handle: function() {
+        this.renderDailyMixes()
       }
     },
   
@@ -615,7 +646,7 @@ const app = {
           onOpenPlaylist.innerHTML = `
             <img src='./assets/images/main-view/back.png' id="on-open-playlist__return-home">
             <div id="on-open-playlist__header">
-              <img id="on-open-playlist__header__img" src=${thisPlaylistInDB.img}>
+              <img id="on-open-playlist__header__img" src="${thisPlaylistInDB.img}">
               <div id="on-open-playlist__header__title">
                 <div id="on-open-playlist__header__title__type">playlist</div>
                 <div id="on-open-playlist__header__title__name">${thisPlaylistInDB.name}</div>
@@ -702,7 +733,6 @@ const app = {
           },
 
           handlePlaylistHeaderOnscroll: function() {
-            console.log((rootTop.offsetTop - onOpenPlaylist.scrollTop))
             const tableHeader = $('#position-fixed-header')
             if (onOpenPlaylist.style.display == 'block') {
               if ((rootTop.offsetTop - onOpenPlaylist.scrollTop) <= -375 && window.outerWidth > 999) {
@@ -922,6 +952,7 @@ const app = {
     start: function() {
       this.handleOwnPlaylist.handle()
       this.handleCurrentPlaylist.handle()
+      this.handleDailyMixes.handle()
   
       const playlistArray = Array.from(document.getElementsByClassName('is-a-playlist'))
       for (let eachPlaylist of playlistArray) {

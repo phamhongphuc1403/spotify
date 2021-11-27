@@ -7,7 +7,7 @@ const allSongs = [
     path: "./data/songs/hold-on__justin-bieber.mp3",
     album: "Justice",
     backgroundColor: '#095250',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop']
   },
   { 
     id: 2, 
@@ -17,7 +17,7 @@ const allSongs = [
     path: "./data/songs/weightless__all-time-low.mp3",
     album: "Nothing Personal",
     backgroundColor: '#70684e',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop punk']
   },
   { 
     id: 3, 
@@ -27,7 +27,7 @@ const allSongs = [
     path: "./data/songs/break-your-little-heart__all-time-low.mp3",
     album: "Nothing Personal",
     backgroundColor: '#70684e',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop punk']
   },
   { 
     id: 4,
@@ -37,7 +37,7 @@ const allSongs = [
     path: "./data/songs/damn-if-i-do-ya__all-time-low.mp3",
     album: "Nothing Personal",
     backgroundColor: '#70684e',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop punk']
   },
   { 
     id: 5, 
@@ -47,7 +47,7 @@ const allSongs = [
     path: "./data/songs/stella__all-time-low.mp3",
     album: "Nothing Personal",
     backgroundColor: '#70684e',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop punk']
   },
   { 
     id: 6, 
@@ -57,7 +57,7 @@ const allSongs = [
     path: "./data/songs/runaways__all-time-low.mp3",
     album: "Future Hearts",
     backgroundColor: '#466668',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop punk']
   },
   { 
     id: 7, 
@@ -67,7 +67,7 @@ const allSongs = [
     path: "./data/songs/australia__jonas-brothers.mp3",
     album: ["Jonas Brothers"],
     backgroundColor: '#585657',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop punk', 'pop']
   },
   { 
     id: 8, 
@@ -77,7 +77,7 @@ const allSongs = [
     path: "./data/songs/hesitate__jonas-brothers.mp3",
     album: "Happiness Begins",
     backgroundColor: '#5c6e6e',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop']
   },
   { 
     id: 9, 
@@ -87,7 +87,7 @@ const allSongs = [
     path: "./data/songs/rollercoaster__jonas-brothers.mp3",
     album: "Happiness Begins",
     backgroundColor: '#5c6e6e',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop']
   },
   { id: 10, 
     name: "Die Young",
@@ -96,7 +96,7 @@ const allSongs = [
     path: "./data/songs/die-young__kesha.mp3",
     album: "Warrior",
     backgroundColor: '#5c6e6e',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop']
   },
   { 
     id: 11, 
@@ -106,7 +106,7 @@ const allSongs = [
     path: "./data/songs/best-song-ever__one-direction.mp3",
     album: "Midnight Memories",
     backgroundColor: '#6a4240',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop']
   },
   { 
     id: 12, 
@@ -116,7 +116,7 @@ const allSongs = [
     path: "./data/songs/daylight__maroon-5.mp3",
     album: "Overexposed",
     backgroundColor: '#743b53',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop']
   },
   { 
     id: 13, 
@@ -126,7 +126,7 @@ const allSongs = [
     path: "./data/songs/summer__calvin-harris.mp3",
     album: "Motion",
     backgroundColor: '#545658',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop', 'edm']
   },
   { 
     id: 14, 
@@ -146,7 +146,7 @@ const allSongs = [
     path: "./data/songs/good-times__all-time-low.mp3",
     album: "Last Young Renegade",
     backgroundColor: '#29373c',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop punk']
   },
   { 
     id: 16, 
@@ -156,7 +156,7 @@ const allSongs = [
     path: "./data/songs/missing-you__all-time-low.mp3",
     album: "Future Hearts",
     backgroundColor: '#466668',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop']
   },
   { 
     id: 17, 
@@ -166,7 +166,7 @@ const allSongs = [
     path: "./data/songs/kids-in-the-dark__all-time-low.mp3",
     album: "Future Hearts",
     backgroundColor: '#466668',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop punk']
   },
   { 
     id: 18, 
@@ -176,7 +176,7 @@ const allSongs = [
     path: "./data/songs/dear-maria-count-me-in__all-time-low.mp3",
     album: "So Wrong, It's Right",
     backgroundColor: '#665303',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop punk']
   },
   { 
     id: 19, 
@@ -186,7 +186,7 @@ const allSongs = [
     path: "./data/songs/time-bomb__all-time-low.mp3",
     album: "Dirty Work",
     backgroundColor: '#02446c',
-    tag: ['favorite', ]
+    tag: ['favorite','pop punk' ]
   },
   { 
     id: 20, 
@@ -196,7 +196,7 @@ const allSongs = [
     path: "./data/songs/life-of-the-party__all-time-low.mp3",
     album: "Last Young Renegade",
     backgroundColor: '#29373c',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop punk']
   },
   { 
     id: 21, 
@@ -206,7 +206,7 @@ const allSongs = [
     path: "./data/songs/somethings-gotta-give__all-time-low.mp3",
     album: "Future Hearts",
     backgroundColor: '#466668',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop punk']
   },
   { 
     id: 22, 
@@ -216,7 +216,7 @@ const allSongs = [
     path: "./data/songs/once-in-a-lifetime__all-time-low.mp3",
     album: "Once In A Life Time",
     backgroundColor: '#623023',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop punk']
   },
   { 
     id: 23, 
@@ -226,7 +226,7 @@ const allSongs = [
     path: "./data/songs/monsters__all-time-low.mp3",
     album: "Wake Up, Sunshine",
     backgroundColor: '#64593c',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop punk']
   },
   { 
     id: 24, 
@@ -236,7 +236,7 @@ const allSongs = [
     path: "./data/songs/used-to-love__martin-garrix.mp3",
     album: "Used To Love (with Dean Lewis)",
     backgroundColor: '#203e51',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 25, 
@@ -246,7 +246,7 @@ const allSongs = [
     path: "./data/songs/drown__martin-garrix.mp3",
     album: "Drown (feat. Cliton Kane)",
     backgroundColor: '#484747',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 26, 
@@ -256,7 +256,7 @@ const allSongs = [
     path: "./data/songs/no-sleep__martin-garrix.mp3",
     album: "No Sleep (feat. Bonn)",
     backgroundColor: '#523825',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 27, 
@@ -266,7 +266,7 @@ const allSongs = [
     path: "./data/songs/high-on-life__martin-garrix.mp3",
     album: "High On Life (feat. Bonn)",
     backgroundColor: '#3b3e3e',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 28, 
@@ -276,7 +276,7 @@ const allSongs = [
     path: "./data/songs/summer-days__martin-garrix.mp3",
     album: "Summer Days (feat. Macklemore & Patrick Stump of Fall Out Boy)",
     backgroundColor: '#2e5a62',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },  
   { 
     id: 29, 
@@ -286,7 +286,7 @@ const allSongs = [
     path: "./data/songs/these-are-the-times__martin-garrix.mp3",
     album: "These Are The Times (feat. JRM)",
     backgroundColor: '#545454',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 30, 
@@ -296,7 +296,7 @@ const allSongs = [
     path: "./data/songs/burn-out__martin-garrix.mp3",
     album: "Burn Out (feat. Dewain Whitmore)",
     backgroundColor: '#1d162b',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 31, 
@@ -306,7 +306,7 @@ const allSongs = [
     path: "./data/songs/higher-ground__martin-garrix.mp3",
     album: "Higher Ground (feat. John Martin)",
     backgroundColor: '#4e4e4e',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 32, 
@@ -316,7 +316,7 @@ const allSongs = [
     path: "./data/songs/forbidden-voices__martin-garrix.mp3",
     album: "Forbidden Voices",
     backgroundColor: '#2f2f2f',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 33, 
@@ -326,7 +326,7 @@ const allSongs = [
     path: "./data/songs/waiting-for-tomorrow__martin-garrix.mp3",
     album: "BYLAW EP",
     backgroundColor: '#3c1f29',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 34, 
@@ -336,7 +336,7 @@ const allSongs = [
     path: "./data/songs/sucker__jonas-brothers.mp3",
     album: "Happiness Begins",
     backgroundColor: '#5c6e6e',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop']
   },
   { 
     id: 35, 
@@ -346,7 +346,7 @@ const allSongs = [
     path: "./data/songs/only-human__jonas-brothers.mp3",
     album: "Happiness Begins",
     backgroundColor: '#5c6e6e',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop']
   },
   { 
     id: 36, 
@@ -356,7 +356,7 @@ const allSongs = [
     path: "./data/songs/by-your-side__jonas-blue.mp3",
     album: "Blue",
     backgroundColor: '#435864',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 37, 
@@ -366,7 +366,7 @@ const allSongs = [
     path: "./data/songs/mama__jonas-blue.mp3",
     album: "Blue",
     backgroundColor: '#435864',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 38, 
@@ -376,7 +376,7 @@ const allSongs = [
     path: "./data/songs/polaroid__jonas-blue.mp3",
     album: "Blue",
     backgroundColor: '#435864',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 39, 
@@ -386,7 +386,7 @@ const allSongs = [
     path: "./data/songs/rise__jonas-blue.mp3",
     album: "Blue",
     backgroundColor: '#435864',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 40, 
@@ -396,7 +396,7 @@ const allSongs = [
     path: "./data/songs/younger__jonas-blue.mp3",
     album: "Younger",
     backgroundColor: '#85171d',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 41, 
@@ -406,7 +406,7 @@ const allSongs = [
     path: "./data/songs/perfect-stranger__jonas-blue.mp3",
     album: "Blue",
     backgroundColor: '#435864',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 42, 
@@ -416,7 +416,7 @@ const allSongs = [
     path: "./data/songs/walk-thru-fire__vicetone__meron-ryan.mp3",
     album: "Walk Thru Fire",
     backgroundColor: '#8d0b16',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 43, 
@@ -426,7 +426,7 @@ const allSongs = [
     path: "./data/songs/waiting__vicetone__daisy-guttridge.mp3",
     album: "Waiting",
     backgroundColor: '#9d131d',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 44, 
@@ -436,7 +436,7 @@ const allSongs = [
     path: "./data/songs/something-strange__vicetone__haley-reinhart.mp3",
     album: "Something Strange",
     backgroundColor: '#1e4062',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 45, 
@@ -446,7 +446,7 @@ const allSongs = [
     path: "./data/songs/somebody-im-not__martin-jensen__bjrnskov.mp3",
     album: "Somebody I'm Not",
     backgroundColor: '#083347',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 46, 
@@ -506,7 +506,7 @@ const allSongs = [
     path: "./data/songs/whos-in-your-head__jonas-brothers.mp3",
     album: "Setlist: The Remember This Tour",
     backgroundColor: '#4a6b21',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop']
   },
   { 
     id: 52, 
@@ -546,7 +546,7 @@ const allSongs = [
     path: "./data/songs/hold-on__martin-garrix.mp3",
     album: "Hold On (feat. Michel Zitron)",
     backgroundColor: '#4c4d50',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 56, 
@@ -556,7 +556,7 @@ const allSongs = [
     path: "./data/songs/stargazing__kygo__justin-jesso.mp3",
     album: "Stargazing-EP",
     backgroundColor: '#4c4d50',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 57, 
@@ -566,7 +566,7 @@ const allSongs = [
     path: "./data/songs/it-aint-me__kygo__selena-gomez.mp3",
     album: "Stargazing-EP",
     backgroundColor: '#4c4d50',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 58, 
@@ -576,7 +576,7 @@ const allSongs = [
     path: "./data/songs/higher-love__kygo__whitney-houston.mp3",
     album: "Higher Love",
     backgroundColor: '#4c4d50',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 59, 
@@ -586,7 +586,7 @@ const allSongs = [
     path: "./data/songs/happy-now__kygo__sandro_cavazza.mp3",
     album: "Happy Now",
     backgroundColor: '#4c4d50',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 60, 
@@ -596,7 +596,7 @@ const allSongs = [
     path: "./data/songs/firestone__kygo__conrad-sewell.mp3",
     album: "Cloud Nine",
     backgroundColor: '#4c4d50',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 61, 
@@ -606,7 +606,7 @@ const allSongs = [
     path: "./data/songs/born-to-be-yours__kygo__imagine-dragons.mp3",
     album: "Born To Be Yours",
     backgroundColor: '#4c4d50',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 62, 
@@ -616,7 +616,7 @@ const allSongs = [
     path: "./data/songs/remind-me-to-forget__kygo__miguel.mp3",
     album: "Kids In Love",
     backgroundColor: '#4c4d50',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 63, 
@@ -626,7 +626,7 @@ const allSongs = [
     path: "./data/songs/girls-like-you__maroon-5__cardi-b.mp3",
     album: "Red Pill Blues",
     backgroundColor: '#4c4d50',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop']
   },
   { 
     id: 64, 
@@ -636,7 +636,7 @@ const allSongs = [
     path: "./data/songs/what-lovers-do__maroon-5__sza.mp3",
     album: "Red Pill Blues",
     backgroundColor: '#4c4d50',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop']
   },
   { 
     id: 65, 
@@ -646,7 +646,7 @@ const allSongs = [
     path: "./data/songs/dont-wanna-know-maroon-5__kendrick-lamar.mp3",
     album: "Red Pill Blues",
     backgroundColor: '#4c4d50',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop']
   },
   { 
     id: 66, 
@@ -656,7 +656,7 @@ const allSongs = [
     path: "./data/songs/payphone__maroon-5__wiz-khalifa.mp3",
     album: "Overexposed",
     backgroundColor: '#743b53',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop']
   },
   { 
     id: 67, 
@@ -666,7 +666,7 @@ const allSongs = [
     path: "./data/songs/moves-like-jagger__maroon-5__christina-aguilera.mp3",
     album: "Overexposed",
     backgroundColor: '#743b53',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop']
   },
   { 
     id: 68, 
@@ -676,7 +676,7 @@ const allSongs = [
     path: "./data/songs/maps__maroon-5.mp3",
     album: "V",
     backgroundColor: '#743b53',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop']
   },
   { 
     id: 69, 
@@ -686,7 +686,7 @@ const allSongs = [
     path: "./data/songs/animals__maroon-5.mp3",
     album: "V",
     backgroundColor: '#743b53',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop']
   },
   { 
     id: 70, 
@@ -696,7 +696,7 @@ const allSongs = [
     path: "./data/songs/sugar__maroon-5.mp3",
     album: "V",
     backgroundColor: '#743b53',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop']
   },
   { 
     id: 71, 
@@ -706,7 +706,7 @@ const allSongs = [
     path: "./data/songs/beautiful-mistakes__maroon-5__megan-thee-stallion.mp3",
     album: "JORDI",
     backgroundColor: '#743b53',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop' ]
   },
   { 
     id: 72, 
@@ -716,7 +716,7 @@ const allSongs = [
     path: "./data/songs/memories__maroon-5.mp3",
     album: "JORDI",
     backgroundColor: '#743b53',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop']
   },
   { 
     id: 73, 
@@ -726,7 +726,7 @@ const allSongs = [
     path: "./data/songs/fast-car__jonas-blue__dakota.mp3",
     album: "Blue",
     backgroundColor: '#743b53',
-    tag: ['favorite', ]
+    tag: ['favorite', 'edm']
   },
   { 
     id: 74, 
@@ -736,12 +736,12 @@ const allSongs = [
     path: "./data/songs/cake-by-the-ocean__dnce.mp3",
     album: "DNCE",
     backgroundColor: '#743b53',
-    tag: ['favorite', ]
+    tag: ['favorite', 'pop']
   },
 ]
 shuffleArray(allSongs)
 
-const allPlaylists = [ 
+const allPlaylists = [
   {
     id: 1, 
     name: "Liked Songs", 
@@ -830,9 +830,122 @@ const allPlaylists = [
     headerColor: '51, 54, 58',
     tag: ['own playlist', ]
   },
+  // {
+  //   id: 9, 
+  //   name: "Tobu", 
+  //   description: '',
+  //   owner: "Phuc",
+  //   img: "./data/playlists/own-playlists/maroon-5.jpg",
+  //   songs: allSongs.filter(song => song.artist.includes('Maroon 5')),
+  //   backgroundColor: '122, 130, 137',
+  //   headerColor: '51, 54, 58',
+  //   tag: ['own playlist', ]
+  // },
+  // {
+  //   id: 10, 
+  //   name: "Justin Bieber", 
+  //   description: '',
+  //   owner: "Phuc",
+  //   img: "./data/playlists/own-playlists/maroon-5.jpg",
+  //   songs: allSongs.filter(song => song.artist.includes('Justin Bieber')),
+  //   backgroundColor: '122, 130, 137',
+  //   headerColor: '51, 54, 58',
+  //   tag: ['own playlist', ]
+  // },
 ]
+
 shuffleArray(allPlaylists)
 
+const dailyMixesFactory = {
+  data: {
+    artistsGroups: [
+      ["Martin Garrix", "Jonas Blue", "Kygo", "Vicetone", "Martin Jensen"],
+      // ["Vicetone", "Martin Jensen"],
+      ["Jonas Brothers", "Maroon 5", "Justin Bieber"],
+      ["Boston", "Starship",  "The Cult", "Kansas", "The White Stripes", "The Animals", "Gun N' Roses"],
+      ["All Time Low",],
+    ],
+    dailyMixesFeaturing: [
+      ["Daily Mixes 1", "All Time Low", "Jonas Brothers", "Justin Bieber", "Kygo", "Martin Garrix", "Maroon 5", "Vicetone"],
+      ["Daily Mixes 2", "All Time Low", "Jonas Brothers", "Justin Bieber", "Kygo", "Martin Garrix", "Maroon 5"],
+      ["Daily Mixes 3", "All Time Low", "Jonas Blue", "Jonas Brothers", "Justin Bieber", "Kygo", "Martin Garrix", "Maroon 5", "Boston"],
+      ["Daily Mixes 4", "All Time Low", "Jonas Blue", "Maroon 5", "Boston"],
+      ["Daily Mixes 5", "Boston", "Martin Garrix"],
+    ],
+  },
+  
+  dailyMixesGenerator: {
+    sortDailyMixes: function() {
+      dailyMixesFactory.data.dailyMixesFeaturing.sort((a, b) => a.length - b.length)
+    },
+    chooseFeaturingArtist: {
+      FeaturingArtists: [],
+      handleFeaturing: function() {
+        dailyMixesFactory.data.dailyMixesFeaturing.forEach(dailyMix => {
+          function randomPick() {
+              const newDailyMixes = dailyMix[Math.floor(Math.random() * (dailyMix.length - 1)) + 1]
+              const flattedArray = dailyMixesFactory.dailyMixesGenerator.chooseFeaturingArtist.FeaturingArtists.flat()
+              flattedArray.includes(newDailyMixes) ? randomPick() : dailyMixesFactory.dailyMixesGenerator.chooseFeaturingArtist.FeaturingArtists.push([dailyMix[0],newDailyMixes])
+          }
+          randomPick()
+        })
+        this.FeaturingArtists.sort((a, b) => a[0] < b[0] ? -1 : 1)
+      }
+    },
+    generateSongs: function(artistGroup) {
+      const songs = []
+      artistGroup.forEach(artist => {
+        songs.push(allSongs.filter(song => song.artist.includes(artist)))
+      })
+      return songs.flat()
+    },
+    generateDescription: function(artistGroup) {
+      filteredArtists = artistGroup.slice(0, 3)
+      return filteredArtists.reduce((description, artist, index) => {
+        if (index == 0) {
+          return `${artist}`
+        } else {
+          return `${description}, ${artist}`
+        }
+      }) + ' and more'
+    },
+    createDailyMixes: function() {
+      dailyMixesFactory.dailyMixesGenerator.chooseFeaturingArtist.FeaturingArtists.forEach((dailyMix, index) => {
+        const artistGroup = dailyMixesFactory.data.artistsGroups.filter(array => array.includes(dailyMix[1]))[0]
+        function sortedArtists() {
+          for (let i = artistGroup.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+              [artistGroup[i], artistGroup[j]] = [artistGroup[j], artistGroup[i]];
+          }
+  
+          [artistGroup[artistGroup.indexOf(dailyMix[1])], artistGroup[0]] = [artistGroup[0], artistGroup[artistGroup.indexOf(dailyMix[1])]];
+          
+        }
+        sortedArtists()
+        const nextId = [...allPlaylists].sort((a, b) => a.id - b.id)[allPlaylists.length - 1].id + 1
+        const playlist = {
+            name: dailyMix[0],
+            id: nextId,
+            description: this.generateDescription(artistGroup),
+            owner: 'Made for Phuc',
+            img: `./data/playlists/daily-mixes/${dailyMix[0]}/${dailyMix[1]}.jfif`,
+            songs: this.generateSongs(artistGroup),
+            backgroundColor: '122, 130, 137',
+            headerColor: '51, 54, 58',
+            tag: ['daily mix']
+          }
+          allPlaylists.push(playlist)
+      })
+    },
+    start: function() {
+      this.sortDailyMixes()
+      this.chooseFeaturingArtist.handleFeaturing()
+      this.createDailyMixes()
+    }
+  }
+}
+
+dailyMixesFactory.dailyMixesGenerator.start()
 
 function shuffleArray(Array) {
   Array.forEach(value => value.order = Math.floor(Math.random() * (Array.length - 1)) + 1)
