@@ -859,9 +859,9 @@ shuffleArray(allPlaylists)
 const dailyMixesFactory = {
   data: {
     artistsGroups: [
-      ["Martin Garrix", "Jonas Blue", "Kygo", "Vicetone", "Martin Jensen"],
-      // ["Vicetone", "Martin Jensen"],
-      ["Jonas Brothers", "Maroon 5", "Justin Bieber"],
+      ["Martin Garrix", "Jonas Blue", "Kygo", "Calvin Harris"],
+      ["Vicetone", "Martin Jensen"],
+      ["Jonas Brothers", "Maroon 5", "Justin Bieber", "DNCE", "Ke$ha"],
       ["Boston", "Starship",  "The Cult", "Kansas", "The White Stripes", "The Animals", "Gun N' Roses"],
       ["All Time Low",],
     ],
@@ -870,7 +870,7 @@ const dailyMixesFactory = {
       ["Daily Mixes 2", "All Time Low", "Jonas Brothers", "Justin Bieber", "Kygo", "Martin Garrix", "Maroon 5"],
       ["Daily Mixes 3", "All Time Low", "Jonas Blue", "Jonas Brothers", "Justin Bieber", "Kygo", "Martin Garrix", "Maroon 5", "Boston"],
       ["Daily Mixes 4", "All Time Low", "Jonas Blue", "Maroon 5", "Boston"],
-      ["Daily Mixes 5", "Boston", "Martin Garrix"],
+      ["Daily Mixes 5", "Boston", "Martin Garrix", "Maroon 5"],
     ],
   },
   
@@ -902,11 +902,8 @@ const dailyMixesFactory = {
     generateDescription: function(artistGroup) {
       filteredArtists = artistGroup.slice(0, 3)
       return filteredArtists.reduce((description, artist, index) => {
-        if (index == 0) {
-          return `${artist}`
-        } else {
-          return `${description}, ${artist}`
-        }
+        if (index == 0) {return `${artist}`}  
+        return `${description}, ${artist}`
       }) + ' and more'
     },
     createDailyMixes: function() {
@@ -944,8 +941,71 @@ const dailyMixesFactory = {
     }
   }
 }
+const bestOfArtistFactory = {
 
+  playlistPageData: [
+    {
+      name: "All Time Low",
+      description: "The best of All Time Low, all in one playlist.",
+      backgroundColor: '204, 78, 78',
+      headerColor: '86, 32, 32',
+    },
+    {
+      name: "Jonas Blue",
+      description: "This is Jonas Blue. The essential tracks, all in one playlist.",
+      backgroundColor: '110, 141, 194',
+      headerColor: '45, 57, 80',
+    },
+    {
+      name: "Jonas Brothers",
+      description: "All the essentials in one playlist.",
+      backgroundColor: '147, 139, 169',
+      headerColor: '61, 57, 70',
+    },
+    {
+      name: "Kygo",
+      description: "The essential Norwegian DJ's tracks and remixes.",
+      backgroundColor: '125, 201, 193',
+      headerColor: '51, 83, 80',
+    },
+    {
+      name: "Maroon 5",
+      description: "From Songs About Jane to JORDI, find their latest releases here!",
+      backgroundColor: '55, 55, 62',
+      headerColor: '22, 22, 26',
+    },
+    {
+      name: "Martin Garrix",
+      description: "The essential tracks by the Dutch DJ and producer.",
+      backgroundColor: '132, 199, 192',
+      headerColor: '54, 83, 80',
+    },
+  ],
+  
+  createDailyMixes: function() {
+    for (let i = bestOfArtistFactory.playlistPageData.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [bestOfArtistFactory.playlistPageData[i], bestOfArtistFactory.playlistPageData[j]] = [bestOfArtistFactory.playlistPageData[j], bestOfArtistFactory.playlistPageData[i]];
+    }
+    bestOfArtistFactory.playlistPageData.forEach(data => {
+      const nextId = [...allPlaylists].sort((a, b) => a.id - b.id)[allPlaylists.length - 1].id + 1
+      const playlist = {
+        name: 'This Is ' + data.name,
+        id: nextId,
+        description: data.description,
+        owner: 'Spotify',
+        img: `./data/playlists/best-of-artist/${data.name}.jfif`,
+        songs: allSongs.filter(song => song.artist.includes(data.name)),
+        backgroundColor: data.backgroundColor,
+        headerColor: data.headerColor,
+        tag: ['best of artist']
+      }
+      allPlaylists.push(playlist)
+    })
+  },
+}
 dailyMixesFactory.dailyMixesGenerator.start()
+bestOfArtistFactory.createDailyMixes()
 
 function shuffleArray(Array) {
   Array.forEach(value => value.order = Math.floor(Math.random() * (Array.length - 1)) + 1)

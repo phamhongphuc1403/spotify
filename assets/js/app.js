@@ -374,9 +374,7 @@ const app = {
       _this = this
       function handleButtons() {
         app.handlePlaylists.handleCurrentPlaylist.handleCurrentPlaylistsButtonOpacity()
-        app.handlePlaylists.handlePlaylistSections.handleDailyMixes.handlePlayBtnOpacity()
-        app.handlePlaylists.handlePlaylistSections.handleRecentlyPlayed.handlePlayBtnOpacity()
-        app.handlePlaylists.handlePlaylistSections.handleYourPlaylists.handlePlayBtnOpacity()
+        app.handlePlaylists.handlePlaylistSections.handlePlayBtnOpacity()
         app.handlePlaylists.handleOwnPlaylists.stylePlayingPlaylist.handle()
         app.handlePlaylists.handlePlayOrOpenPlaylist.openPlaylist.stylePlaylistPage.styleSongs.handle()
         app.handleQueuePage.styleQueuePage.styleSong()
@@ -419,7 +417,6 @@ const app = {
       renderCurrentPlaylists: function() {
         const currentPlaylistContent = app.handlePlaylists.playlists.filter(playlist => playlist.tag.includes('own playlist'))
           .filter(playlist => playlist.order <=6 )
-          // .splice(0,6)
           .map(playlist => `
             <li class="current-playlist is-a-playlist" playlist-id="${playlist.id}">
                 <img src="${playlist.img}">
@@ -437,15 +434,16 @@ const app = {
       handleCurrentPlaylistsHover: {
         handleMainViewBackground: {
           renderBackground: function() {  
-            mainView.style.backgroundImage = `linear-gradient(rgba(${app.handlePlaylists.playlists[0].backgroundColor}, 0.35), #121212 400px)`
+            const currentPlaylistContent = app.handlePlaylists.playlists.filter(playlist => playlist.tag.includes('own playlist')).filter(playlist => playlist.order <=6 )
+            mainView.style.backgroundImage = `linear-gradient(rgba(${currentPlaylistContent[0].backgroundColor}, 0.35), #121212 400px)`
             this.handleHeaderOpacity(app.handlePlaylists.playlists[0].headerColor)
             
             const currentPlaylists = Array.from(document.getElementsByClassName('current-playlist'));
             currentPlaylists.forEach((playlist, index) => {
               playlist.onmouseenter = function() {
-                mainView.style.backgroundImage = `linear-gradient(rgba(${app.handlePlaylists.playlists[index].backgroundColor}, 0.35), #121212 400px)`
-                rootTop.style.backgroundColor = `rgba(${app.handlePlaylists.playlists[index].headerColor}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`;
-                app.handlePlaylists.handleCurrentPlaylist.handleCurrentPlaylistsHover.handleMainViewBackground.handleHeaderOpacity(app.handlePlaylists.playlists[index].headerColor)
+                mainView.style.backgroundImage = `linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px)`
+                rootTop.style.backgroundColor = `rgba(${currentPlaylistContent[index].headerColor}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`;
+                app.handlePlaylists.handleCurrentPlaylist.handleCurrentPlaylistsHover.handleMainViewBackground.handleHeaderOpacity(currentPlaylistContent[index].headerColor)
               }
             })
           },
@@ -458,7 +456,6 @@ const app = {
           }
         },
         handle: function() {
-          // this.showPlayNowButton()
           app.handleMainView.handleBtns.showPlayNowButton('current-playlist')
           this.handleMainViewBackground.start()
         }
@@ -538,53 +535,34 @@ const app = {
       }
     },
     handlePlaylistSections: {
-      handleDailyMixes: {
-        renderDailyMixes: function() {
+      handleRender: {
+        handleDailyMixes: function() {
           const dailyMixes = app.handlePlaylists.playlists.filter(playlist => playlist.tag.includes('daily mix'))
-          .map(playlist => `
-          <li class="playlist is-a-playlist daily-mix" playlist-id ="${playlist.id}">
-            <div class='playlist__playbtn'>
-              <img class="playlist-img" src="${playlist.img}">
-              <img src="./assets/images/main-view/play-now.PNG" class="play-now">
-              <img src="./assets/images/main-view/pause.PNG" class="playing">
-              <div class="play-now-shadow"></div>
-              <div class="playing-shadow"></div>
-            </div>
-            <div class="playlist__description">
-                <div class="playlist__description__title">${playlist.name}</div>
-                <div class="playlist__description__artist">${playlist.description}</div>
-            </div>
-          </li>
-          `).join('')
-         Array.from(document.getElementsByClassName('root__main-view__playlist-section')).filter(section => section.getAttribute('section-type') == 'daily-mix')[0].innerHTML = `
-          <div class="introduction">
-            <div>
-                <a href ="" class="title">Made for you</a>
-                <span class="description"></span>
-            </div>
-            <a class="see-all" href="">See all</a>
-          </div>
-          <ul class="playlists">
-            ${dailyMixes}
-          </ul>`
+          app.handlePlaylists.handlePlaylistSections.handleRender.renderPlaylists(dailyMixes, 'daily-mix', 'Made for you')
         },
-        handlePlayBtnOpacity: function() {
-          app.handleMainView.handleBtns.handlePlayBtnOpacity.handle('daily-mix')
-        },
-        handle: function() {
-          this.renderDailyMixes()
-          app.handleMainView.handleBtns.showPlayNowButton('daily-mix')
-          this.handlePlayBtnOpacity()
-        }
-      },
-      handleRecentlyPlayed: {
-        renderRecentlyPlayed: function() {
+        handleRecentlyPlayed: function() {
           const RecentlyPlayedPlaylists = app.handlePlaylists.playlists
-          for (let i = RecentlyPlayedPlaylists.length - 1; i > 0; i--) {
+          this.shufflePlaylists(RecentlyPlayedPlaylists)
+          app.handlePlaylists.handlePlaylistSections.handleRender.renderPlaylists(RecentlyPlayedPlaylists.slice(0, 5), 'recently-played', 'Recently Played')
+        },
+        handleYourPlaylists: function() {
+          const ownPlaylists = app.handlePlaylists.playlists.filter(playlist => playlist.tag.includes('own playlist'))
+          this.shufflePlaylists(ownPlaylists)
+          app.handlePlaylists.handlePlaylistSections.handleRender.renderPlaylists(ownPlaylists.slice(0, 5), 'your-playlists', 'Your Playlists')
+        },
+        handleBestOfArtists: function() {
+          const bestOfArtists = app.handlePlaylists.playlists.filter(playlist => playlist.tag.includes('best of artist'))
+          this.shufflePlaylists(bestOfArtists)
+          app.handlePlaylists.handlePlaylistSections.handleRender.renderPlaylists(bestOfArtists.slice(0, 5), 'best-of-artist', 'Best of artist')
+        },
+        shufflePlaylists: function(playlistsArray) {
+          for (let i = playlistsArray.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-              [RecentlyPlayedPlaylists[i], RecentlyPlayedPlaylists[j]] = [RecentlyPlayedPlaylists[j], RecentlyPlayedPlaylists[i]];
+              [playlistsArray[i], playlistsArray[j]] = [playlistsArray[j], playlistsArray[i]];
           }
-          const renderedRecentlyPlayedPlaylists = RecentlyPlayedPlaylists.slice(0, 5).map(playlist => `
+        },
+        renderPlaylists: function(playlistsArray, sectionType, title) {
+          const renderedPlaylists = playlistsArray.map(playlist => `
           <li class="playlist is-a-playlist recently-played" playlist-id ="${playlist.id}">
             <div class='playlist__playbtn'>
               <img class="playlist-img" src="${playlist.img}">
@@ -595,78 +573,45 @@ const app = {
             </div>
             <div class="playlist__description">
                 <div class="playlist__description__title">${playlist.name}</div>
-                <div class="playlist__description__artist">${playlist.tag.includes('own-playlist') ? 'By ' + playlist.owner : playlist.description}</div>
+                <div class="playlist__description__artist">${playlist.tag.includes('own playlist') ? 'By ' + playlist.owner : playlist.description}</div>
             </div>
           </li>`).join('')
           
-          Array.from(document.getElementsByClassName('root__main-view__playlist-section')).filter(section => section.getAttribute('section-type') == 'recently-played')[0].innerHTML = `
+          Array.from(document.getElementsByClassName('root__main-view__playlist-section')).filter(section => section.getAttribute('section-type') == sectionType)[0].innerHTML = `
             <div class="introduction">
               <div>
-                  <a href ="" class="title">Recently played</a>
+                  <a href ="" class="title">${title}</a>
                   <span class="description"></span>
               </div>
               <a class="see-all" href="">See all</a>
             </div>
             <ul class="playlists">
-              ${renderedRecentlyPlayedPlaylists}
+              ${renderedPlaylists}
             </ul>`
         },
-        handlePlayBtnOpacity: function() {
-          app.handleMainView.handleBtns.handlePlayBtnOpacity.handle('recently-played')
-        },
-        handle: function() {
-          this.renderRecentlyPlayed()
-          app.handleMainView.handleBtns.showPlayNowButton('recently-played')
-          this.handlePlayBtnOpacity()
+        start: function() {
+          this.handleDailyMixes()
+          this.handleRecentlyPlayed()
+          this.handleYourPlaylists()
+          this.handleBestOfArtists()
         }
       },
-      handleYourPlaylists: {
-        renderYourPlaylists: function() {
-          const ownPlaylists = app.handlePlaylists.playlists.filter(playlist => playlist.tag.includes('own playlist'))
-          for (let i = ownPlaylists.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-              [ownPlaylists[i], ownPlaylists[j]] = [ownPlaylists[j], ownPlaylists[i]];
-          }
-          const renderedOwnPlaylists = ownPlaylists.slice(0, 5).map(playlist => `
-          <li class="playlist is-a-playlist your-playlists" playlist-id ="${playlist.id}">
-            <div class='playlist__playbtn'>
-              <img class="playlist-img" src="${playlist.img}">
-              <img src="./assets/images/main-view/play-now.PNG" class="play-now">
-              <img src="./assets/images/main-view/pause.PNG" class="playing">
-              <div class="play-now-shadow"></div>
-              <div class="playing-shadow"></div>
-            </div>
-            <div class="playlist__description">
-                <div class="playlist__description__title">${playlist.name}</div>
-                <div class="playlist__description__artist">By ${playlist.owner}</div>
-            </div>
-          </li>`).join('')
-          
-          Array.from(document.getElementsByClassName('root__main-view__playlist-section')).filter(section => section.getAttribute('section-type') == 'your-playlists')[0].innerHTML = `
-            <div class="introduction">
-              <div>
-                  <a href ="" class="title">Your playlists</a>
-                  <span class="description"></span>
-              </div>
-              <a class="see-all" href="">See all</a>
-            </div>
-            <ul class="playlists">
-              ${renderedOwnPlaylists}
-            </ul>`
-        },
-        handlePlayBtnOpacity: function() {
-          app.handleMainView.handleBtns.handlePlayBtnOpacity.handle('your-playlists')
-        },
-        handle: function() {
-          this.renderYourPlaylists()
-          app.handleMainView.handleBtns.showPlayNowButton('your-playlists')
-          this.handlePlayBtnOpacity()
-        }
+      handlePlayBtnOpacity: function() {
+        app.handleMainView.handleBtns.handlePlayBtnOpacity.handle('daily-mix')
+        app.handleMainView.handleBtns.handlePlayBtnOpacity.handle('recently-played')
+        app.handleMainView.handleBtns.handlePlayBtnOpacity.handle('your-playlists')
+        app.handleMainView.handleBtns.handlePlayBtnOpacity.handle('best-of-artist')
+      },
+      showPlayBtns: function() {
+        app.handleMainView.handleBtns.showPlayNowButton('daily-mix')
+        app.handleMainView.handleBtns.showPlayNowButton('recently-played')
+        app.handleMainView.handleBtns.showPlayNowButton('your-playlists')
+        app.handleMainView.handleBtns.showPlayNowButton('best-of-artist')
       },
       handle: function() {
-        this.handleDailyMixes.handle()
-        this.handleRecentlyPlayed.handle()
-        this.handleYourPlaylists.handle()
+        this.handleRender.start()
+        this.showPlayBtns()
+        this.handlePlayBtnOpacity()
       }
     },
     //play playlist when click "play now" button
