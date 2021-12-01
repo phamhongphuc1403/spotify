@@ -856,6 +856,8 @@ const allPlaylists = [
 
 shuffleArray(allPlaylists)
 
+
+
 const dailyMixesFactory = {
   data: {
     artistsGroups: [
@@ -1012,3 +1014,39 @@ function shuffleArray(Array) {
   Array.sort((a, b) => a.order - b.order)
   Array.forEach((value, index) => value.order = index + 1)
 }
+
+
+const allSections = [
+  {
+    name: 'Hello',
+    sectionType: "current-playlists",
+    playlists: [...allPlaylists].filter(playlist => playlist.tag.includes('own playlist')),
+    shuffle: true
+  },
+  {
+    name: 'Made for you',
+    sectionType: "daily-mix",
+    playlists: [...allPlaylists].filter(playlist => playlist.tag.includes('daily mix')),
+    shuffle: false
+  },
+  {
+    name: 'Recently played',
+    sectionType: "recently-played",
+    playlists: [...allPlaylists],
+    shuffle: true
+  },
+  {
+    name: 'Your playlists',
+    sectionType: "your-playlists",
+    playlists: [...allPlaylists].filter(playlist => playlist.tag.includes('own playlist')),
+    shuffle: true
+  },
+  {
+    name: 'Best of artist',
+    sectionType: "best-of-artist",
+    playlists: [...allPlaylists].filter(playlist => playlist.tag.includes('best of artist')),
+    shuffle: true
+  },
+
+
+]

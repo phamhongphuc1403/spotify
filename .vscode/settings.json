@@ -2,5 +2,6 @@
     "cSpell.enableFiletypes": [
         "!html"
     ],
-    "cmake.configureOnOpen": false
+    "cmake.configureOnOpen": false,
+    "cSpell.words": []
 }

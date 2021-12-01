@@ -456,7 +456,6 @@ html * {
 }
 
 .play-now {
-    FONT-WEIGHT: 100;
     margin-left: 8px;
     height: 40px;
     opacity: 0;
@@ -476,16 +475,15 @@ html * {
     border-radius: 50px;
     opacity: 0;
     transition: opacity 300ms;
-
 }
 
-.playing {
+/* .playing {
     right: 15px;
     height: 40px;
     opacity: 0;
     position: absolute;
-}
-.playing-shadow {
+} */
+/* .playing-shadow {
     width: 40px;
     height: 40px;
     box-shadow: 0 8px 8px rgb(0 0 0 / 30%);
@@ -493,7 +491,7 @@ html * {
     right: 16px;
     border-radius: 50px;
     opacity: 0;
-}
+} */
 .root__main-view__playlist-section {
     margin-bottom: 50px;
 }
@@ -590,8 +588,9 @@ html * {
     position: absolute;
     bottom: 24px;
     right: 8px;
+    opacity: 0;
     /* height: 40px; */
-    /* opacity: 1; */
+    opacity: 1;
     /* transition: opacity 300ms; */
     /* z-index: 1; */
 }
