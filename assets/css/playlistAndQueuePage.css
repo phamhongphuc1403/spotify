@@ -1,6 +1,7 @@
 #on-open-playlist {
     display: none;
     height: 100%;
+    /* width: 100vw; */
     background-color: white;
     z-index: 3;
     position: absolute;
@@ -202,6 +203,8 @@
     z-index: 4;
     overflow-x: hidden;
     box-sizing: border-box;
+    width: 100%;
+    height: 100%;
 }
 #queue__header {
     display: none;
@@ -257,6 +260,7 @@
 @media (max-width: 999px) {
     #on-open-playlist {
         padding: 10px;
+        overflow-x: hidden;
     }
     #on-open-playlist__return-home {
         display: block;

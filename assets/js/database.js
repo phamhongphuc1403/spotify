@@ -90,23 +90,23 @@ const allSongs = [
     tag: ['favorite', 'pop']
   },
   { id: 10, 
-    name: "Die Young",
-    artist: ["Ke$ha"], 
-    img: "./data/albums/warrior__kehsa.jpg",
-    path: "./data/songs/die-young__kesha.mp3",
-    album: "Warrior",
+    name: "Where Have You Gone (Anywhere)",
+    artist: ["Lucas & Steve"], 
+    img: "./data/albums/letters-to-remember__lucas-steve.jpg",
+    path: "./data/songs/where-have-you-gone-anywhere__lucas-steve.mp3",
+    album: "Letters To Remember",
     backgroundColor: '#5c6e6e',
-    tag: ['favorite', 'pop']
+    tag: ['favorite', 'edm']
   },
   { 
     id: 11, 
-    name: "Best Song Ever", 
-    artist: ["One Direction"],
-    img: "./data/albums/midnight-memories__one-direction.jpg",
-    path: "./data/songs/best-song-ever__one-direction.mp3",
-    album: "Midnight Memories",
-    backgroundColor: '#6a4240',
-    tag: ['favorite', 'pop']
+    name: "Letters", 
+    artist: ["Lucas & Steve"],
+    img: "./data/albums/letters-to-remember__lucas-steve.jpg",
+    path: "./data/songs/letters__lucas-steve.mp3",
+    album: "Letters To Remember",
+    backgroundColor: '#111735',
+    tag: ['favorite', 'edm']
   },
   { 
     id: 12, 
@@ -115,18 +115,18 @@ const allSongs = [
     img: "./data/albums/overexposed__maroon-5.jpg",
     path: "./data/songs/daylight__maroon-5.mp3",
     album: "Overexposed",
-    backgroundColor: '#743b53',
+    backgroundColor: '#111735',
     tag: ['favorite', 'pop']
   },
   { 
     id: 13, 
-    name: "Summer", 
-    artist: ["Calvin Harris"],
-    img: "./data/albums/motion__calvin-harris.jpg",
-    path: "./data/songs/summer__calvin-harris.mp3",
-    album: "Motion",
-    backgroundColor: '#545658',
-    tag: ['favorite', 'pop', 'edm']
+    name: "These Heights (feat. Caroline Pennell)", 
+    artist: ["Bassjackers", "Lucas & Steve", "Caroline Pennell"],
+    img: "./data/singles/these-heights__bassjackers.jpg",
+    path: "./data/songs/these-heights__bassjackers__lucas-steve__caroline-pennell.mp3",
+    album: "These Heights (feat. Caroline Pennell)",
+    backgroundColor: '#241832',
+    tag: ['favorite', 'edm']
   },
   { 
     id: 14, 
@@ -725,7 +725,7 @@ const allSongs = [
     img: "./data/albums/blue__jonas-blue.jpg",
     path: "./data/songs/fast-car__jonas-blue__dakota.mp3",
     album: "Blue",
-    backgroundColor: '#743b53',
+    backgroundColor: '#435864',
     tag: ['favorite', 'edm']
   },
   { 
@@ -735,8 +735,78 @@ const allSongs = [
     img: "./data/albums/dnce__dnce.jpg",
     path: "./data/songs/cake-by-the-ocean__dnce.mp3",
     album: "DNCE",
-    backgroundColor: '#743b53',
+    backgroundColor: '#58250e',
     tag: ['favorite', 'pop']
+  },
+  {
+    id: 75, 
+    name: "High Hopes", 
+    artist: ["Panic! At The Disco"],
+    img: "./data/albums/pray-for-the-wicked__panic-at-the-disco.jpg",
+    path: "./data/songs/high-hopes__panic-at-the-disco.mp3",
+    album: "Pray For The Wicked",
+    backgroundColor: '#084444',
+    tag: ['favorite', 'pop']
+  },
+  {
+    id: 76, 
+    name: "Hey Look Ma I Made It", 
+    artist: ["Panic! At The Disco"],
+    img: "./data/albums/pray-for-the-wicked__panic-at-the-disco.jpg",
+    path: "./data/songs/hey-look-ma-i-made-it__panic-at-the-disco.mp3",
+    album: "Pray For The Wicked",
+    backgroundColor: '#084444',
+    tag: ['favorite', 'pop']
+  },
+  {
+    id: 77, 
+    name: "ME! (feat. Brendon Urie of Panic! At The Disco)", 
+    artist: ["Taylor Swift", "Brendon Urie", "Panic! At The Disco"],
+    img: "./data/albums/lover__taylor-swift.jpg",
+    path: "./data/songs/me__taylor-swift__brendon-urie.mp3",
+    album: "Lover",
+    backgroundColor: '#935f71',
+    tag: ['favorite', 'pop']
+  },
+  {
+    id: 78, 
+    name: "Forever Young", 
+    artist: ["John De Sohn", "LIAMOO"],
+    img: "./data/albums/made-for-you__john-de-sohn.jpg",
+    path: "./data/songs/forever-young__john-de-sohn-liamoo.mp3",
+    album: "Made For You",
+    backgroundColor: '#303030',
+    tag: ['favorite', 'edm']
+  },
+  {
+    id: 79, 
+    name: "Happy Kids", 
+    artist: ["John De Sohn"],
+    img: "./data/albums/made-for-you__john-de-sohn.jpg",
+    path: "./data/songs/happy-kids__john-de-sohn-liamoo.mp3",
+    album: "Made For You",
+    backgroundColor: '#303030',
+    tag: ['favorite', 'edm']
+  },
+  {
+    id: 80, 
+    name: "Got Damn! (W.O.M.A.N)", 
+    artist: ["John De Sohn", "LIAMOO"],
+    img: "./data/singles/got-damn-woman__john-de-sohn.jpg",
+    path: "./data/songs/got-damn-woman__john-de-sohn.mp3",
+    album: "Got Damn! (W.O.M.A.N)",
+    backgroundColor: '#0c4e99',
+    tag: ['favorite', 'edm']
+  },
+  {
+    id: 81, 
+    name: "Wasted Love", 
+    artist: ["John De Sohn", "Andrelli", "Ramus Hagen"],
+    img: "./data/singles/wasted-love__john-de-sohn.jpg",
+    path: "./data/songs/wasted-love__john-de-sohn__andrelli__rasmus-hagen.mp3",
+    album: "Wasted Love",
+    backgroundColor: '#303031',
+    tag: ['favorite', 'edm']
   },
 ]
 shuffleArray(allSongs)
@@ -861,18 +931,18 @@ shuffleArray(allPlaylists)
 const dailyMixesFactory = {
   data: {
     artistsGroups: [
-      ["Martin Garrix", "Jonas Blue", "Kygo", "Calvin Harris"],
-      ["Vicetone", "Martin Jensen"],
-      ["Jonas Brothers", "Maroon 5", "Justin Bieber", "DNCE", "Ke$ha"],
+      ["Martin Garrix", "Jonas Blue", "Kygo"],
+      ["Vicetone", "Martin Jensen", "John De Sohn"],
+      ["Jonas Brothers", "Maroon 5", "Justin Bieber", "DNCE", "Panic! At The Disco"],
       ["Boston", "Starship",  "The Cult", "Kansas", "The White Stripes", "The Animals", "Gun N' Roses"],
       ["All Time Low",],
     ],
     dailyMixesFeaturing: [
       ["Daily Mixes 1", "All Time Low", "Jonas Brothers", "Justin Bieber", "Kygo", "Martin Garrix", "Maroon 5", "Vicetone"],
       ["Daily Mixes 2", "All Time Low", "Jonas Brothers", "Justin Bieber", "Kygo", "Martin Garrix", "Maroon 5"],
-      ["Daily Mixes 3", "All Time Low", "Jonas Blue", "Jonas Brothers", "Justin Bieber", "Kygo", "Martin Garrix", "Maroon 5", "Boston"],
-      ["Daily Mixes 4", "All Time Low", "Jonas Blue", "Maroon 5", "Boston"],
-      ["Daily Mixes 5", "Boston", "Martin Garrix", "Maroon 5"],
+      ["Daily Mixes 3", "All Time Low", "Jonas Blue", "Jonas Brothers", "Justin Bieber", "Kygo", "Maroon 5", "Boston", "Panic! At The Disco"],
+      ["Daily Mixes 4", "All Time Low", "Jonas Blue", "Maroon 5", "Boston", "Kygo", "Panic! At The Disco"],
+      ["Daily Mixes 5", "Boston", "Martin Garrix", "Maroon 5", "Panic! At The Disco"],
     ],
   },
   

@@ -93,7 +93,7 @@ html, body {
     font-style: normal; 
 }
 html {
-    background-color: #4c4d50;
+    background-color: #241832;
     font-family: Gotham;
     color:white;
     font-stretch: ultra-condensed;
@@ -106,6 +106,7 @@ html {
     -moz-user-select: none; /* Old versions of Firefox */
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none;
+    overflow: h;
 }
 html * {
     box-sizing: border-box;
@@ -124,7 +125,7 @@ html * {
 
   /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #4d4d4d; 
+    background: #4d4d4d;
 }
   
   /* Handle on hover */

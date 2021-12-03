@@ -441,7 +441,7 @@ const app = {
             playlist.onmouseenter = function() {
               mainView.style.backgroundImage = `linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px)`
               rootTop.style.backgroundColor = `rgba(${currentPlaylistContent[index].headerColor}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`;
-              app.handlePlaylists.handleCurrentPlaylist.handleCurrentPlaylistsHover.handleMainViewBackground.handleHeaderOpacity(currentPlaylistContent[index].headerColor)
+              app.handlePlaylists.handleCurrentPlaylist.handleMainViewBackground.handleHeaderOpacity(currentPlaylistContent[index].headerColor)
             }
           })
         },
@@ -936,6 +936,7 @@ const app = {
             app.handleMainView.handleBtns.handlePlayBtn.parentElement = e.target.offsetParent
           } else {
             _this.openPlaylist.startOpen(thisPlaylistInDB)
+            // playlistPage.style.height = mainView.offsetHeight + 'px'
             app.handlePlaylists.handleOwnPlaylists.styleLeftSidebarPlaylist()
           }
         })
@@ -1053,6 +1054,7 @@ const app = {
     },
     openQueuePage: function() { 
       queuePage.style.display = 'block'
+      // queuePage.style.height = mainView.offsetHeight + 'px'
       queuePage.scrollTop = 0
       rootTop.style.backgroundColor = 'transparent'
       app.handleNavigation.farFromHome()
@@ -1130,7 +1132,7 @@ const app = {
       handleResponsive: {
         handlePageSize: function(page) {
           page.style.width = mainView.offsetWidth + 'px'
-          page.style.height = mainView.offsetHeight + 'px'
+          // page.style.height = mainView.offsetHeight + 'px'
           page.style.top = mainView.offsetTop + 'px'
           page.style.left = mainView.offsetLeft + 'px'
         },
@@ -1256,7 +1258,7 @@ const app = {
           })
         },
         pausePlayingPlaylist: function() {
-          if (app.handleMainView.handleBtns.handlePlayBtn.isPause) {
+          if (app.handleMainView.handleBtns.handlePlayBtn.isPause && mainView.style.display != 'none') {
             const playBtn = this.parentElement.querySelector('.play-now')
             const playBtnShadow = this.parentElement.querySelector('.play-now-shadow')
             playBtn.style.opacity = 1;
@@ -1294,12 +1296,14 @@ const app = {
         homeBtn.classList.add('current')
         app.trace.push(mainView)
         app.currentPage += 1
+        mainView.style.overflowY = 'overlay'
       }
     },
     farFromHome: function() {
       app.isAtHome = false;
       homeBtn.querySelector('img').src = './assets/images/left-sidebar/home.PNG'
       homeBtn.classList.remove('current')
+      mainView.style.overflowY = 'hidden'
     },
     handleBtns: function() {
       const _this = this
