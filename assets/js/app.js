@@ -513,7 +513,7 @@ const app = {
         Array.from($('#root__left-sidebar').getElementsByClassName('is-a-playlist'))
         .forEach(eachPlaylist => eachPlaylist.ondblclick = function() {
           const thisPlaylistInDB = app.handlePlaylists.playlists.filter(playlist => playlist.id == eachPlaylist.getAttribute('playlist-id'))[0]
-          app.handlePlaylistPage.openPlaylist.playPlaylist(thisPlaylistInDB)
+          app.handlePlaylistPage.playPlaylist(thisPlaylistInDB)
         })
       },
       handle: function() {
