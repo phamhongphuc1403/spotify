@@ -1453,8 +1453,11 @@ html * {
     }
 }
 @media (max-width: 499px) {
+    #root__main-view {
+        background-attachment: scroll;
+    }
     .playlists > .playlist {
-        /* background-color: rgba(255, 255, 255, .1); */
+        background-color: rgba(255, 255, 255, .1);
     }
 }
 
