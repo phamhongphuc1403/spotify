@@ -423,7 +423,7 @@ html * {
     padding: 24px 32px 0px;
     overflow: overlay;
     height: 100%;
-    background-image: linear-gradient(rgba(142, 128, 86, 0.35) 0%, #121212 15%);
+    /* background-image: linear-gradient(rgba(142, 128, 86, 0.35) 0%, #121212 15%); */
     background-attachment: local;
     /* z-index: 1; */
     /*transition: 0.3s linear;

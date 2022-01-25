@@ -439,8 +439,7 @@ const app = {
       handleMainViewBackground: {
         renderBackground: function() {  
           const currentPlaylistContent = app.handlePlaylists.playlists.filter(playlist => playlist.tag.includes('own playlist'))
-          // mainView.style.backgroundImage = `linear-gradient(rgba(${currentPlaylistContent[0].backgroundColor}, 0.35), #121212 400px)`
-          mainView.style.backgroundImage = ``
+          mainView.style.backgroundImage = `linear-gradient(rgba(${currentPlaylistContent[0].backgroundColor}, 0.35), #121212 400px)`
           mainView.style.backgroundColor = `#181818`
           // mainView.style.cssText = `
           // background-color: rgba(${currentPlaylistContent[0].backgroundColor}, 0.35);
@@ -454,8 +453,7 @@ const app = {
           const currentPlaylists = Array.from(document.getElementsByClassName('current-playlist'));
           currentPlaylists.forEach((playlist, index) => {
             playlist.onmouseenter = function() {
-              // mainView.style.backgroundImage = `linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px)`
-              mainView.style.backgroundImage = ``
+              mainView.style.backgroundImage = `linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px)`
               mainView.style.backgroundColor = `#181818`
               // mainView.style.cssText = `
               // background-color: rgba(${currentPlaylistContent[index].backgroundColor}, 0.35);
@@ -685,9 +683,7 @@ const app = {
       stylePlaylistPage: {
         styleGeneral: function(thisPlaylistInDB) {
           playlistPage.style.display = 'block'
-          // playlistPage.style.backgroundImage = `linear-gradient(rgb(${thisPlaylistInDB.backgroundColor}), #181818 600px)`
-          playlistPage.style.backgroundImage = ``
-
+          playlistPage.style.backgroundImage = `linear-gradient(rgb(${thisPlaylistInDB.backgroundColor}), #181818 600px)`
           playlistPage.style.backgroundColor = `rgb(${thisPlaylistInDB.backgroundColor})`
           // playlistPage.style.cssText = `
           // background-color: rgb(${thisPlaylistInDB.backgroundColor});
