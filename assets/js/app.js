@@ -439,7 +439,8 @@ const app = {
       handleMainViewBackground: {
         renderBackground: function() {  
           const currentPlaylistContent = app.handlePlaylists.playlists.filter(playlist => playlist.tag.includes('own playlist'))
-          mainView.style.backgroundImage = `linear-gradient(rgba(${currentPlaylistContent[0].backgroundColor}, 0.35), #121212 400px)`
+          // mainView.style.backgroundImage = `linear-gradient(rgba(${currentPlaylistContent[0].backgroundColor}, 0.35), #121212 400px)`
+          mainView.style.backgroundImage = ``
           mainView.style.backgroundColor = `#181818`
           // mainView.style.cssText = `
           // background-color: rgba(${currentPlaylistContent[0].backgroundColor}, 0.35);
@@ -453,7 +454,8 @@ const app = {
           const currentPlaylists = Array.from(document.getElementsByClassName('current-playlist'));
           currentPlaylists.forEach((playlist, index) => {
             playlist.onmouseenter = function() {
-              mainView.style.backgroundImage = `linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px)`
+              // mainView.style.backgroundImage = `linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px)`
+              mainView.style.backgroundImage = ``
               mainView.style.backgroundColor = `#181818`
               // mainView.style.cssText = `
               // background-color: rgba(${currentPlaylistContent[index].backgroundColor}, 0.35);
@@ -683,7 +685,9 @@ const app = {
       stylePlaylistPage: {
         styleGeneral: function(thisPlaylistInDB) {
           playlistPage.style.display = 'block'
-          playlistPage.style.backgroundImage = `linear-gradient(rgb(${thisPlaylistInDB.backgroundColor}), #181818 600px)`
+          // playlistPage.style.backgroundImage = `linear-gradient(rgb(${thisPlaylistInDB.backgroundColor}), #181818 600px)`
+          playlistPage.style.backgroundImage = ``
+
           playlistPage.style.backgroundColor = `rgb(${thisPlaylistInDB.backgroundColor})`
           // playlistPage.style.cssText = `
           // background-color: rgb(${thisPlaylistInDB.backgroundColor});
@@ -1299,13 +1303,12 @@ const app = {
           })
         },
         pausePlayingPlaylist: function() {
-          if (app.handleMainView.handleBtns.handlePlayBtn.isPause && mainView.style.display != 'none') {
+          if (app.handleMainView.handleBtns.handlePlayBtn.isPause && playlistPage.style.display == 'none') {
             const playBtn = this.parentElement.querySelector('.play-now')
             const playBtnShadow = this.parentElement.querySelector('.play-now-shadow')
             playBtn.style.opacity = 1;
             playBtnShadow.style.opacity = 1;
             app.handleMainView.handleBtns.handlePlayBtn.isPause = false;
-            // console.log(this.parentElement)
           }
         },
         handle: function() {
