@@ -27,9 +27,6 @@ const playlistsSections = $('#sections')
 
 
 const app = {
-  isAtHome: true,
-  trace: [mainView],
-  currentPage: 0,
   playSongs: { 
     songs: [...allPlaylists.filter(playlist => playlist.tag.includes('liked songs'))[0].songs],
     id: allPlaylists.filter(playlist => playlist.tag.includes('liked songs'))[0].id,
@@ -58,7 +55,7 @@ const app = {
       }
     },
   
-    handleTimeTotal: function() {
+    handleTotalTime: function() {
       audio.onloadedmetadata = function() {
         playbackSlider.max = audio.duration
         const songDuration = Math.round(audio.duration)
@@ -79,17 +76,17 @@ const app = {
         currentSecond < 10 ? timePlayed.innerHTML = `${currentMinute}:0${currentSecond}`: timePlayed.innerHTML = `${currentMinute}:${currentSecond}`
     },
   
-      //handle when song is playing
+      //handle when the song is playing
     audioPlaying: function(color = '#b3b3b3') {
       const _this = this
     
       audio.ontimeupdate = function() {
 
-        //set 'time played' when song plays
+        //update time played when the song is playing
         if (_this.isSeeking == false) {
           _this.handleTimePlayed()
      
-           //handle slider track color when song plays
+           //handle slider track color when the song is playing
           playbackSlider.value = audio.currentTime
           let thumbValue = playbackSlider.value / playbackSlider.max *100
           playbackSlider.style.background = `linear-gradient(to right, ${color} 0%, ${color} ${thumbValue}%, #535353 ${thumbValue}%, #535353 100%)`
@@ -101,18 +98,18 @@ const app = {
       this.currentIndex += 1
       this.loadCurrentSong()
       audio.autoplay = true
-      playBtn.src = `./assets/images/now-playing/pause.png`  //prevent glitch when the next song is load
+      playBtn.src = `./assets/images/now-playing/pause.png`  //prevent glitch when the next song is loading
     },
   
   
     handlePlaybackSliderBar: function() {   
       const _this = this
+
       //handle slider thumb when drag or click
       playbackSlider.oninput = function() {
         _this.isSeeking = true
         _this.handleTimePlayed(playbackSlider.value)
         let thumbValue = playbackSlider.value / playbackSlider.max *100
-        // setTimeout(_this.audioPlaying)
         playbackSlider.style.background = 'linear-gradient(to right, #1db954 0%, #1db954 ' + thumbValue + '%, #535353 ' + thumbValue + '%, #535353 100%)'
   
       }
@@ -124,7 +121,7 @@ const app = {
   
       playbackSlider.onclick = function(e) {e.stopPropagation()}
   
-      //handle slider tracks color
+      //handle color of the slider track
       playbackSlider.onmouseenter = function() {
   
         //add new css file to change the slider thumb when hover
@@ -135,7 +132,7 @@ const app = {
         link.setAttribute('id',"slidercss")
         head.appendChild(link)
   
-        //change slider track color when hover
+        //change the color of slider track when hover
         _this.audioPlaying('#1db954')
         let thumbValue = playbackSlider.value / playbackSlider.max *100
         playbackSlider.style.background = 'linear-gradient(to right, #1db954 0%, #1db954 ' + thumbValue + '%, #535353 ' + thumbValue + '%, #535353 100%)'
@@ -211,7 +208,7 @@ const app = {
         link.setAttribute('id',"slidercss")
         head.appendChild(link)
   
-        //change slider track color when hover
+        //change the color of the slider track when hover
         let thumbValue = volumeSlider.value / volumeSlider.max * 100
         volumeSlider.style.background = `linear-gradient(to right, #1db954 0%, #1db954 ${thumbValue}%, #535353 ${thumbValue}%, #535353 100%)`
   
@@ -224,7 +221,7 @@ const app = {
         const sliderHover = document.getElementById('slidercss')
         sliderHover.remove()
   
-        //change slider track color to default
+        //change the color of slider track to default
         let thumbValue = volumeSlider.value / volumeSlider.max * 100
         volumeSlider.style.background = `linear-gradient(to right, #b3b3b3 0%, #b3b3b3 ${thumbValue}%, #535353 ${thumbValue}%, #535353 100%)`
   
@@ -236,7 +233,7 @@ const app = {
       shuffle: function() {
         app.playSongs.isShuffle = true
   
-        //random order of other songs
+        //random order of other songs (except listening song)
         app.playSongs.songs.forEach(obj => {obj.shuffledOrder =  Math.floor(Math.random() * (app.playSongs.songs.length - 1)) + 1})
         app.playSongs.songs[app.playSongs.currentIndex].shuffledOrder = 0
   
@@ -249,7 +246,7 @@ const app = {
       
       noShuffle: function() {
         app.playSongs.isShuffle = false
-        //sort songs by order
+        //sort songs by default order
         const currentSong = app.playSongs.songs[app.playSongs.currentIndex]
         app.playSongs.songs.sort((a,b) => a.order - b.order)
         app.playSongs.currentIndex = app.playSongs.songs.indexOf(currentSong)
@@ -270,7 +267,7 @@ const app = {
           
           const playlistLength = app.playSongs.songs.length - 1
             
-          if (app.playSongs.currentIndex < playlistLength) {  //if the next song is not the last in the playlist, auto play the song
+          if (app.playSongs.currentIndex < playlistLength) {  //if the next song is not the last in the playlist, auto play it
             app.playSongs.handleNextSong()
             app.handleQueuePage.reRenderQueuePage()
           } else {    //if the next song is the last, stop the playlist 
@@ -281,7 +278,7 @@ const app = {
           }                                                  
         }      
         
-        //change repeat button to default
+        //change the repeat button to default
         repeatBtn.src = './assets/images/now-playing/repeat.PNG'
       },
   
@@ -293,7 +290,7 @@ const app = {
         audio.onended = function() {
           const playlistLength = app.playSongs.songs.length - 1
   
-          if (app.playSongs.currentIndex < playlistLength) {  //if the next song is not the last in the playlist, auto play the song
+          if (app.playSongs.currentIndex < playlistLength) {  //if the next song is not the last in the playlist, auto play it
             app.playSongs.handleNextSong()
           } else {    //if the next song is the last, auto play the first song 
             app.playSongs.currentIndex = 0                                       
@@ -324,7 +321,7 @@ const app = {
       playBtn.onclick = function(e) {       
         e.stopPropagation()                           
         _this.isPlaying ? audio.pause() : audio.play()             
-        if (_this.currentIndex > _this.songs.length) {  //if the the last song in the playlist is end, go to the first song
+        if (_this.currentIndex > _this.songs.length) {  //if the the last song in the playlist is finish, load the first song
           _this.currentIndex = 0
           _this.loadCurrentSong()
           audio.autoplay = true
@@ -338,9 +335,9 @@ const app = {
         
         if (audio.currentTime < 2.5) {      // go to the previous song if the current song is playing less than 2.5 seconds
           _this.currentIndex -= 1
-          if (_this.currentIndex < 0) {_this.currentIndex = _this.songs.length - 1}  //if the current song is the first in the playlist, go to the last song
+          if (_this.currentIndex < 0) {_this.currentIndex = _this.songs.length - 1}  //if the current song is the first in the playlist, play the last song
           _this.loadCurrentSong()
-        } else {      //replay the song if the current song is playing more than 2.5 seconds
+        } else {      //replay the song if the song is playing more than 2.5 seconds
           _this.loadCurrentSong()
         }
         app.handleQueuePage.reRenderQueuePage()
@@ -349,7 +346,7 @@ const app = {
       //handle next button
       nextBtn.onclick = function() {
         _this.currentIndex += 1   
-        if (_this.currentIndex >= _this.songs.length) {_this.currentIndex = 0}    //if it's the the last song in the playlist, play the first song
+        if (_this.currentIndex >= _this.songs.length) {_this.currentIndex = 0}    //if it's the last song in the playlist, play the first song
         _this.loadCurrentSong()
         audio.autoplay = true
         app.handleQueuePage.reRenderQueuePage()
@@ -374,8 +371,6 @@ const app = {
     handlePlayOrPauseAudio: function() {
       _this = this
       function handleButtons() {
-        // app.handlePlaylists.handleCurrentPlaylist.handleCurrentPlaylistsButtonOpacity()
-        // app.handlePlaylists.handlePlaylistSections.handlePlayBtnOpacity()
         app.handleMainView.handleBtns.handlePlayBtn.handle()
         app.handlePlaylists.handleOwnPlaylists.stylePlayingPlaylist.handle()
         app.handlePlaylistPage.openPlaylist.stylePlaylistPage.styleSongs.handle()
@@ -385,7 +380,7 @@ const app = {
       audio.onplay = function() {
         _this.isPlaying = true;
         playBtn.src = `./assets/images/now-playing/pause.png`
-        $('title').innerText = `${_this.songs[_this.currentIndex].name} · ${_this.songs[_this.currentIndex].artist}`
+        $('title').innerText = `${_this.songs[_this.currentIndex].name} · ${_this.songs[_this.currentIndex].artist.join(', ')}`
 
         handleButtons()
       }
@@ -401,7 +396,7 @@ const app = {
     },
     start: function() {  //wrap all function into one 
         this.loadCurrentSong()
-        this.handleTimeTotal()
+        this.handleTotalTime()
         this.isRepeatPlaylist ? this.handleRepeat.repeatPlaylist() : this.isRepeatSong ? this.handleRepeat.repeatSong() : this.handleRepeat.noRepeat()
         if (this.isShuffle) this.handleShuffle.shuffle()
         this.audioPlaying()
@@ -416,8 +411,10 @@ const app = {
   handlePlaylists: {
     playlists: [...allPlaylists],
     handleCurrentPlaylist: {
+
+      //render current playlists
       renderCurrentPlaylists: function() {
-        const currentPlaylistContent = allSections.filter(section => section.sectionType == 'current-playlists')[0].playlists.slice(0,6)
+        const currentPlaylistContent = allSections.filter(section => section.sectionType == 'current-playlists')[0].playlists.slice(0,6) //pick the first 6 playlists from the database
           .map(playlist => `
             <li class="current-playlist is-a-playlist" playlist-id="${playlist.id}">
                 <img src="${playlist.img}">
@@ -430,6 +427,7 @@ const app = {
           .join('')
         currentPlaylists.innerHTML = currentPlaylistContent
       },
+
       handleMainViewBackground: {
         renderBackground: function() {  
           const currentPlaylistContent = app.handlePlaylists.playlists.filter(playlist => playlist.tag.includes('own playlist'))
@@ -472,12 +470,12 @@ const app = {
         .forEach(playlist => {
           if (playlistPage.style.display == 'block' && playlistPage.querySelector('#on-open-playlist__body__btns__play').getAttribute('playlist-id') == playlist.getAttribute('playlist-id')) {
             playlist.style.color = 'white'
-            playlist.onmouseenter = function() {playlist.style.color = 'white'}
-            playlist.onmouseleave = function() {playlist.style.color = 'white'}
+            playlist.onmouseenter = () => {playlist.style.color = 'white'}
+            playlist.onmouseleave = () => {playlist.style.color = 'white'}
           } else {
             playlist.style.color = '#b3b3b3'
-            playlist.onmouseenter = function() {playlist.style.color = 'white'}
-            playlist.onmouseleave = function() {playlist.style.color = '#b3b3b3'}
+            playlist.onmouseenter = () => {playlist.style.color = 'white'}
+            playlist.onmouseleave = () => {playlist.style.color = '#b3b3b3'}
           }
         })
       },
@@ -896,8 +894,7 @@ const app = {
         const _this = this;
         if (queuePage.style.display == 'block') {app.handleQueuePage.closeQueuePage()}
         app.handleNavigation.farFromHome()
-        // app.currentPage += 1;
-        // app.trace.push(playlistPage.innerHTML)
+
         playlistPage.onscroll = function() {
           rootTop.style.backgroundColor = `rgba(${thisPlaylistInDB.headerColor}, ${0.5 + - (225 - Math.ceil(playlistPage.scrollTop)) / 100})`
           _this.stylePlaylistPage.handlePlaylistHeaderOnscroll()
@@ -908,6 +905,9 @@ const app = {
         this.handlePlaylistPageButtons.startHandle(thisPlaylistInDB)
         app.handleMainView.styleMainView.handleResponsive.handlePageSize(playlistPage)
         playlistPage.scrollTop = 0
+        
+        app.handlePlaylists.handleOwnPlaylists.styleLeftSidebarPlaylist()
+
       }
     },
     closePlaylist: function() {
@@ -935,8 +935,11 @@ const app = {
             _this.playPlaylist(thisPlaylistInDB)
             app.handleMainView.handleBtns.handlePlayBtn.parentElement = e.target.offsetParent
           } else {
+            app.handleNavigation.currentPageOrder++;
             _this.openPlaylist.startOpen(thisPlaylistInDB)
             // playlistPage.style.height = mainView.offsetHeight + 'px'
+            app.handleNavigation.handleTracing(playlistPage, thisPlaylistInDB)
+            app.handleNavigation.handleBtns.styleNavigationBtns()
             app.handlePlaylists.handleOwnPlaylists.styleLeftSidebarPlaylist()
           }
         })
@@ -1000,6 +1003,7 @@ const app = {
         if (queuePage.style.display == 'block') {
           if (window.outerWidth > 999) {
             app.handleMainView.styleMainView.handleResponsive.handlePageSize(queuePage)
+            queuePage.style.zIndex = 4;
           } else {
             queuePage.style.cssText = `
             display: block;
@@ -1010,7 +1014,7 @@ const app = {
             top: 0;
             left: 0;
             height: 100%;`
-            document.getElementById('root__now-playing').style.zIndex = '0'
+            // document.getElementById('root__now-playing').style.zIndex = '0'
             document.getElementById('root__left-sidebar').style.zIndex = '0'
           }
         }
@@ -1037,7 +1041,7 @@ const app = {
       const _this = this
       $('#queue__header__close').onclick = function() {
         _this.closeQueuePage()
-          document.getElementById('root__now-playing').style.zIndex = '3'
+          document.getElementById('root__now-playing').style.zIndex = '5'
           document.getElementById('root__left-sidebar').style.zIndex = '3'
       }
       
@@ -1058,8 +1062,6 @@ const app = {
       queuePage.scrollTop = 0
       rootTop.style.backgroundColor = 'transparent'
       app.handleNavigation.farFromHome()
-      app.currentPage += 1
-      app.trace.push(queuePage)
       $('.list').src= './assets/images/now-playing/list-active.PNG'
       app.handleNowPlaying.handleActiveBtns(true, $('.list'), $('.list-active'))
       this.reRenderQueuePage()
@@ -1068,7 +1070,6 @@ const app = {
       queuePage.style.display = 'none'
       $('.list').src= './assets/images/now-playing/list.PNG'
       app.handleNowPlaying.handleActiveBtns(false, $('.list'), $('.list-active'))
-
       mainView.scrollTop = 0
       playlistPage.scrollTop = 0
       rootTop.style.backgroundColor = 'transparent'
@@ -1077,7 +1078,16 @@ const app = {
       const _this = this
       $('.list').onclick = function(e) {
         e.stopPropagation()
-        window.getComputedStyle(queuePage).display == 'none' ? _this.openQueuePage() : _this.closeQueuePage()
+        app.handleNavigation.currentPageOrder++;
+        if (window.getComputedStyle(queuePage).display == 'none') {
+          _this.openQueuePage()
+          app.handleNavigation.handleTracing(queuePage, app.handlePlaylists.playlists.filter(playlist => playlist.id == app.playSongs.id)[0])
+          
+        } else {
+          _this.closeQueuePage()
+          app.handleNavigation.trace[app.handleNavigation.currentPageOrder] = app.handleNavigation.trace[app.handleNavigation.currentPageOrder - 2]
+        } 
+        app.handleNavigation.handleBtns.styleNavigationBtns()
       }
     }
   },
@@ -1085,7 +1095,6 @@ const app = {
     openNowPlayingPage: function() {
       nowPlaying.onclick = function() {
         if(!document.getElementById('nowPlaying') && window.outerWidth <= 999) {
-          app.handleNavigation.farFromHome()
           const head = document.querySelector('head')
           const link = document.createElement('link')
           link.setAttribute('rel',"stylesheet")
@@ -1264,7 +1273,7 @@ const app = {
             playBtn.style.opacity = 1;
             playBtnShadow.style.opacity = 1;
             app.handleMainView.handleBtns.handlePlayBtn.isPause = false;
-            console.log(this.parentElement)
+            // console.log(this.parentElement)
           }
         },
         handle: function() {
@@ -1287,29 +1296,115 @@ const app = {
     }
   },
   handleNavigation: {
+    isAtHome: true,
+    trace: [[mainView]],
+    currentPageOrder: 0,
     homeComing: function() {
-      if (!app.isAtHome) {
+      if (!app.handleNavigation.isAtHome) {
         if (playlistPage.style.display == 'block') {app.handlePlaylistPage.closePlaylist()}
         if (queuePage.style.display == 'block') {app.handleQueuePage.closeQueuePage()}
-        app.isAtHome = true;
+        app.handleNavigation.isAtHome = true;
         homeBtn.querySelector('img').src = './assets/images/left-sidebar/home-active.PNG'
         homeBtn.classList.add('current')
-        app.trace.push(mainView)
-        app.currentPage += 1
         mainView.style.overflowY = 'overlay'
       }
     },
     farFromHome: function() {
-      app.isAtHome = false;
+      app.handleNavigation.isAtHome = false;
       homeBtn.querySelector('img').src = './assets/images/left-sidebar/home.PNG'
       homeBtn.classList.remove('current')
       mainView.style.overflowY = 'hidden'
     },
-    handleBtns: function() {
-      const _this = this
-      $('#root__left-sidebar__logo').onclick = function() {_this.homeComing()}
-      homeBtn.onclick = function() {_this.homeComing()}
-    }
+    handleTracing: function(currentPageOrder, playlist) {
+        if (this.trace[this.currentPageOrder] == undefined) {
+          this.trace.push([currentPageOrder, playlist])
+        } else {
+          // console.log(this.trace)
+          this.trace.splice(this.currentPageOrder);
+          this.trace.push([currentPageOrder, playlist])
+        }
+      // console.log(this.trace)
+      // console.log(this.currentPageOrder)
+    },
+    handleBtns: {
+      styleNavigationBtns: function() {
+        const prevBtn = Array.from($('#root__top__move-action').querySelectorAll('img'))[0]
+        const nextBtn = Array.from($('#root__top__move-action').querySelectorAll('img'))[1]
+        if (app.handleNavigation.currentPageOrder == 0) {
+          prevBtn.style.cssText = `
+          opacity: 0.5;
+          cursor: not-allowed;
+          `
+        } else {
+          prevBtn.style.cssText = `
+          opacity: 1;
+          cursor: default;
+          `
+        }
+
+        if (app.handleNavigation.currentPageOrder == app.handleNavigation.trace.length - 1) {
+          nextBtn.style.cssText = `
+          opacity: 0.5;
+          cursor: not-allowed;
+          `
+        } else {
+          nextBtn.style.cssText = `
+          opacity: 1;
+          cursor: default;
+          `
+        }
+      },
+      navigateChoices: function() {
+        switch (app.handleNavigation.trace[app.handleNavigation.currentPageOrder][0]) {
+          case mainView: 
+            app.handleNavigation.homeComing();
+            break;
+          case playlistPage:
+            app.handlePlaylistPage.openPlaylist.startOpen(app.handleNavigation.trace[app.handleNavigation.currentPageOrder][1]);
+            break;
+          case queuePage:
+            app.handleQueuePage.openQueuePage();
+            break;
+        }
+      },
+      start: function() {
+        const _this = this;
+        $('#root__left-sidebar__logo').onclick = function() {
+          app.handleNavigation.homeComing()
+          app.handleNavigation.currentPageOrder++;
+          app.handleNavigation.trace.push([mainView])
+          // console.log(app.handleNavigation.trace)
+          app.handleNavigation.handleBtns.styleNavigationBtns()
+        }
+        homeBtn.onclick = function() {
+          app.handleNavigation.homeComing()
+          app.handleNavigation.currentPageOrder++;
+          app.handleNavigation.trace.push([mainView])
+          // console.log(app.handleNavigation.trace)
+          app.handleNavigation.handleBtns.styleNavigationBtns()
+        }
+
+        $('.root__top__move-action__prev').onclick = function() {
+          if (app.handleNavigation.currentPageOrder != 0) {
+            app.handleNavigation.currentPageOrder--;
+            _this.navigateChoices()
+            _this.styleNavigationBtns()
+            // console.log(app.handleNavigation.trace)
+            // console.log(app.handleNavigation.currentPageOrder)
+          }
+        }
+        $('.root__top__move-action__next').onclick = function() {
+          if (app.handleNavigation.currentPageOrder != app.handleNavigation.trace.length - 1) {
+            app.handleNavigation.currentPageOrder++;
+            _this.navigateChoices()
+            _this.styleNavigationBtns()
+            // console.log(app.handleNavigation.trace)
+            // console.log(app.handleNavigation.currentPageOrder)
+          }
+        }
+      }
+    },
+    
   },
   resize: function() {
     const _this = this
@@ -1329,7 +1424,7 @@ const app = {
     this.handlePlaylistPage.start()
     this.handleQueuePage.start()
     this.handleMainView.start()
-    this.handleNavigation.handleBtns()
+    this.handleNavigation.handleBtns.start()
     this.handleNowPlaying.openNowPlayingPage()
     this.resize()
   }

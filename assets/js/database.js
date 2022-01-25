@@ -808,6 +808,16 @@ const allSongs = [
     backgroundColor: '#303031',
     tag: ['favorite', 'edm']
   },
+  {
+    id: 82, 
+    name: "Radio Ga Ga", 
+    artist: ["Queen"],
+    img: "./data/albums/the-works__queen.jpg",
+    path: "./data/songs/radio-ga-ga-remastered-2011__queen.mp3",
+    album: "The Works (Deluxe Remastered Version)",
+    backgroundColor: '#66645e',
+    tag: ['favorite', 'rock']
+  },
 ]
 shuffleArray(allSongs)
 
@@ -934,7 +944,7 @@ const dailyMixesFactory = {
       ["Martin Garrix", "Jonas Blue", "Kygo"],
       ["Vicetone", "Martin Jensen", "John De Sohn"],
       ["Jonas Brothers", "Maroon 5", "Justin Bieber", "DNCE", "Panic! At The Disco"],
-      ["Boston", "Starship",  "The Cult", "Kansas", "The White Stripes", "The Animals", "Gun N' Roses"],
+      ["Boston", "Starship",  "The Cult", "Kansas", "The White Stripes", "The Animals", "Gun N' Roses", "Queen"],
       ["All Time Low",],
     ],
     dailyMixesFeaturing: [
