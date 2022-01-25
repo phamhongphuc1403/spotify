@@ -1119,6 +1119,7 @@ const app = {
       mainView.scrollTop = 0
       playlistPage.scrollTop = 0
       rootTop.style.backgroundColor = 'transparent'
+      if (app.handleNavigation.trace[app.handleNavigation.currentPageOrder][0] == mainView) {mainView.style.overflowY = 'overlay'}
     }, 
     start: function() {
       const _this = this
@@ -1130,10 +1131,12 @@ const app = {
           app.handleNavigation.handleTracing(queuePage, app.handlePlaylists.playlists.filter(playlist => playlist.id == app.playSongs.id)[0])
           
         } else {
-          _this.closeQueuePage()
           app.handleNavigation.trace[app.handleNavigation.currentPageOrder] = app.handleNavigation.trace[app.handleNavigation.currentPageOrder - 2]
+          _this.closeQueuePage()
         } 
         app.handleNavigation.handleBtns.styleNavigationBtns()
+        console.log( app.handleNavigation.trace)
+        console.log(app.handleNavigation.currentPageOrder)
       }
     }
   },
