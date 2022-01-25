@@ -107,6 +107,9 @@ html {
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none;
     overflow: h;
+    -moz-appearance: none; 
+    -webkit-appearance: none; 
+    appearance: none;
 }
 html * {
     box-sizing: border-box;
@@ -1450,8 +1453,8 @@ html * {
     }
 }
 @media (max-width: 499px) {
-    #root__main-view {
-        background-attachment: scroll;
+    .playlists > .playlist {
+        /* background-color: rgba(255, 255, 255, .1); */
     }
 }
 
