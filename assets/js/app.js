@@ -432,12 +432,15 @@ const app = {
         renderBackground: function() {  
           const currentPlaylistContent = app.handlePlaylists.playlists.filter(playlist => playlist.tag.includes('own playlist'))
           mainView.style.backgroundImage = `linear-gradient(rgba(${currentPlaylistContent[0].backgroundColor}, 0.35), #121212 400px)`
+          mainView.style.backgroundColor = `#181818`
+
           this.handleHeaderOpacity(app.handlePlaylists.playlists[0].headerColor)
           
           const currentPlaylists = Array.from(document.getElementsByClassName('current-playlist'));
           currentPlaylists.forEach((playlist, index) => {
             playlist.onmouseenter = function() {
               mainView.style.backgroundImage = `linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px)`
+              mainView.style.backgroundColor = `#181818`
               rootTop.style.backgroundColor = `rgba(${currentPlaylistContent[index].headerColor}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`;
               app.handlePlaylists.handleCurrentPlaylist.handleMainViewBackground.handleHeaderOpacity(currentPlaylistContent[index].headerColor)
             }
@@ -660,6 +663,7 @@ const app = {
         styleGeneral: function(thisPlaylistInDB) {
           playlistPage.style.display = 'block'
           playlistPage.style.backgroundImage = `linear-gradient(rgb(${thisPlaylistInDB.backgroundColor}), #181818 600px)`
+          playlistPage.style.backgroundColor = `rgb(${thisPlaylistInDB.backgroundColor})`
         },
         
         styleTitle: function() {
