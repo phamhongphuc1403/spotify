@@ -467,6 +467,10 @@ html * {
     -ms-transition: .3s ease;
     -o-transition: .3s ease;
 }
+#root__main-view__currently-playing__playlists > .current-playlist:hover {
+    background-color: rgba(255, 255, 255, .2);
+
+}
 
 #root__main-view__currently-playing__playlists > .current-playlist > img {
     width: 80px;
@@ -683,14 +687,52 @@ html * {
     width: 100%;
     margin-bottom: 32px;
 }
-
-.root__right-sidebar__user > img {
+.root__right-sidebar__user__avatar {
+    position: relative;
+    margin-right: 10px;
+}
+.root__right-sidebar__user .avatar {
     width: 48px;
     border-radius: 50%;
-    margin-right: 10px;
-    /* border: 1px solid red */
+    -webkit-filter: brightness(100%);
+    -moz-filter: brightness(100%);
+    -o-filter: brightness(100%);
+    -ms-filter: brightness(100%);
+    filter: brightness(100%);
+    transition: 0.1s ease;
+    -webkit-transition: 0.2s ease;
+    -moz-transition: 0.1s ease;
+    -ms-transition: 0.1s ease;
+    -o-transition: 0.1s ease;
+}
+.root__right-sidebar__user .play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 13px;
+    transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    opacity: 0;
+    transition: 0.2s ease;
+    -webkit-transition: 0.2s ease;
+    -moz-transition: 0.2s ease;
+    -ms-transition: 0.2s ease;
+    -o-transition: 0.2s ease;
 }
 
+.root__right-sidebar__user__avatar:hover .avatar {
+    -webkit-filter: brightness(50%);
+	-moz-filter: brightness(50%);
+	-o-filter: brightness(50%);
+	-ms-filter: brightness(50%);
+	filter: brightness(50%);
+}
+.root__right-sidebar__user__avatar:hover .play-btn {
+    opacity: 1;
+}
 .root__right-sidebar__user__user-content {
     color: #afafaf;
     min-width: 170px;

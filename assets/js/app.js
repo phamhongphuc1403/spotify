@@ -448,14 +448,6 @@ const app = {
           mainView.style.backgroundImage = `-moz-linear-gradient(rgba(${currentPlaylistContent[0].backgroundColor}, 0.35), #121212 400px)`
           mainView.style.backgroundImage = `-o-linear-gradient(rgba(${currentPlaylistContent[0].backgroundColor}, 0.35), #121212 400px)`
           mainView.style.backgroundImage = `linear-gradient(rgba(${currentPlaylistContent[0].backgroundColor}, 0.35), #121212 400px)`
-          
-          // mainView.style.cssText = `
-          // background-color: rgba(${currentPlaylistContent[0].backgroundColor}, 0.35);
-          // background-image: -webkit-linear-gradient(rgba(${currentPlaylistContent[0].backgroundColor}, 0.35), #121212 400px); 
-          // background-image:    -moz-linear-gradient(rgba(${currentPlaylistContent[0].backgroundColor}, 0.35), #121212 400px); 
-          // background-image:      -o-linear-gradient(rgba(${currentPlaylistContent[0].backgroundColor}, 0.35), #121212 400px); 
-          // background-image:         linear-gradient(rgba(${currentPlaylistContent[0].backgroundColor}, 0.35), #121212 400px); 
-          // `
           this.handleHeaderOpacity(app.handlePlaylists.playlists[0].headerColor)
           
           const currentPlaylists = Array.from(document.getElementsByClassName('current-playlist'));
@@ -466,13 +458,7 @@ const app = {
               mainView.style.backgroundImage = `-moz-linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px)`
               mainView.style.backgroundImage = `-o-linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px)`
               mainView.style.backgroundImage = `linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px)`
-              // mainView.style.cssText = `
-              // background-color: rgba(${currentPlaylistContent[index].backgroundColor}, 0.35);
-              // background-image: -webkit-linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px); 
-              // background-image:    -moz-linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px); 
-              // background-image:      -o-linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px); 
-              // background-image:         linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px); 
-              // `
+
               rootTop.style.backgroundColor = `rgba(${currentPlaylistContent[index].headerColor}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`;
               app.handlePlaylists.handleCurrentPlaylist.handleMainViewBackground.handleHeaderOpacity(currentPlaylistContent[index].headerColor)
             }
@@ -699,13 +685,6 @@ const app = {
           playlistPage.style.backgroundImage = `-moz-linear-gradient(rgb(${thisPlaylistInDB.backgroundColor}), #181818 600px)`
           playlistPage.style.backgroundImage = `-o-linear-gradient(rgb(${thisPlaylistInDB.backgroundColor}), #181818 600px)`
           playlistPage.style.backgroundImage = `linear-gradient(rgb(${thisPlaylistInDB.backgroundColor}), #181818 600px)`
-          // playlistPage.style.cssText = `
-          // background-color: rgb(${thisPlaylistInDB.backgroundColor});
-          // background-image: -webkit-linear-gradient(rgb(${thisPlaylistInDB.backgroundColor}), #181818 600px); 
-          // background-image:    -moz-linear-gradient(rgb(${thisPlaylistInDB.backgroundColor}), #181818 600px); 
-          // background-image:      -o-linear-gradient(rgb(${thisPlaylistInDB.backgroundColor}), #181818 600px); 
-          // background-image:         linear-gradient(rgb(${thisPlaylistInDB.backgroundColor}), #181818 600px); 
-          // `
         },
         
         styleTitle: function() {
@@ -1343,6 +1322,51 @@ const app = {
       this.handleBtns.handlePlayBtn.handle()
     }
   },
+  handleRightSidebar: {
+    renderUsers: function() {
+      $('#root__right-sidebar__users').innerHTML = allUsers.map(user => {
+        const song = allSongs.filter(song => song.id == user.latestSongID)[0];
+        return `
+        <div class="root__right-sidebar__user" user-id=${user.id}>
+          <div class="root__right-sidebar__user__avatar">
+            <img class="avatar" src="${user.avatarPath}">
+            <img src="./assets/images/right-sidebar/play.png" class="play-btn" song-id="${user.latestSongID}">
+          </div>
+          <div class="root__right-sidebar__user__user-content">
+            <div class="user-name-and-activity">
+              <span class='user-name'>${user.name}</span>
+              <div class="user-activity">
+                ${user.lastActive == 'online' ? `<img src="./assets/images/right-sidebar/listening.png">` : user.lastActive}
+              </div>
+            </div>
+            <div class='user-music'>
+              <div class='user-music__song'><span class="user-music__song__name">${song.name}</span><img src="./assets/images/right-sidebar/dot.png"><span class="user-music__song__artist">${song.artist}</span></div>
+              <div class='user-music__owner'><img src="./assets/images/right-sidebar/playlist.png">${song.album}</div>
+            </div>
+          </div>
+        </div>`
+      }).join('')
+    },
+    handleListenAlong: function() {
+      const users = Array.from($('#root__right-sidebar__users').querySelectorAll('.root__right-sidebar__user'));
+      users.forEach(user => {
+        const playBtn = user.querySelector('.play-btn')
+        playBtn.onclick = function() {
+          // console.log(allSongs.filter(song => song.id == playBtn.getAttribute('song-id'))[0])
+          app.playSongs.songs = [allSongs.filter(song => song.id == playBtn.getAttribute('song-id'))[0]];
+          app.playSongs.id = playBtn.getAttribute('song-id');
+          app.playSongs.currentIndex = 0;
+          app.playSongs.start();
+          audio.play();
+        }
+      })
+      console.log(users)
+    },
+    start: function() {
+      this.renderUsers();
+      this.handleListenAlong();
+    }
+  },
   handleNavigation: {
     isAtHome: true,
     trace: [[mainView]],
@@ -1370,6 +1394,10 @@ const app = {
           // console.log(this.trace)
           this.trace.splice(this.currentPageOrder);
           this.trace.push([currentPageOrder, playlist])
+        }
+        if (this.trace[this.trace.length - 1][0] ==  this.trace[this.trace.length - 2][0] && this.trace[this.trace.length - 1][1] ==  this.trace[this.trace.length - 2][1]) {
+          this.currentPageOrder--;
+          this.trace.pop()
         }
       // console.log(this.trace)
       // console.log(this.currentPageOrder)
@@ -1472,6 +1500,7 @@ const app = {
     this.handlePlaylistPage.start()
     this.handleQueuePage.start()
     this.handleMainView.start()
+    this.handleRightSidebar.start()
     this.handleNavigation.handleBtns.start()
     this.handleNowPlaying.openNowPlayingPage()
     this.resize()

@@ -818,6 +818,36 @@ const allSongs = [
     backgroundColor: '#66645e',
     tag: ['favorite', 'rock']
   },
+  {
+    id: 83, 
+    name: "Ta Bầu Cho Tổng Thống Chum", 
+    artist: ["Linh Phương"],
+    img: "./data/singles/ta-bau-cho-tt-trump__linh-phuong.jpg",
+    path: "./data/songs/ta-bau-cho-tt-trump__linh-phuong.mp3",
+    album: "Ta Bầu Cho Tổng Thống Chum",
+    backgroundColor: '#aa1e35',
+    tag: ['hidden']
+  },
+  {
+    id: 84, 
+    name: "Censored (remix)", 
+    artist: ["Chị Cả"],
+    img: "./data/singles/censored-remix__chi-ca.jpg",
+    path: "./data/songs/censored-remix__chi-ca.mp3",
+    album: "Censored (remix)",
+    backgroundColor: '#53534f',
+    tag: ['hidden']
+  },
+  {
+    id: 85, 
+    name: "Super Idol (remix)", 
+    artist: ["阿肆"],
+    img: "./data/singles/super-idol-remix__a-tu.jpg",
+    path: "./data/songs/super-idol-remix__a-tu.mp3",
+    album: "热爱105°C的你",
+    backgroundColor: '#1a132a',
+    tag: ['hidden']
+  },
 ]
 shuffleArray(allSongs)
 
@@ -1129,4 +1159,28 @@ const allSections = [
   },
 
 
+]
+
+const allUsers = [
+  {
+    id: 1,
+    name: "Donal Trump",
+    avatarPath: './assets/images/user/donal-trump.jfif',
+    latestSongID: '83',
+    lastActive: 'online',
+  },
+  {
+    id: 2,
+    name: "Dev Nguyen",
+    avatarPath: './assets/images/user/dev-nguyen.jpg',
+    latestSongID: '84',
+    lastActive: '10h',
+  },
+  {
+    id: 3,
+    name: "A Tu",
+    avatarPath: './assets/images/user/atu.jpg',
+    latestSongID: '85',
+    lastActive: '1d',
+  }
 ]
