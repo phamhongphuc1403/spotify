@@ -52,13 +52,13 @@ const app = {
         nowPlaying.style.backgroundImage = ''
       } else {
         nowPlaying.style.backgroundImage = `linear-gradient(${this.songs[this.currentIndex].backgroundColor} 90%, #181818)`
-        nowPlaying.style.cssText = `
-        background-color: ${this.songs[this.currentIndex].backgroundColor};
-        background-image: -webkit-linear-gradient(${this.songs[this.currentIndex].backgroundColor} 90%, #181818); 
-        background-image:    -moz-linear-gradient(${this.songs[this.currentIndex].backgroundColor} 90%, #181818); 
-        background-image:      -o-linear-gradient(${this.songs[this.currentIndex].backgroundColor} 90%, #181818); 
-        background-image:         linear-gradient(${this.songs[this.currentIndex].backgroundColor} 90%, #181818); 
-        `
+        // nowPlaying.style.cssText = `
+        // background-color: ${this.songs[this.currentIndex].backgroundColor};
+        // background-image: -webkit-linear-gradient(${this.songs[this.currentIndex].backgroundColor} 90%, #181818); 
+        // background-image:    -moz-linear-gradient(${this.songs[this.currentIndex].backgroundColor} 90%, #181818); 
+        // background-image:      -o-linear-gradient(${this.songs[this.currentIndex].backgroundColor} 90%, #181818); 
+        // background-image:         linear-gradient(${this.songs[this.currentIndex].backgroundColor} 90%, #181818); 
+        // `
 
       }
     },
@@ -439,29 +439,29 @@ const app = {
       handleMainViewBackground: {
         renderBackground: function() {  
           const currentPlaylistContent = app.handlePlaylists.playlists.filter(playlist => playlist.tag.includes('own playlist'))
-          // mainView.style.backgroundImage = `linear-gradient(rgba(${currentPlaylistContent[0].backgroundColor}, 0.35), #121212 400px)`
-          // mainView.style.backgroundColor = `#181818`
-          mainView.style.cssText = `
-          background-color: rgba(${currentPlaylistContent[0].backgroundColor}, 0.35);
-          background-image: -webkit-linear-gradient(rgba(${currentPlaylistContent[0].backgroundColor}, 0.35), #121212 400px); 
-          background-image:    -moz-linear-gradient(rgba(${currentPlaylistContent[0].backgroundColor}, 0.35), #121212 400px); 
-          background-image:      -o-linear-gradient(rgba(${currentPlaylistContent[0].backgroundColor}, 0.35), #121212 400px); 
-          background-image:         linear-gradient(rgba(${currentPlaylistContent[0].backgroundColor}, 0.35), #121212 400px); 
-          `
+          mainView.style.backgroundImage = `linear-gradient(rgba(${currentPlaylistContent[0].backgroundColor}, 0.35), #121212 400px)`
+          mainView.style.backgroundColor = `#181818`
+          // mainView.style.cssText = `
+          // background-color: rgba(${currentPlaylistContent[0].backgroundColor}, 0.35);
+          // background-image: -webkit-linear-gradient(rgba(${currentPlaylistContent[0].backgroundColor}, 0.35), #121212 400px); 
+          // background-image:    -moz-linear-gradient(rgba(${currentPlaylistContent[0].backgroundColor}, 0.35), #121212 400px); 
+          // background-image:      -o-linear-gradient(rgba(${currentPlaylistContent[0].backgroundColor}, 0.35), #121212 400px); 
+          // background-image:         linear-gradient(rgba(${currentPlaylistContent[0].backgroundColor}, 0.35), #121212 400px); 
+          // `
           this.handleHeaderOpacity(app.handlePlaylists.playlists[0].headerColor)
           
           const currentPlaylists = Array.from(document.getElementsByClassName('current-playlist'));
           currentPlaylists.forEach((playlist, index) => {
             playlist.onmouseenter = function() {
-              // mainView.style.backgroundImage = `linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px)`
-              // mainView.style.backgroundColor = `#181818`
-              mainView.style.cssText = `
-              background-color: rgba(${currentPlaylistContent[index].backgroundColor}, 0.35);
-              background-image: -webkit-linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px); 
-              background-image:    -moz-linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px); 
-              background-image:      -o-linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px); 
-              background-image:         linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px); 
-              `
+              mainView.style.backgroundImage = `linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px)`
+              mainView.style.backgroundColor = `#181818`
+              // mainView.style.cssText = `
+              // background-color: rgba(${currentPlaylistContent[index].backgroundColor}, 0.35);
+              // background-image: -webkit-linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px); 
+              // background-image:    -moz-linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px); 
+              // background-image:      -o-linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px); 
+              // background-image:         linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px); 
+              // `
               rootTop.style.backgroundColor = `rgba(${currentPlaylistContent[index].headerColor}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`;
               app.handlePlaylists.handleCurrentPlaylist.handleMainViewBackground.handleHeaderOpacity(currentPlaylistContent[index].headerColor)
             }
@@ -685,13 +685,13 @@ const app = {
           playlistPage.style.display = 'block'
           playlistPage.style.backgroundImage = `linear-gradient(rgb(${thisPlaylistInDB.backgroundColor}), #181818 600px)`
           playlistPage.style.backgroundColor = `rgb(${thisPlaylistInDB.backgroundColor})`
-          playlistPage.style.cssText = `
-          background-color: rgb(${thisPlaylistInDB.backgroundColor});
-          background-image: -webkit-linear-gradient(rgb(${thisPlaylistInDB.backgroundColor}), #181818 600px); 
-          background-image:    -moz-linear-gradient(rgb(${thisPlaylistInDB.backgroundColor}), #181818 600px); 
-          background-image:      -o-linear-gradient(rgb(${thisPlaylistInDB.backgroundColor}), #181818 600px); 
-          background-image:         linear-gradient(rgb(${thisPlaylistInDB.backgroundColor}), #181818 600px); 
-          `
+          // playlistPage.style.cssText = `
+          // background-color: rgb(${thisPlaylistInDB.backgroundColor});
+          // background-image: -webkit-linear-gradient(rgb(${thisPlaylistInDB.backgroundColor}), #181818 600px); 
+          // background-image:    -moz-linear-gradient(rgb(${thisPlaylistInDB.backgroundColor}), #181818 600px); 
+          // background-image:      -o-linear-gradient(rgb(${thisPlaylistInDB.backgroundColor}), #181818 600px); 
+          // background-image:         linear-gradient(rgb(${thisPlaylistInDB.backgroundColor}), #181818 600px); 
+          // `
         },
         
         styleTitle: function() {
