@@ -975,7 +975,7 @@ const dailyMixesFactory = {
       ["Vicetone", "Martin Jensen", "John De Sohn"],
       ["Jonas Brothers", "Maroon 5", "Justin Bieber", "DNCE", "Panic! At The Disco"],
       ["Boston", "Starship",  "The Cult", "Kansas", "The White Stripes", "The Animals", "Gun N' Roses", "Queen"],
-      ["All Time Low",],
+      ["All Time Low"],
     ],
     dailyMixesFeaturing: [
       ["Daily Mixes 1", "All Time Low", "Jonas Brothers", "Justin Bieber", "Kygo", "Martin Garrix", "Maroon 5", "Vicetone"],
