@@ -574,10 +574,10 @@ const app = {
             Array.from(document.getElementsByClassName('root__main-view__playlist-section')).filter(playlistSection => playlistSection.getAttribute('section-type') == section.sectionType)[0].innerHTML = `
               <div class="introduction">
                 <div>
-                    <a href ="" class="title">${section.name}</a>
+                    <a href="#" class="title">${section.name}</a>
                     <span class="description"></span>
                 </div>
-                <a class="see-all" href="">See all</a>
+                <a class="see-all" href="#">See all</a>
               </div>
               <ul class="playlists">
                 ${renderedPlaylists}

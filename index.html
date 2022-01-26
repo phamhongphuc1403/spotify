@@ -18,11 +18,11 @@
             <img id="root__left-sidebar__logo" src="assets/images/left-sidebar/spotify.png">
             <ul id="root__left-sidebar__navigation">
                 <li id="root__left-sidebar__navigation__home" class="current"><img src="./assets/images/left-sidebar/home-active.PNG"><span>Home</span></li>
-                <li id="root__left-sidebar__navigation__search"><img src="./assets/images/left-sidebar/search.PNG"><span>Search</span></li>
-                <li id="root__left-sidebar__navigation__library"><img src="./assets/images/left-sidebar/library.PNG"><span>Your library</span></li>
+                <li id="root__left-sidebar__navigation__search" style="cursor: not-allowed;"><img src="./assets/images/left-sidebar/search.PNG"><span>Search</span></li>
+                <li id="root__left-sidebar__navigation__library" style="cursor: not-allowed;"><img src="./assets/images/left-sidebar/library.PNG"><span>Your library</span></li>
             </ul>
             <ul id="root__left-sidebar__action">
-                <li><img src="./assets/images/left-sidebar/create-playlist.PNG">Create Playlist</li>
+                <li style="cursor: not-allowed;"><img src="./assets/images/left-sidebar/create-playlist.PNG">Create Playlist</li>
                 <li class="my-playlist is-a-playlist" playlist-id ="1"><img src="./assets/images/left-sidebar/liked-songs.PNG"><span>Liked Songs</span><img class="playing-playlist" src="./assets/images/now-playing/volume-big.PNG"></li>
             </ul>
             <div id="root__left-sidebar__dashline">
@@ -76,9 +76,6 @@
             </div>
         </div>
 
-
-
-
         <div id="root__right-sidebar">
             <div id="responsive-friends__profile">
                 <img src="./assets/images/user/user-avatar.jpg">
@@ -98,7 +95,7 @@
         <div id="root__now-playing">
             <div id="root__now-playing__header">
                 <img id="root__now-playing__header__minimize" src='./assets/images/now-playing/minimize.png'>
-                <span id="root__now-playing__header__playlist">Liked Songs</span>
+                <span id="root__now-playing__header__playlist"></span>
                 <img id="root__now-playing__header__see-more" src='./assets/images/now-playing/see-more.png'>
             </div>
             <div id="root__now-playing__song">
@@ -109,7 +106,7 @@
                         <div id="root__now-playing__song__info__artist"></div>  
                     </div>
                     <img id="root__now-playing__song__favorite" src="./assets/images/now-playing/favorite.png">
-                    <img id="root__now-playing__song__overlay" src="./assets/images/now-playing/overlay.png">    
+                    <img id="root__now-playing__song__overlay" src="./assets/images/now-playing/overlay.png" style="cursor: not-allowed;">    
                 </div>
             </div>
             <div id="root__now-playing__player-control">
@@ -139,12 +136,12 @@
                     <img class="media-control list" src="./assets/images/now-playing/list.PNG">
                     <img class="list-active" src="./assets/images/now-playing/active-dot.png">
                 </div>
-                <img class="media-control remote" src="./assets/images/now-playing/remote.PNG">
+                <img class="media-control remote" src="./assets/images/now-playing/remote.PNG" style="cursor: not-allowed;">
                 <div id="root__now-playing__media-control__volume-bar">
                     <img class="volume-btn" src="./assets/images/now-playing/volume-big.PNG">
                     <input id="root__now-playing__media-control__volume-bar__range-slider" min="0" max="100" type="range" value = "100"/>
                 </div>
-                <img class="media-control fullscreen" src="./assets/images/now-playing/fullscreen.PNG">
+                <img class="media-control fullscreen" style="cursor: not-allowed;" src="./assets/images/now-playing/fullscreen.PNG">
             </div>
         </div>       
     </div>  
