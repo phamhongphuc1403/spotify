@@ -858,7 +858,7 @@ const allPlaylists = [
     description: '',
     owner: "Phuc",
     img: "./data/playlists/own-playlists/liked-songs.jpg",
-    songs: allSongs,
+    songs: allSongs.filter(song => song.tag.includes('favorite')),
     backgroundColor: '74, 53, 144',
     headerColor: '32, 22, 64',
     tag: ['own playlist', 'liked songs']
