@@ -1032,7 +1032,6 @@ const app = {
           } else {
             queuePage.style.cssText = `
             display: block;
-            padding: 10px;
             position: absolute;
             width: 100%;
             z-index: 10;

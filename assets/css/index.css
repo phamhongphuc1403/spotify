@@ -1487,6 +1487,10 @@ html * {
     #root__now-playing__song__overlay {
         display: none;
     }
+
+    #queue {
+        padding: 10px;
+    }
 }   
 
 @media (max-width:767px){
