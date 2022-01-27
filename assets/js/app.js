@@ -44,6 +44,13 @@ const app = {
       songArtist.innerHTML = `${this.songs[this.currentIndex].artist.join(', ')}`
       audio.src = `${this.songs[this.currentIndex].path}`
       this.changeNowPlayingColor()
+
+      const currentPlaylist = allPlaylists.filter(playlist => playlist.id == this.id)[0]
+      if (currentPlaylist != undefined) {
+        $('#root__now-playing__header__playlist').innerHTML = `${allPlaylists.filter(playlist => playlist.id == this.id)[0].name}`
+      } else {
+        $('#root__now-playing__header__playlist').innerHTML = `${this.songs[this.currentIndex].album}`
+      }
     },
   
     changeNowPlayingColor: function() {
@@ -56,14 +63,6 @@ const app = {
         nowPlaying.style.backgroundImage = `-moz-linear-gradient(${this.songs[this.currentIndex].backgroundColor} 90%, #181818)`
         nowPlaying.style.backgroundImage = `-o-linear-gradient(${this.songs[this.currentIndex].backgroundColor} 90%, #181818)`
         nowPlaying.style.backgroundImage = `linear-gradient(${this.songs[this.currentIndex].backgroundColor} 90%, #181818)`
-        // nowPlaying.style.cssText = `
-        // background-color: ${this.songs[this.currentIndex].backgroundColor};
-        // background-image: -webkit-linear-gradient(${this.songs[this.currentIndex].backgroundColor} 90%, #181818); 
-        // background-image:    -moz-linear-gradient(${this.songs[this.currentIndex].backgroundColor} 90%, #181818); 
-        // background-image:      -o-linear-gradient(${this.songs[this.currentIndex].backgroundColor} 90%, #181818); 
-        // background-image:         linear-gradient(${this.songs[this.currentIndex].backgroundColor} 90%, #181818); 
-        // `
-
       }
     },
   
@@ -340,7 +339,7 @@ const app = {
           app.handleQueuePage.reRenderQueuePage()
         }
       }
-  
+      
       //handle previous button
       prevBtn.onclick = function() {
         audio.autoplay = true
@@ -617,7 +616,7 @@ const app = {
         app.handleQueuePage.reRenderQueuePage()
         audio.play()
       }
-      $('#root__now-playing__header__playlist').innerHTML = `${thisPlaylistInDB.name}`
+      // $('#root__now-playing__header__playlist').innerHTML = `${thisPlaylistInDB.name}`
     },
 
     openPlaylist: {
@@ -1038,7 +1037,6 @@ const app = {
             top: 0;
             left: 0;
             height: 100%;`
-            // document.getElementById('root__now-playing').style.zIndex = '0'
             document.getElementById('root__left-sidebar').style.zIndex = '0'
           }
         }
@@ -1351,7 +1349,6 @@ const app = {
       users.forEach(user => {
         const playBtn = user.querySelector('.play-btn')
         playBtn.onclick = function() {
-          // console.log(allSongs.filter(song => song.id == playBtn.getAttribute('song-id'))[0])
           app.playSongs.songs = [allSongs.filter(song => song.id == playBtn.getAttribute('song-id'))[0]];
           app.playSongs.id = playBtn.getAttribute('song-id');
           app.playSongs.currentIndex = 0;
@@ -1359,7 +1356,6 @@ const app = {
           audio.play();
         }
       })
-      console.log(users)
     },
     start: function() {
       this.renderUsers();
@@ -1390,7 +1386,6 @@ const app = {
         if (this.trace[this.currentPageOrder] == undefined) {
           this.trace.push([currentPageOrder, playlist])
         } else {
-          // console.log(this.trace)
           this.trace.splice(this.currentPageOrder);
           this.trace.push([currentPageOrder, playlist])
         }
@@ -1398,8 +1393,6 @@ const app = {
           this.currentPageOrder--;
           this.trace.pop()
         }
-      // console.log(this.trace)
-      // console.log(this.currentPageOrder)
     },
     handleBtns: {
       styleNavigationBtns: function() {
@@ -1448,14 +1441,12 @@ const app = {
           app.handleNavigation.homeComing()
           app.handleNavigation.currentPageOrder++;
           app.handleNavigation.trace.push([mainView])
-          // console.log(app.handleNavigation.trace)
           app.handleNavigation.handleBtns.styleNavigationBtns()
         }
         homeBtn.onclick = function() {
           app.handleNavigation.homeComing()
           app.handleNavigation.currentPageOrder++;
           app.handleNavigation.trace.push([mainView])
-          // console.log(app.handleNavigation.trace)
           app.handleNavigation.handleBtns.styleNavigationBtns()
         }
 
@@ -1464,8 +1455,6 @@ const app = {
             app.handleNavigation.currentPageOrder--;
             _this.navigateChoices()
             _this.styleNavigationBtns()
-            // console.log(app.handleNavigation.trace)
-            // console.log(app.handleNavigation.currentPageOrder)
           }
         }
         $('.root__top__move-action__next').onclick = function() {
@@ -1473,8 +1462,6 @@ const app = {
             app.handleNavigation.currentPageOrder++;
             _this.navigateChoices()
             _this.styleNavigationBtns()
-            // console.log(app.handleNavigation.trace)
-            // console.log(app.handleNavigation.currentPageOrder)
           }
         }
       }

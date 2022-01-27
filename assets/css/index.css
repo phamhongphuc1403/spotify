@@ -234,8 +234,8 @@ html * {
 }
 
 #root__top__user__avatar {
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
 }
 
@@ -849,8 +849,8 @@ html * {
 #root__now-playing__song__info__artist {
     font-size: 11px;
     color: #afafaf;
-    text-overflow: ellipsis; 
-    white-space: nowrap; 
+    text-overflow: ellipsis;
+    white-space: nowrap;
     overflow: hidden;
 }
 
@@ -1258,7 +1258,7 @@ html * {
         -moz-transform: translateX(100%);
         -ms-transform: translateX(100%);
         -o-transform: translateX(100%);
-}
+    }
     #root__right-sidebar__friend-activity {
         margin-top: 80px;
     }
@@ -1486,10 +1486,6 @@ html * {
     }   
     #root__now-playing__song__overlay {
         display: none;
-    }
-
-    #queue {
-        padding: 10px;
     }
 }   
 

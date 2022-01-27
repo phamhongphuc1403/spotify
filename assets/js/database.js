@@ -1140,6 +1140,12 @@ const allSections = [
     shuffle: false
   },
   {
+    name: 'Best of artist',
+    sectionType: "best-of-artist",
+    playlists: [...allPlaylists].filter(playlist => playlist.tag.includes('best of artist')),
+    shuffle: true
+  },
+  {
     name: 'Recently played',
     sectionType: "recently-played",
     playlists: [...allPlaylists],
@@ -1151,14 +1157,6 @@ const allSections = [
     playlists: [...allPlaylists].filter(playlist => playlist.tag.includes('own playlist')),
     shuffle: true
   },
-  {
-    name: 'Best of artist',
-    sectionType: "best-of-artist",
-    playlists: [...allPlaylists].filter(playlist => playlist.tag.includes('best of artist')),
-    shuffle: true
-  },
-
-
 ]
 
 const allUsers = [
