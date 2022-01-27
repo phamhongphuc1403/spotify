@@ -442,29 +442,32 @@ const app = {
       handleMainViewBackground: {
         renderBackground: function() {  
           const currentPlaylistContent = app.handlePlaylists.playlists.filter(playlist => playlist.tag.includes('own playlist'))
-          mainView.style.backgroundColor = `rgba(${currentPlaylistContent[0].backgroundColor}, 0.35)`
-          mainView.style.backgroundImage = `-webkit-linear-gradient(rgba(${currentPlaylistContent[0].backgroundColor}, 0.35), #121212 400px)`
-          mainView.style.backgroundImage = `-moz-linear-gradient(rgba(${currentPlaylistContent[0].backgroundColor}, 0.35), #121212 400px)`
-          mainView.style.backgroundImage = `-o-linear-gradient(rgba(${currentPlaylistContent[0].backgroundColor}, 0.35), #121212 400px)`
-          mainView.style.backgroundImage = `linear-gradient(rgba(${currentPlaylistContent[0].backgroundColor}, 0.35), #121212 400px)`
-          this.handleHeaderOpacity(app.handlePlaylists.playlists[0].headerColor)
+
+          mainView.style.cssText = `--backgroundColor: rgba(${currentPlaylistContent[0].backgroundColor}, 0.35);`
           
+          rootTop.style.cssText = `--headerColor: rgba(${currentPlaylistContent[0].headerColor}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100});`
+          this.handleHeaderOpacity(app.handlePlaylists.playlists[0].headerColor)
+          app.handleMainView.styleMainView.handleResponsive.handlePageSize(rootTop)
+
+
           const currentPlaylists = Array.from(document.getElementsByClassName('current-playlist'));
           currentPlaylists.forEach((playlist, index) => {
             playlist.onmouseenter = function() {
-              mainView.style.backgroundColor = `rgba(${currentPlaylistContent[index].backgroundColor}, 0.35)`
-              mainView.style.backgroundImage = `-webkit-linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px)`
-              mainView.style.backgroundImage = `-moz-linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px)`
-              mainView.style.backgroundImage = `-o-linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px)`
-              mainView.style.backgroundImage = `linear-gradient(rgba(${currentPlaylistContent[index].backgroundColor}, 0.35), #121212 400px)`
-
-              rootTop.style.backgroundColor = `rgba(${currentPlaylistContent[index].headerColor}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`;
+              mainView.style.cssText = `--backgroundColor: rgba(${currentPlaylistContent[index].backgroundColor}, 0.35);`
+              rootTop.style.cssText = `--headerColor: rgba(${currentPlaylistContent[index].headerColor}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100});`
               app.handlePlaylists.handleCurrentPlaylist.handleMainViewBackground.handleHeaderOpacity(currentPlaylistContent[index].headerColor)
+              app.handleMainView.styleMainView.handleResponsive.handlePageSize(rootTop)
             }
           })
         },
         handleHeaderOpacity: function(color) {
-          mainView.addEventListener('scroll', function() {rootTop.style.backgroundColor = `rgba(${color}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`})
+
+          mainView.addEventListener('scroll', function() {
+            // rootTop.style.backgroundImage = ''
+            // rootTop.style.backgroundColor = `rgba(${color}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`
+            rootTop.style.cssText = `--headerColor: rgba(${color}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100});`
+            app.handleMainView.styleMainView.handleResponsive.handlePageSize(rootTop)
+          })
         },
         handle: function() {
           this.renderBackground();

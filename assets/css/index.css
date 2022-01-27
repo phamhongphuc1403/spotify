@@ -156,17 +156,28 @@ html * {
     grid-template-rows: auto 90px;  
 }
 
+@property --headerColor {
+    syntax: '<color>';
+    initial-value: rgba(0, 0, 0, 0);
+    inherits: false;
+}
+
 #root__top-container {
     height: 60px;
     display: flex;
     top: 0px;
-    margin: 0 -32px;
+    /* margin: 0 -32px; */
     justify-content: space-between;
     align-items: center;
     position: fixed;
-    /* background-color: #66645e; */
     overflow-x: hidden;
     z-index: 10;
+    background-image: linear-gradient(var(--headerColor), var(--headerColor));
+    transition: --headerColor 0.5s;
+    -webkit-transition: --headerColor 0.5s;
+    -ms-transition: --headerColor 0.5s;
+    -moz-transition: --headerColor 0.5s;
+    -o-transition: --headerColor 0.5s;
 }
 
 #root__top__move-action {
@@ -413,24 +424,26 @@ html * {
     opacity:1;
     color:white;
 }
-
-/* #root__left-sidebar__my-playlists .current {
-    color:white;
-} */
+@property --backgroundColor {
+    syntax: '<color>';
+    initial-value: #121212;
+    inherits: false;
+}
 
 #root__main-view {
     grid-area: main;
     padding: 24px 32px 0px;
     overflow: overlay;
     height: 100%;
-    /* background-image: linear-gradient(rgba(142, 128, 86, 0.35) 0%, #121212 15%); */
     background-attachment: local;
-    /* z-index: 1; */
-    /*transition: 0.3s linear;
-     -webkit-transition: background-color 1000ms linear;
-    -ms-transition: background-color 1000ms linear;
-    transition: background-color 1000ms linear; */
+    background-image: linear-gradient(var(--backgroundColor) 0%, #121212 15%);
+    transition: --backgroundColor 0.5s;
+    -webkit-transition: --backgroundColor 0.5s;
+    -ms-transition: --backgroundColor 0.5s;
+    -moz-transition: --backgroundColor 0.5s;
+    -o-transition: --backgroundColor 0.5s;
 }
+
 #root__main-view::-webkit-scrollbar-thumb {
     background: rgba(90, 90, 90, 1); 
 }
