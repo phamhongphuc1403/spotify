@@ -981,8 +981,8 @@ const dailyMixesFactory = {
       ["Daily Mixes 1", "All Time Low", "Jonas Brothers", "Justin Bieber", "Kygo", "Martin Garrix", "Maroon 5", "Vicetone"],
       ["Daily Mixes 2", "All Time Low", "Jonas Brothers", "Justin Bieber", "Kygo", "Martin Garrix", "Maroon 5"],
       ["Daily Mixes 3", "All Time Low", "Jonas Blue", "Jonas Brothers", "Justin Bieber", "Kygo", "Maroon 5", "Boston", "Panic! At The Disco"],
-      ["Daily Mixes 4", "All Time Low", "Jonas Blue", "Maroon 5", "Boston", "Kygo", "Panic! At The Disco"],
-      ["Daily Mixes 5", "Boston", "Martin Garrix", "Maroon 5", "Panic! At The Disco"],
+      ["Daily Mixes 4", "All Time Low", "Jonas Blue", "Maroon 5", "Boston", "Kygo", "Panic! At The Disco", "Queen"],
+      ["Daily Mixes 5", "Boston", "Martin Garrix", "Maroon 5", "Panic! At The Disco", "Queen"],
     ],
   },
   
@@ -993,11 +993,12 @@ const dailyMixesFactory = {
     chooseFeaturingArtist: {
       FeaturingArtists: [],
       handleFeaturing: function() {
+        const _this = this
         dailyMixesFactory.data.dailyMixesFeaturing.forEach(dailyMix => {
           function randomPick() {
               const newDailyMixes = dailyMix[Math.floor(Math.random() * (dailyMix.length - 1)) + 1]
-              const flattedArray = dailyMixesFactory.dailyMixesGenerator.chooseFeaturingArtist.FeaturingArtists.flat()
-              flattedArray.includes(newDailyMixes) ? randomPick() : dailyMixesFactory.dailyMixesGenerator.chooseFeaturingArtist.FeaturingArtists.push([dailyMix[0],newDailyMixes])
+              const flattedArray = _this.FeaturingArtists.flat()
+              flattedArray.includes(newDailyMixes) ? randomPick() : _this.FeaturingArtists.push([dailyMix[0],newDailyMixes])
           }
           randomPick()
         })
@@ -1126,6 +1127,7 @@ function shuffleArray(Array) {
 }
 
 
+
 const allSections = [
   {
     name: 'Hello',
@@ -1182,3 +1184,21 @@ const allUsers = [
     lastActive: '1d',
   }
 ]
+
+const setGreeting = function() {
+  const regex = /[0-9][0-9]:/
+  let time =  Date().match(regex)
+  time = time[0]
+  time = time.slice(0, -1)
+  time = Number(time)
+
+  const currentPlaylists = allSections.filter(section => section.sectionType == 'current-playlists')[0]
+  if (0 < time && time< 12) {
+    currentPlaylists.name = 'Good morning'
+  } else if (12 <= time && time < 18) {
+    currentPlaylists.name = 'Good afternoon'
+  } else {
+    currentPlaylists.name = 'Good evening'
+  }
+}
+setGreeting()

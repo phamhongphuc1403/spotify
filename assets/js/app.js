@@ -11,7 +11,7 @@ const nextBtn = $('.next')
 const prevBtn = $('.prev')
 const shuffleBtn = $('.shuffle')
 const repeatBtn = $('.repeat')
-const currentPlaylists = $('#root__main-view__currently-playing__playlists')
+const currentPlaylists = $('#root__main-view__currently-playing')
 const volumeBar = $('#root__now-playing__media-control__volume-bar')
 const volumeSlider = $('#root__now-playing__media-control__volume-bar__range-slider')
 const volumeBtn = $('.volume-btn')
@@ -436,7 +436,14 @@ const app = {
                 </div>
             </li>`)
           .join('')
-        currentPlaylists.innerHTML = currentPlaylistContent
+        currentPlaylists.innerHTML = `
+          <div id="root__main-view__responsive-nav">
+            <span class="greeting">${allSections.filter(section => section.sectionType == 'current-playlists')[0].name}</span>
+            <img id="responsive-friends" src="./assets/images/responsive/friends.png">
+          </div>
+          <ul id="root__main-view__currently-playing__playlists">
+            ${currentPlaylistContent}
+          </ul>`
       },
 
       handleMainViewBackground: {
@@ -445,8 +452,8 @@ const app = {
 
           mainView.style.cssText = `--backgroundColor: rgba(${currentPlaylistContent[0].backgroundColor}, 0.35);`
           
-          rootTop.style.cssText = `--headerColor: rgba(${currentPlaylistContent[0].headerColor}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100});`
-          this.handleHeaderOpacity(app.handlePlaylists.playlists[0].headerColor)
+          // rootTop.style.cssText = `--headerColor: rgba(${currentPlaylistContent[0].headerColor}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100});`
+          this.handleHeaderOpacity(currentPlaylistContent[0].headerColor)
           app.handleMainView.styleMainView.handleResponsive.handlePageSize(rootTop)
 
 
@@ -465,7 +472,8 @@ const app = {
           mainView.addEventListener('scroll', function() {
             // rootTop.style.backgroundImage = ''
             // rootTop.style.backgroundColor = `rgba(${color}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100})`
-            rootTop.style.cssText = `--headerColor: rgba(${color}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100});`
+            
+            if(color) {rootTop.style.cssText = `--headerColor: rgba(${color}, ${0.5 + - (100 - Math.ceil(mainView.scrollTop)) / 100});`}
             app.handleMainView.styleMainView.handleResponsive.handlePageSize(rootTop)
           })
         },
@@ -1085,7 +1093,8 @@ const app = {
       queuePage.style.display = 'block'
       // queuePage.style.height = mainView.offsetHeight + 'px'
       queuePage.scrollTop = 0
-      rootTop.style.backgroundColor = 'transparent'
+      rootTop.style.cssText = `--headerColor: rgba(0, 0, 0, 0);`
+      app.handleMainView.styleMainView.handleResponsive.handlePageSize(rootTop)
       app.handleNavigation.farFromHome()
       $('.list').src= './assets/images/now-playing/list-active.PNG'
       app.handleNowPlaying.handleActiveBtns(true, $('.list'), $('.list-active'))
