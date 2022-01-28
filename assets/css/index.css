@@ -677,6 +677,7 @@ html * {
     -moz-transform: translateX(0%);
     -ms-transform: translateX(0%);
     -o-transform: translateX(0%);
+    overflow-y: overlay;
 }
 
 #root__right-sidebar__friend-activity {
@@ -1273,10 +1274,11 @@ html * {
         -o-transform: translateX(100%);
     }
     #root__right-sidebar__friend-activity {
-        margin-top: 80px;
+        margin-top: 30px;
     }
     #root__right-sidebar__users {
-        margin-top: 30px;
+        margin-top: 20px;
+        margin-bottom: 80px;
     }
     #root__right-sidebar {
         position: fixed;
