@@ -1075,7 +1075,7 @@ const app = {
       $('#queue__header__close').onclick = function() {
         _this.closeQueuePage()
           document.getElementById('root__now-playing').style.zIndex = '5'
-          document.getElementById('root__left-sidebar').style.zIndex = '3'
+          document.getElementById('root__left-sidebar').style.zIndex = '10'
       }
       
       const thisPlaylistInDB = app.handlePlaylists.playlists.filter(playlist => playlist.id == app.playSongs.id)[0]   //find playlist in the database that match the playing playlist
@@ -1123,8 +1123,8 @@ const app = {
           _this.closeQueuePage()
         } 
         app.handleNavigation.handleBtns.styleNavigationBtns()
-        console.log( app.handleNavigation.trace)
-        console.log(app.handleNavigation.currentPageOrder)
+        // console.log( app.handleNavigation.trace)
+        // console.log(app.handleNavigation.currentPageOrder)
       }
     }
   },

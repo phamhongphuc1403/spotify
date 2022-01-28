@@ -1193,7 +1193,7 @@ const setGreeting = function() {
   time = Number(time)
 
   const currentPlaylists = allSections.filter(section => section.sectionType == 'current-playlists')[0]
-  if (0 < time && time< 12) {
+  if (0 < time && time < 12) {
     currentPlaylists.name = 'Good morning'
   } else if (12 <= time && time < 18) {
     currentPlaylists.name = 'Good afternoon'
