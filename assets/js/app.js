@@ -11,7 +11,7 @@ const nextBtn = $('.next')
 const prevBtn = $('.prev')
 const shuffleBtn = $('.shuffle')
 const repeatBtn = $('.repeat')
-const currentPlaylists = $('#root__main-view__currently-playing')
+const currentPlaylists = $('#root__main-view__currently-playing__playlists')
 const volumeBar = $('#root__now-playing__media-control__volume-bar')
 const volumeSlider = $('#root__now-playing__media-control__volume-bar__range-slider')
 const volumeBtn = $('.volume-btn')
@@ -436,14 +436,8 @@ const app = {
                 </div>
             </li>`)
           .join('')
-        currentPlaylists.innerHTML = `
-          <div id="root__main-view__responsive-nav">
-            <span class="greeting">${allSections.filter(section => section.sectionType == 'current-playlists')[0].name}</span>
-            <img id="responsive-friends" src="./assets/images/responsive/friends.png">
-          </div>
-          <ul id="root__main-view__currently-playing__playlists">
-            ${currentPlaylistContent}
-          </ul>`
+        currentPlaylists.innerHTML = currentPlaylistContent
+        $('.greeting').innerHTML = allSections.filter(section => section.sectionType == 'current-playlists')[0].name
       },
 
       handleMainViewBackground: {
