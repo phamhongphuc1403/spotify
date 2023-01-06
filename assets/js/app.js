@@ -35,7 +35,6 @@ const app = {
     isShuffle: false,
     isRepeatSong: false,
     isRepeatPlaylist: false,
-    isMute: false,
     isSeeking: false,
   
     loadCurrentSong: function() {
